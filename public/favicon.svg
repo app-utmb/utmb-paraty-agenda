@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Paraty Brazil by UTMB">
+  <rect width="512" height="512" rx="112" fill="#070d1c"/>
+  <path d="M56 348 176 196l82 104 54-66 124 114z" fill="#4ade80"/>
+  <path d="M176 196l82 104 54-66 124 114H258z" fill="#2fae63"/>
+  <circle cx="366" cy="146" r="38" fill="#fcbf49"/>
+  <path d="M40 396c40-22 72-22 112 0s72 22 112 0 72-22 112 0 60 20 96 2" fill="none" stroke="#63b0ff" stroke-width="26" stroke-linecap="round"/>
+</svg>

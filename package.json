@@ -1,0 +1,54 @@
+{
+  "name": "paraty-agenda",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --force",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "icons": "node scripts/generate-icons.mjs",
+    "audit:all": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "planilha": "node scripts/gerar-planilha.mjs"
+  },
+  "dependencies": {
+    "papaparse": "^5.7.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/jest-axe": "^3.5.9",
+    "@types/node": "^26.5.0",
+    "@types/papaparse": "^5.5.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/coverage-v8": "^4.1.11",
+    "eslint": "^10.10.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.6",
+    "exceljs": "^4.4.0",
+    "globals": "^17.12.0",
+    "jest-axe": "^11.0.0",
+    "jsdom": "^29.1.1",
+    "sharp": "^0.35.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.0",
+    "vite": "^8.2.2",
+    "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^4.1.11"
+  },
+  "description": "Agenda do atleta do Paraty Brazil by UTMB, alimentada por uma planilha do Google Sheets.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}

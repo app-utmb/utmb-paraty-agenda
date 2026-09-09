@@ -1,0 +1,8 @@
+node_modules
+dist
+dev-dist
+coverage
+.npm-cache
+*.tsbuildinfo
+.DS_Store
+.vite
