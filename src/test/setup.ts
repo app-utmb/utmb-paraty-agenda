@@ -3,6 +3,16 @@ import { afterEach, expect, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
 import { toHaveNoViolations } from 'jest-axe'
 
+/**
+ * Os testes nunca falam com a planilha de producao. Com as URLs vazias,
+ * carregarDados usa os dados de exemplo embutidos, que sao deterministicos.
+ * Quem precisa testar a rede sobrescreve este mock com vi.doMock.
+ */
+vi.mock('../config', async () => {
+  const real = await vi.importActual<typeof import('../config')>('../config')
+  return { ...real, URL_CSV_PROGRAMACAO: '', URL_CSV_CONFIG: '' }
+})
+
 expect.extend(toHaveNoViolations)
 
 /**

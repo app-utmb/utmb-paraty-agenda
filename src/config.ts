@@ -12,8 +12,10 @@
  * Enquanto as URLs estiverem vazias, o app roda com os dados de exemplo
  * embutidos em src/data/exemplo.ts, para voce ver o layout funcionando.
  */
-export const URL_CSV_PROGRAMACAO = ''
-export const URL_CSV_CONFIG = ''
+export const URL_CSV_PROGRAMACAO =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vQdJFeMN2WfVknF0RcsQAPCzifeC2-7QAmcQX2oq7OHIVsnE61GtTGKDX03CwbQ3LTBQXhpii_Q70mK/pub?output=csv'
+export const URL_CSV_CONFIG =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRI7HwGSv0aSRzSE30iD_jfBZXV_-tAwU6GFbX2Ol7LKnvhxih7QbKm_SjggdNvkflpbzZMS_9lP1l5/pub?output=csv'
 
 /** Intervalo de revalidacao automatica enquanto o app esta aberto. */
 export const INTERVALO_REVALIDACAO_MS = 5 * 60 * 1000
