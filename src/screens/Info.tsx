@@ -140,11 +140,6 @@ export function Info({ dados }: Props) {
           )}
         </Grupo>
       )}
-
-      <section className="grupo">
-        <h2 className="grupo__titulo">{t.info.versaoDados}</h2>
-        <p className="bloco-texto">{t.info.origem[dados.origem]}</p>
-      </section>
     </div>
   )
 }

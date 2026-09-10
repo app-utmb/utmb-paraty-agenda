@@ -131,27 +131,77 @@ describe('tela Programacao', () => {
     expect(screen.queryByText('Entrada livre')).not.toBeInTheDocument()
   })
 
-  it('filtra por marca', async () => {
+  /** Abre o menu suspenso de marcas. */
+  const abrirMarcas = async () => {
+    await userEvent.click(screen.getByRole('button', { name: /filtrar por marca/i }))
+  }
+
+  it('filtra por marca pelo menu suspenso', async () => {
     abrir()
-    await userEvent.click(screen.getByRole('button', { name: 'The North Face' }))
+    await abrirMarcas()
+    await userEvent.click(screen.getByRole('option', { name: 'The North Face' }))
     expect(screen.getByText('Teste de calcados')).toBeInTheDocument()
     expect(screen.queryByText('Retirada de kits')).not.toBeInTheDocument()
     expect(screen.getByText('1 item')).toBeInTheDocument()
   })
 
+  it('busca a marca dentro do menu', async () => {
+    abrir()
+    await abrirMarcas()
+    await userEvent.type(screen.getByRole('searchbox', { name: /buscar marca/i }), 'north')
+    expect(screen.getByRole('option', { name: 'The North Face' })).toBeInTheDocument()
+    expect(screen.queryByRole('option', { name: 'Paraty Brazil by UTMB' })).not.toBeInTheDocument()
+  })
+
+  it('avisa quando a busca de marca nao acha nada', async () => {
+    abrir()
+    await abrirMarcas()
+    await userEvent.type(screen.getByRole('searchbox', { name: /buscar marca/i }), 'zzz')
+    expect(screen.getByText(/nenhum estabelecimento com esse nome/i)).toBeInTheDocument()
+  })
+
   it('so oferece marcas presentes no recorte de dia e pilar', async () => {
     abrir()
-    expect(screen.getByRole('button', { name: 'Paraty Brazil by UTMB' })).toBeInTheDocument()
+    await abrirMarcas()
+    expect(screen.getByRole('option', { name: 'Paraty Brazil by UTMB' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: 'The North Face' })).toBeInTheDocument()
+    await userEvent.keyboard('{Escape}')
+
+    // A The North Face so tem item no dia 17, entao some do menu no dia 18.
+    await userEvent.click(screen.getByRole('tab', { name: /18/ }))
+    await abrirMarcas()
+    expect(screen.getByRole('option', { name: 'Leki' })).toBeInTheDocument()
+    expect(screen.queryByRole('option', { name: 'The North Face' })).not.toBeInTheDocument()
+  })
+
+  it('esconde o filtro de marca quando o recorte tem menos de duas marcas', async () => {
+    abrir()
     await userEvent.click(screen.getByRole('button', { name: 'Talks' }))
-    expect(screen.queryByRole('button', { name: 'The North Face' })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: /filtrar por marca/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('solta o filtro de marca quando ela some do recorte', async () => {
     abrir()
-    await userEvent.click(screen.getByRole('button', { name: 'The North Face' }))
+    await abrirMarcas()
+    await userEvent.click(screen.getByRole('option', { name: 'The North Face' }))
     expect(screen.getByText('1 item')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('tab', { name: /18/ }))
     expect(screen.getByText('2 itens')).toBeInTheDocument()
+  })
+
+  it('fecha o menu de marcas com Escape', async () => {
+    abrir()
+    await abrirMarcas()
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    await userEvent.keyboard('{Escape}')
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+  })
+
+  it('nao mostra mais a etiqueta de destaque', () => {
+    abrir()
+    expect(screen.queryByText(/^destaque$/i)).not.toBeInTheDocument()
   })
 
   it('mostra os dias oficiais quando a planilha esta vazia', () => {
@@ -309,11 +359,6 @@ describe('tela Info', () => {
     renderizar(<Info dados={dados} />)
     await userEvent.click(screen.getByRole('button', { name: /adicionar à tela de início/i }))
     expect(screen.getByText(/adicionar à tela de início\./i)).toBeVisible()
-  })
-
-  it('mostra a origem dos dados', () => {
-    renderizar(<Info dados={dadosDeTeste({ origem: 'cache' })} />)
-    expect(screen.getByText(/última versão salva no aparelho/i)).toBeInTheDocument()
   })
 
   it('esconde secoes que a planilha nao preencheu', () => {

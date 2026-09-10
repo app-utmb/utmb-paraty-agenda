@@ -33,12 +33,12 @@ export const es: Dicionario = {
     titulo: 'Programa',
     filtroPilar: 'Filtrar por pilar',
     filtroMarca: 'Filtrar por marca',
+    buscarMarca: 'Buscar marca',
     todasMarcas: 'Todas las marcas',
     seletorDia: 'Elegir el día',
     todos: 'Todos',
     vazio: 'Ningún elemento para este filtro',
     vazioDica: 'Prueba otro día o el filtro Todos',
-    destaque: 'Destacado',
     itensContagem: (n: number) => (n === 1 ? '1 elemento' : `${n} elementos`),
   },
   beneficios: {

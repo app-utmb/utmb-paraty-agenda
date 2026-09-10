@@ -31,12 +31,12 @@ export const pt = {
     titulo: 'Programação',
     filtroPilar: 'Filtrar por pilar',
     filtroMarca: 'Filtrar por marca',
+    buscarMarca: 'Buscar marca',
     todasMarcas: 'Todas as marcas',
     seletorDia: 'Escolher o dia',
     todos: 'Todos',
     vazio: 'Nenhum item para este filtro',
     vazioDica: 'Tente outro dia ou o filtro Todos',
-    destaque: 'Destaque',
     itensContagem: (n: number) => (n === 1 ? '1 item' : `${n} itens`),
   },
   beneficios: {

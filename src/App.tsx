@@ -120,7 +120,6 @@ export function App({ referencia }: Props = {}) {
               width={900}
               height={479}
             />
-            <span className="cabecalho__datas">{config?.eventoDatas ?? ''}</span>
           </div>
           <div className="cabecalho__acoes">
             <SeletorTema tema={tema} aoTrocar={trocarTema} />

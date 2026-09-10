@@ -36,7 +36,7 @@
      e o meio termo entre deixar os patrocinadores legiveis e nao comer a
      tela do atleta. Trocar aqui muda o rodape inteiro. */
   --alt-regua: 104px;
-  --alt-cabecalho: 56px;
+  --alt-cabecalho: 64px;
   --sombra: 0 6px 24px rgb(0 0 0 / 45%);
 
   color-scheme: dark;
@@ -169,10 +169,10 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   min-height: var(--alt-cabecalho);
-  padding: 8px 14px calc(8px + env(safe-area-inset-top)) 14px;
-  padding-top: calc(8px + env(safe-area-inset-top));
+  padding: 10px 16px;
+  padding-top: calc(10px + env(safe-area-inset-top));
   background: color-mix(in srgb, var(--fundo) 92%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--borda);
@@ -180,7 +180,7 @@ img {
 
 .cabecalho__marca {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   min-width: 0;
 }
 
@@ -197,8 +197,14 @@ img {
 
 .cabecalho__logo {
   display: block;
-  height: 42px;
+  height: 40px;
   width: auto;
+}
+
+@media (min-width: 420px) {
+  .cabecalho__logo {
+    height: 46px;
+  }
 }
 
 .cabecalho__acoes {
@@ -206,6 +212,22 @@ img {
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
+}
+
+.cabecalho__acoes .idioma__botao,
+.cabecalho__acoes .botao-tema {
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+/* No cabecalho o trocador de idioma mostra so a sigla, sem o globo, para
+   os dois botoes ficarem do mesmo tamanho. */
+.cabecalho__acoes .idioma__botao svg {
+  display: none;
 }
 
 .botao-tema {
@@ -483,12 +505,6 @@ img {
 .etiqueta--filmes {
   color: var(--filmes);
   background: var(--filmes-fundo);
-}
-
-.etiqueta--destaque {
-  color: var(--texto);
-  background: var(--fundo-cartao-ativo);
-  border: 1px solid var(--borda-forte);
 }
 
 .etiqueta--inscricao {
@@ -1156,4 +1172,106 @@ img {
   font-size: 15px;
   line-height: 1.6;
   color: var(--texto-suave);
+}
+
+/* ---------- Filtro de marca ---------- */
+
+.marca-filtro {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.marca-filtro__botao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 13px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.marca-filtro__botao[data-escolhida='true'] {
+  border-color: var(--acento);
+  color: var(--texto);
+  font-weight: 700;
+}
+
+.marca-filtro__rotulo {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.marca-filtro__seta {
+  flex: 0 0 auto;
+  color: var(--texto-fraco);
+  transform: rotate(90deg);
+  transition: transform 0.15s ease;
+}
+
+.marca-filtro__botao[aria-expanded='true'] .marca-filtro__seta {
+  transform: rotate(-90deg);
+}
+
+.marca-filtro__painel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 25;
+  padding: 10px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  background: var(--fundo-elevado);
+  box-shadow: var(--sombra);
+}
+
+.busca--compacta {
+  margin-bottom: 8px;
+}
+
+.busca--compacta .busca__campo {
+  min-height: 42px;
+}
+
+.marca-filtro__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.marca-filtro__opcao {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 12px;
+  border-radius: var(--raio-pequeno);
+  text-align: left;
+  font-size: 15px;
+  color: var(--texto-suave);
+}
+
+.marca-filtro__opcao[aria-selected='true'] {
+  background: var(--fundo-cartao-ativo);
+  color: var(--texto);
+  font-weight: 700;
+}
+
+.marca-filtro__vazio {
+  margin: 0;
+  padding: 14px 12px;
+  font-size: 14px;
+  color: var(--texto-fraco);
 }

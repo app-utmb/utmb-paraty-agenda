@@ -334,11 +334,15 @@ export function normalizarProgramacao(
   return { dados: ordenarItens(itens), problemas }
 }
 
-/** Ordena por data, depois destaque no topo, depois horario, depois titulo. */
+/**
+ * Ordena por data, depois por horario, depois por titulo. A coluna destaque
+ * nao mexe mais na ordem da programacao: com a etiqueta fora da tela, um item
+ * da noite aparecendo acima de um da manha parecia defeito. Ela continua
+ * valendo nos beneficios.
+ */
 export function ordenarItens(itens: ItemProgramacao[]): ItemProgramacao[] {
   return [...itens].sort((a, b) => {
     if (a.data !== b.data) return a.data < b.data ? -1 : 1
-    if (a.destaque !== b.destaque) return a.destaque ? -1 : 1
     if (a.minutoInicio !== b.minutoInicio) return a.minutoInicio - b.minutoInicio
     return a.titulo.pt.localeCompare(b.titulo.pt, 'pt-BR')
   })

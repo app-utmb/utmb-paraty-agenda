@@ -32,7 +32,6 @@ export function CartaoItem({ item, aoAbrir, mostrarData = false }: Props) {
           {faixaHoraria(item)}
         </span>
         <span className={`etiqueta etiqueta--${item.pilar}`}>{pilarRotulo}</span>
-        {item.destaque && <span className="etiqueta etiqueta--destaque">{t.programacao.destaque}</span>}
       </span>
 
       <span className="cartao__titulo">{titulo}</span>

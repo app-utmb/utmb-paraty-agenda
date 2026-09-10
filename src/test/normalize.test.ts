@@ -313,14 +313,22 @@ describe('normalizarProgramacao', () => {
 })
 
 describe('ordenacao', () => {
-  it('ordena por data, depois destaque, depois horario', () => {
+  it('ordena por data e depois por horario', () => {
     const { dados } = importar(
       { id: 'a', data: '2026-09-18', hora_inicio: '09:00', titulo_pt: 'A' },
       { id: 'b', data: '2026-09-17', hora_inicio: '18:00', titulo_pt: 'B' },
       { id: 'c', data: '2026-09-17', hora_inicio: '08:00', titulo_pt: 'C' },
-      { id: 'd', data: '2026-09-17', hora_inicio: '20:00', titulo_pt: 'D', destaque: 'sim' },
     )
-    expect(dados.map((i) => i.id)).toEqual(['d', 'c', 'b', 'a'])
+    expect(dados.map((i) => i.id)).toEqual(['c', 'b', 'a'])
+  })
+
+  it('destaque nao muda mais a ordem da programacao', () => {
+    const { dados } = importar(
+      { id: 'cedo', data: '2026-09-17', hora_inicio: '08:00', titulo_pt: 'Cedo' },
+      { id: 'tarde', data: '2026-09-17', hora_inicio: '20:00', titulo_pt: 'Tarde', destaque: 'sim' },
+    )
+    expect(dados.map((i) => i.id)).toEqual(['cedo', 'tarde'])
+    expect(dados.find((i) => i.id === 'tarde')?.destaque).toBe(true)
   })
 
   it('desempata pelo titulo quando data, destaque e hora sao iguais', () => {

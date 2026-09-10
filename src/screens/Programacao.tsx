@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { CartaoItem } from '../components/CartaoItem'
+import { SeletorMarca } from '../components/SeletorMarca'
 import { DIAS_EVENTO } from '../config'
 import type { DadosApp, ItemProgramacao, Pilar } from '../data/types'
 import { PILARES } from '../data/types'
@@ -106,27 +107,7 @@ export function Programacao({ dados, aoAbrirItem, referencia }: Props) {
       </div>
 
       {marcas.length > 1 && (
-        <div className="chips chips--secundario" role="group" aria-label={t.programacao.filtroMarca}>
-          <button
-            type="button"
-            className="chip chip--pequeno"
-            aria-pressed={marcaAtiva === 'todas'}
-            onClick={() => setMarca('todas')}
-          >
-            {t.programacao.todasMarcas}
-          </button>
-          {marcas.map((m) => (
-            <button
-              key={m}
-              type="button"
-              className="chip chip--pequeno"
-              aria-pressed={marcaAtiva === m}
-              onClick={() => setMarca(m)}
-            >
-              {m}
-            </button>
-          ))}
-        </div>
+        <SeletorMarca marcas={marcas} valor={marcaAtiva} aoEscolher={setMarca} />
       )}
 
       <p className="secao-titulo" aria-live="polite">
