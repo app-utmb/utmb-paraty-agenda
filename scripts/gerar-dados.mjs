@@ -25,7 +25,14 @@ const EXPO = ['Expo', 'Expo', 'Expo']
 const ARENA = ['Arena de largada e chegada', 'Arena de salida y llegada', 'Start and finish arena']
 const AMBOS = ['Arena e Expo', 'Arena y Expo', 'Arena and Expo']
 const FAZENDA = ['Fazenda Bananal', 'Fazenda Bananal', 'Fazenda Bananal']
-const estande = (marca) => [`Estande ${marca}`, `Stand ${marca}`, `${marca} booth`]
+/**
+ * Codigo do estande no Mapa Village UTMB 2026. Entra junto com o nome da
+ * marca para o atleta achar o lugar sem precisar abrir o mapa.
+ */
+const estande = (marca, codigo = '') => {
+  const suf = codigo ? `, ${codigo}` : ''
+  return [`Estande ${marca}${suf}`, `Stand ${marca}${suf}`, `${marca} booth${suf}`]
+}
 const aConfirmar = ['A confirmar', 'Por confirmar', 'To be confirmed']
 
 // ---------------------------------------------------------------- oficial
@@ -132,19 +139,19 @@ const ATIVACOES = [
     desc: ['Personalize a sua medalha no estande da HOKA.', 'Personaliza tu medalla en el stand de HOKA.', 'Personalise your medal at the HOKA booth.'],
     dias: ['2026-09-19', '2026-09-20'],
     horas: { '2026-09-19': ['14:00', '20:00'], '2026-09-20': ['10:00', '14:00'] },
-    local: estande('HOKA'), destaque: 'sim',
+    local: estande('HOKA', 'B1'), destaque: 'sim',
   }),
   ...ativacao({
     slug: 'nnormal-tenis', marca: 'NNormal', logoArquivo: 'nnormal',
     tit: ['Experimentacao de tenis', 'Prueba de zapatillas', 'Shoe try-on'],
     desc: ['Experimente os modelos NNormal no estande.', 'Prueba los modelos NNormal en el stand.', 'Try the NNormal models at the booth.'],
-    dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('NNormal'),
+    dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('NNormal', 'D9'),
   }),
   ...ativacao({
     slug: 'coros-cacada', marca: 'COROS', logoArquivo: 'coros',
     tit: ['Caca ao tesouro COROS', 'Busqueda del tesoro COROS', 'COROS treasure hunt'],
     desc: ['Vagas limitadas, inscricao no estande.', 'Cupos limitados, inscripcion en el stand.', 'Limited places, sign up at the booth.'],
-    dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('COROS'),
+    dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('COROS', 'D9'),
     inscricao: 'previa', link: 'https://paraty.utmb.world/pt',
   }),
   ...ativacao({
@@ -153,37 +160,72 @@ const ATIVACOES = [
     desc: ['Gire a roleta e leve o desconto que sair.', 'Gira la ruleta y llevate el descuento.', 'Spin the wheel and take the discount.'],
     dias: ['2026-09-17', '2026-09-18'],
     horas: { '2026-09-17': ['14:00', '18:00'], '2026-09-18': ['14:00', '18:00'] },
-    local: estande('VIVAS MOVE'),
+    local: estande('VIVAS MOVE', 'D8'),
   }),
   ...ativacao({
     slug: 'drpeanut-degustacao', marca: 'DR PEANUT', logoArquivo: 'dr-peanut',
     tit: ['Degustacao DR PEANUT', 'Degustacion DR PEANUT', 'DR PEANUT tasting'],
     desc: ['Proteina, pasta de amendoim e barra proteica na airfryer.', 'Proteina, pasta de mani y barra proteica en la airfryer.', 'Protein, peanut butter and protein bar from the airfryer.'],
-    dias: TODOS, local: estande('DR PEANUT'),
+    dias: TODOS, local: estande('DR PEANUT', 'D4'),
   }),
   ...ativacao({
     slug: 'mombora-gel', marca: 'MOMBORA', logoArquivo: null,
     tit: ['Degustacao de geis e carbo', 'Degustacion de geles y carbo', 'Gel and carb tasting'],
     desc: ['Geis e carboidrato em po para provar antes da prova.', 'Geles y carbohidrato en polvo para probar.', 'Gels and carb powder to try before the race.'],
-    dias: TODOS, local: estande('MOMBORA'),
+    dias: TODOS, local: estande('MOMBORA', 'F8'),
   }),
   ...ativacao({
-    slug: 'liquidz-degustacao', marca: 'Liquidz', logoArquivo: 'liquidz',
-    tit: ['Degustacao Liquidz', 'Degustacion Liquidz', 'Liquidz tasting'],
-    desc: ['Amostras dos produtos ate durar o estoque.', 'Muestras de los productos hasta agotar stock.', 'Product samples while stocks last.'],
-    dias: TODOS, local: estande('Liquidz'),
+    slug: 'liquidz-sabor', marca: 'Liquidz', logoArquivo: 'liquidz',
+    tit: ['Degustacao do novo sabor', 'Degustacion del nuevo sabor', 'New flavour tasting'],
+    desc: ['O sabor so e lancado em 22 de setembro. Aqui da para provar e comprar antes de todo mundo.',
+           'El sabor se lanza el 22 de septiembre. Aqui puedes probarlo y comprarlo antes que todos.',
+           'The flavour launches on 22 September. Here you can taste and buy it before anyone else.'],
+    dias: TODOS, local: estande('Liquidz', 'C5'), destaque: 'sim',
+  }),
+  ...ativacao({
+    slug: 'liquidz-hidratacao', marca: 'Liquidz', logoArquivo: 'liquidz',
+    tit: ['Teste de hidratacao', 'Test de hidratacion', 'Hydration test'],
+    desc: ['Nutricionista no estande testando a hidratacao dos atletas e falando sobre eletrolitos no endurance.',
+           'Nutricionista en el stand midiendo la hidratacion y hablando de electrolitos en el endurance.',
+           'A nutritionist at the booth testing hydration and explaining electrolytes in endurance.'],
+    dias: ['2026-09-17'], horas: { '2026-09-17': ['14:00', '18:00'] },
+    local: estande('Liquidz', 'C5'), destaque: 'sim',
+  }),
+  ...ativacao({
+    slug: 'liquidz-samples', marca: 'Liquidz', logoArquivo: 'liquidz',
+    tit: ['Cadastro e samples', 'Registro y muestras', 'Sign up and samples'],
+    desc: ['Cadastre-se no estande e leve amostras da marca, incluindo o sabor novo.',
+           'Registrate en el stand y llevate muestras, incluido el sabor nuevo.',
+           'Sign up at the booth and take samples, including the new flavour.'],
+    dias: TODOS, local: estande('Liquidz', 'C5'),
+  }),
+  ...ativacao({
+    slug: 'aimo-qrcode', marca: 'AIMO', logoArquivo: 'aimo',
+    tit: ['QR code de 10% e sorteio de bones', 'QR de 10% y sorteo de gorras', '10% QR code and cap giveaway'],
+    desc: ['Leia o QR code no estande para 10% de desconto. Dois bones sao sorteados entre os cadastrados.',
+           'Escanea el QR en el stand para 10% de descuento. Se sortean dos gorras entre los registrados.',
+           'Scan the QR code at the booth for 10% off. Two caps are raffled among those who sign up.'],
+    dias: TODOS, local: estande('AIMO', 'E3'), destaque: 'sim',
+  }),
+  ...ativacao({
+    slug: 'aimo-camiseta', marca: 'AIMO', logoArquivo: 'aimo',
+    tit: ['Camiseta de edicao limitada', 'Camiseta de edicion limitada', 'Limited edition tee'],
+    desc: ['Souvenir Aimo do Paraty Brazil by UTMB, com customizacao feita na hora no estande.',
+           'Souvenir Aimo del Paraty Brazil by UTMB, personalizada en el momento.',
+           'Aimo souvenir of Paraty Brazil by UTMB, customised on the spot.'],
+    dias: TODOS, local: estande('AIMO', 'E3'),
   }),
   ...ativacao({
     slug: 'runlastic-brindes', marca: 'Runlastic', logoArquivo: 'runlastic',
     tit: ['Brindes Runlastic', 'Regalos Runlastic', 'Runlastic giveaways'],
     desc: ['Brindes no estande durante o horario da Expo.', 'Regalos en el stand durante el horario de la Expo.', 'Giveaways at the booth during Expo hours.'],
-    dias: TODOS, local: estande('Runlastic'),
+    dias: TODOS, local: estande('Runlastic', 'D7'),
   }),
   ...ativacao({
     slug: 'tricky-barrinhas', marca: 'Tricky', logoArquivo: 'tricky',
     tit: ['Degustacao de barrinhas de carbo', 'Degustacion de barras de carbo', 'Carb bar tasting'],
     desc: ['Prove as barrinhas no estande da Tricky.', 'Prueba las barras en el stand de Tricky.', 'Try the bars at the Tricky booth.'],
-    dias: TODOS, local: estande('Tricky'),
+    dias: TODOS, local: estande('Tricky', 'E9'),
   }),
 ]
 
@@ -207,13 +249,13 @@ const BENEFICIOS = [
     id: 'ben-columbia', onde: 'expo', categoria: 'equipamentos', nome: 'COLUMBIA',
     desconto: ['20% a 40% de desconto', '20% a 40% de descuento', '20% to 40% off'],
     descricao: ['Desconto valido nos produtos do estande.', 'Descuento valido en los productos del stand.', 'Discount valid on products at the booth.'],
-    local: estande('COLUMBIA'), condicoes: PEITO, validade: DATAS_EXPO, destaque: 'sim',
+    local: estande('COLUMBIA', 'D1'), condicoes: PEITO, validade: DATAS_EXPO, destaque: 'sim',
   }),
   beneficio({
     id: 'ben-hoka', onde: 'expo', categoria: 'equipamentos', nome: 'HOKA',
     desconto: ['20% de desconto', '20% de descuento', '20% off'],
     descricao: ['Desconto no estande inteiro.', 'Descuento en todo el stand.', 'Discount across the whole booth.'],
-    local: estande('HOKA'), condicoes: PEITO, validade: DATAS_EXPO,
+    local: estande('HOKA', 'B1'), condicoes: PEITO, validade: DATAS_EXPO,
     logoArquivo: 'hoka', destaque: 'sim',
   }),
 ]
