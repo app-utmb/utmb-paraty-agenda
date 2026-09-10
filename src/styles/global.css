@@ -29,7 +29,10 @@
   --raio: 14px;
   --raio-pequeno: 9px;
   --alt-nav: 58px;
-  --alt-regua: 44px;
+  /* A regua e um painel de varias fileiras, nao uma tarja fina. Esta altura
+     e o meio termo entre deixar os patrocinadores legiveis e nao comer a
+     tela do atleta. Trocar aqui muda o rodape inteiro. */
+  --alt-regua: 104px;
   --alt-cabecalho: 56px;
   --sombra: 0 6px 24px rgb(0 0 0 / 45%);
 
@@ -258,6 +261,13 @@ img {
   max-height: var(--alt-regua);
   object-fit: contain;
   object-position: center;
+}
+
+/* Telas baixas cedem espaco da regua para a lista. */
+@media (max-height: 700px) {
+  :root {
+    --alt-regua: 76px;
+  }
 }
 
 .nav {
