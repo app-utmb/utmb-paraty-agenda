@@ -40,36 +40,7 @@ export function Inicio({
     <div>
       <h1 className="visualmente-oculto">{dados.config.eventoNome}</h1>
 
-      <section aria-labelledby="titulo-agora">
-        <h2 className="secao-titulo" id="titulo-agora">
-          {t.inicio.agora}
-        </h2>
-        {agora.length > 0 ? (
-          agora.map((item) => <CartaoItem key={item.id} item={item} aoAbrir={aoAbrirItem} />)
-        ) : (
-          <div className="vazio">
-            <p className="vazio__titulo">{t.inicio.nadaAgora}</p>
-            <p className="vazio__dica">{t.inicio.boasVindas}</p>
-          </div>
-        )}
-      </section>
-
-      <section aria-labelledby="titulo-seguir" style={{ marginTop: 24 }}>
-        <h2 className="secao-titulo" id="titulo-seguir">
-          {t.inicio.aSeguir}
-        </h2>
-        {proximos.length > 0 ? (
-          proximos.map((item) => (
-            <CartaoItem key={item.id} item={item} aoAbrir={aoAbrirItem} mostrarData />
-          ))
-        ) : (
-          <div className="vazio">
-            <p className="vazio__titulo">{t.inicio.nadaSeguir}</p>
-          </div>
-        )}
-      </section>
-
-      <section aria-labelledby="titulo-agenda" style={{ marginTop: 24 }}>
+      <section aria-labelledby="titulo-agenda">
         <h2 className="secao-titulo" id="titulo-agenda">
           {t.agenda.titulo}
         </h2>
@@ -95,6 +66,50 @@ export function Inicio({
             <span className="vazio__titulo">{t.agenda.chamada}</span>
             <span className="vazio__dica">{t.agenda.explicacao}</span>
           </button>
+        )}
+      </section>
+
+      <section aria-labelledby="titulo-agora" style={{ marginTop: 24 }}>
+        <h2 className="secao-titulo" id="titulo-agora">
+          {t.inicio.agora}
+        </h2>
+        {agora.length > 0 ? (
+          agora.map((item) => (
+            <CartaoItem
+              key={item.id}
+              item={item}
+              aoAbrir={aoAbrirItem}
+              favorito={favoritos.ehFavorito(item.id)}
+              aoAlternarFavorito={favoritos.alternar}
+            />
+          ))
+        ) : (
+          <div className="vazio">
+            <p className="vazio__titulo">{t.inicio.nadaAgora}</p>
+            <p className="vazio__dica">{t.inicio.boasVindas}</p>
+          </div>
+        )}
+      </section>
+
+      <section aria-labelledby="titulo-seguir" style={{ marginTop: 24 }}>
+        <h2 className="secao-titulo" id="titulo-seguir">
+          {t.inicio.aSeguir}
+        </h2>
+        {proximos.length > 0 ? (
+          proximos.map((item) => (
+            <CartaoItem
+              key={item.id}
+              item={item}
+              aoAbrir={aoAbrirItem}
+              mostrarData
+              favorito={favoritos.ehFavorito(item.id)}
+              aoAlternarFavorito={favoritos.alternar}
+            />
+          ))
+        ) : (
+          <div className="vazio">
+            <p className="vazio__titulo">{t.inicio.nadaSeguir}</p>
+          </div>
         )}
       </section>
 

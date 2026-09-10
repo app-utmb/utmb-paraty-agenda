@@ -45,6 +45,7 @@ describe('tela Inicio', () => {
     const secao = screen.getByRole('region', { name: /a seguir/i })
     const titulos = within(secao)
       .getAllByRole('button')
+      .filter((b) => b.className.includes('cartao__area'))
       .map((b) => b.textContent ?? '')
     expect(titulos[0]).toContain('Nutricao no ultra')
     expect(titulos[1]).toContain('Teste de calcados')

@@ -224,6 +224,47 @@ describe('agenda do atleta na programacao', () => {
     expect(within(secao).getByRole('button', { name: /1 item guardado/i })).toBeInTheDocument()
   })
 
+  it('a agenda e a primeira coisa do Inicio', () => {
+    const Tela = () => {
+      const favoritos = useFavoritos()
+      return (
+        <Inicio
+          dados={dados}
+          aoAbrirItem={vi.fn()}
+          aoIrPara={vi.fn()}
+          favoritos={favoritos}
+          aoAbrirAgenda={vi.fn()}
+          referencia={DURANTE_KIT}
+        />
+      )
+    }
+    const { container } = renderizar(<Tela />)
+    const titulos = [...container.querySelectorAll('.secao-titulo')].map((e) => e.textContent)
+    expect(titulos[0]).toBe('Minha agenda')
+  })
+
+  it('da para guardar um item direto do Inicio', async () => {
+    const Tela = () => {
+      const favoritos = useFavoritos()
+      return (
+        <Inicio
+          dados={dados}
+          aoAbrirItem={vi.fn()}
+          aoIrPara={vi.fn()}
+          favoritos={favoritos}
+          aoAbrirAgenda={vi.fn()}
+          referencia={DURANTE_KIT}
+        />
+      )
+    }
+    renderizar(<Tela />)
+    const estrela = screen
+      .getAllByRole('button')
+      .find((b) => b.className.includes('cartao__estrela')) as HTMLElement
+    await userEvent.click(estrela)
+    expect(JSON.parse(localStorage.getItem(CHAVE_FAVORITOS) ?? '[]')).toHaveLength(1)
+  })
+
   it('nao tem violacoes de acessibilidade', async () => {
     const { container } = renderizar(<TelaComAgenda />)
     expect(

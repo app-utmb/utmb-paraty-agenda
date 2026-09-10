@@ -86,7 +86,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'runlastic', nome: 'Runlastic', estande: 'D7', marcas: ['Runlastic'],
-    segmentos: [],
+    segmentos: ['vestuario'],
     logo: 'runlastic', tipo: 'marca', px: [920, 230, 52, 64],
   },
   {
@@ -116,7 +116,7 @@ const BRUTOS: Bruto[] = [
   // ---------------------------------------------------------- setor E
   {
     id: 'brooklin', nome: 'Brooklin', estande: 'E1', marcas: ['Brooklin'],
-    segmentos: [], logo: null, tipo: 'marca', px: [744, 364, 52, 34],
+    segmentos: ['vestuario'], logo: null, tipo: 'marca', px: [744, 364, 52, 34],
   },
   {
     id: 'bananinha', nome: 'Bananinha Paraibuna', estande: 'E2', marcas: ['Bananinha Paraibuna'],
@@ -130,7 +130,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'kipway', nome: 'Kipway', estande: 'E4', marcas: ['Kipway'],
-    segmentos: [], logo: null, tipo: 'marca', px: [920, 364, 52, 32],
+    segmentos: ['acessorios'], logo: null, tipo: 'marca', px: [920, 364, 52, 32],
   },
   {
     id: 'gu', nome: 'GU', estande: 'E5', marcas: ['GU'],
@@ -155,7 +155,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'desola', nome: 'Desola', estande: '', marcas: ['Desola'],
-    segmentos: [],
+    segmentos: ['calcados'],
     logo: null, tipo: 'marca', px: [920, 408, 52, 32],
   },
   {
@@ -166,7 +166,7 @@ const BRUTOS: Bruto[] = [
   // ---------------------------------------------------------- setor C
   {
     id: 'nubank', nome: 'Mulher by Nubank', estande: 'C1 e C2', marcas: ['Nubank'],
-    segmentos: [], logo: null, tipo: 'marca', px: [218, 508, 98, 64],
+    segmentos: ['servicos'], logo: null, tipo: 'marca', px: [218, 508, 98, 64],
   },
   {
     id: 'paraty-tours', nome: 'Paraty Tours', estande: 'C3', marcas: ['Paraty Tours'],
