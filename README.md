@@ -129,6 +129,34 @@ Para a lista ficar consistente, use sempre estes nomes na coluna de local:
 - **Arena e Expo**, quando vale nos dois
 - **Fazenda Bananal**
 
+## Logos das marcas
+
+O Google Drive bloqueia hotlink de imagem, então as logos ficam no próprio repositório, em `public/logos/`, e o endereço fica assim:
+
+```
+https://app-utmb.github.io/utmb-paraty-agenda/logos/hoka.png
+```
+
+Esse endereço é o que vai na coluna `logo_url` da programação ou dos benefícios.
+
+Para adicionar uma logo nova: coloque o arquivo em `public/logos/` com nome em minúsculas e sem acento (`nome-da-marca.png`) e faça o push. O `scripts/baixar-logos.mjs` automatiza isso quando a marca mandou o arquivo pelo Drive: basta acrescentar a marca e o id do arquivo na lista de dentro do script e rodar `node scripts/baixar-logos.mjs`, que ele baixa, converte de PDF para PNG, apara a margem e padroniza em 256 por 256.
+
+## Recarregar a planilha sem digitar
+
+`scripts/gerar-dados.mjs` é a fonte da programação e dos benefícios. Ele gera dois formatos:
+
+- `planilha/*.csv`, que fica versionado no repositório
+- `public/dados/*.tsv`, que o app publica e serve para colar no Google Sheets
+
+Para levar uma alteração até a planilha:
+
+1. Edite as listas dentro de `scripts/gerar-dados.mjs`
+2. `node scripts/gerar-dados.mjs`
+3. Faça o push e espere o deploy
+4. Na planilha, clique na célula A1 (na grade, não na caixa de nome) e cole o conteúdo de `https://app-utmb.github.io/utmb-paraty-agenda/dados/programacao.tsv`
+
+**Cuidado:** uma planilha criada a partir de um CSV nasce com o número exato de linhas daquele CSV. Se o conteúdo novo tiver mais linhas, o Google corta a colagem em silêncio. Antes de colar, selecione as linhas existentes e use Inserir, Linhas, Inserir N linhas abaixo.
+
 ## Trocar o Guia do Atleta
 
 1. Suba o PDF no Google Drive.
