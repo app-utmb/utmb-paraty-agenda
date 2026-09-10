@@ -29,6 +29,17 @@ export const en: Dicionario = {
     boasVindas: 'Your weekend schedule',
     verTudoDoDia: 'See the whole day',
   },
+  agenda: {
+    titulo: 'My schedule',
+    chamada: 'Build your own schedule',
+    explicacao: 'Tap the star on an item to keep it here.',
+    favoritar: 'Save to my schedule',
+    remover: 'Remove from my schedule',
+    vazia: 'Your schedule is empty',
+    vaziaDica: 'Tap the star on any item to start building yours.',
+    contagem: (n: number) => (n === 1 ? '1 item saved' : `${n} items saved`),
+    verTudo: 'See the full schedule',
+  },
   programacao: {
     titulo: 'Schedule',
     filtroPilar: 'Filter by pillar',
@@ -65,6 +76,17 @@ export const en: Dicionario = {
   onde: {
     expo: 'At the Expo',
     cidade: 'In town',
+  },
+  segmentos: {
+    nutricao: 'Nutrition and supplements',
+    hidratacao: 'Hydration and food',
+    calcados: 'Footwear',
+    vestuario: 'Apparel',
+    equipamentos: 'Gear and accessories',
+    tecnologia: 'Technology',
+    acessorios: 'Accessories',
+    servicos: 'Services',
+    institucional: 'Institutional and partners',
   },
   categorias: {
     alimentacao: 'Food and drink',

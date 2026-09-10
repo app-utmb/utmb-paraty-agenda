@@ -26,4 +26,9 @@ export function renderizar(
   })
 }
 
+/** Estado de favoritos vazio, para as telas que nao testam a agenda. */
+export function favoritosVazios() {
+  return { favoritos: new Set<string>(), ehFavorito: () => false, alternar: () => {}, total: 0 }
+}
+
 export * from '@testing-library/react'

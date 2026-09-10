@@ -10,7 +10,7 @@ import { ReguaPatrocinadores } from '../components/ReguaPatrocinadores'
 import { CONFIG_PADRAO } from '../data/normalize'
 import type { ItemProgramacao } from '../data/types'
 import { DURANTE_KIT, dadosDeTeste } from './fixtures'
-import { renderizar, screen, within } from './utilitarios'
+import { favoritosVazios, renderizar, screen, within } from './utilitarios'
 
 const dados = dadosDeTeste()
 const item = (id: string) => dados.itens.find((i) => i.id === id) as ItemProgramacao
@@ -71,7 +71,12 @@ describe('tela Inicio', () => {
 
 describe('tela Programacao', () => {
   const abrir = () =>
-    renderizar(<Programacao dados={dados} aoAbrirItem={vi.fn()} referencia={DURANTE_KIT} />)
+    renderizar(<Programacao
+        dados={dados}
+        aoAbrirItem={vi.fn()}
+        favoritos={favoritosVazios()}
+        referencia={DURANTE_KIT}
+      />)
 
   it('abre no dia de hoje quando o evento esta rolando', () => {
     abrir()
@@ -86,11 +91,12 @@ describe('tela Programacao', () => {
     expect(screen.getByText('Teste de calcados')).toBeInTheDocument()
   })
 
-  it('lista os itens em ordem de horario com o destaque no topo', () => {
+  it('lista os itens em ordem de horario', () => {
     abrir()
     const lista = screen.getByRole('tabpanel')
     const titulos = within(lista)
       .getAllByRole('button')
+      .filter((b) => b.className.includes('cartao__area'))
       .map((b) => b.textContent ?? '')
     expect(titulos[0]).toContain('Retirada de kits')
     expect(titulos[1]).toContain('Nutricao no ultra')
@@ -209,6 +215,7 @@ describe('tela Programacao', () => {
       <Programacao
         dados={dadosDeTeste({ itens: [] })}
         aoAbrirItem={vi.fn()}
+        favoritos={favoritosVazios()}
         referencia={DURANTE_KIT}
       />,
     )

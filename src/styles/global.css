@@ -1275,3 +1275,94 @@ img {
   font-size: 14px;
   color: var(--texto-fraco);
 }
+
+/* ---------- Estrela da agenda do atleta ---------- */
+
+.cartao {
+  position: relative;
+  padding: 0;
+}
+
+.cartao__area {
+  display: block;
+  width: 100%;
+  padding: 13px 52px 13px 14px;
+  text-align: left;
+  border-radius: var(--raio);
+}
+
+.cartao__area:active {
+  background: var(--fundo-cartao-ativo);
+}
+
+.cartao__estrela {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  color: var(--texto-fraco);
+}
+
+.cartao__estrela[aria-pressed='true'] {
+  color: var(--destaque);
+}
+
+.cartao--beneficio {
+  padding: 13px 14px;
+}
+
+.agenda-barra {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.agenda-barra[aria-pressed='true'] {
+  border-color: var(--destaque);
+  color: var(--destaque);
+}
+
+.agenda-barra__icone {
+  flex: 0 0 auto;
+  color: var(--destaque);
+}
+
+.agenda-barra__texto {
+  flex: 1;
+  text-align: left;
+}
+
+.agenda-barra__conta {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--texto-fraco);
+}
+
+.dia-titulo {
+  margin: 18px 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--destaque);
+}
+
+.dia-titulo:first-child {
+  margin-top: 0;
+}

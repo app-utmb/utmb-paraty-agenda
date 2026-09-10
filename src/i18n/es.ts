@@ -29,6 +29,17 @@ export const es: Dicionario = {
     boasVindas: 'Tu agenda del fin de semana',
     verTudoDoDia: 'Ver todo el día',
   },
+  agenda: {
+    titulo: 'Mi agenda',
+    chamada: 'Arma tu agenda',
+    explicacao: 'Toca la estrella de un elemento para guardarlo aquí.',
+    favoritar: 'Guardar en mi agenda',
+    remover: 'Quitar de mi agenda',
+    vazia: 'Tu agenda está vacía',
+    vaziaDica: 'Toca la estrella de cualquier elemento del programa para armar la tuya.',
+    contagem: (n: number) => (n === 1 ? '1 elemento guardado' : `${n} elementos guardados`),
+    verTudo: 'Ver todo el programa',
+  },
   programacao: {
     titulo: 'Programa',
     filtroPilar: 'Filtrar por pilar',
@@ -65,6 +76,17 @@ export const es: Dicionario = {
   onde: {
     expo: 'En la Expo',
     cidade: 'En la ciudad',
+  },
+  segmentos: {
+    nutricao: 'Nutrición y suplementación',
+    hidratacao: 'Hidratación y alimentación',
+    calcados: 'Calzado',
+    vestuario: 'Ropa',
+    equipamentos: 'Equipamiento y accesorios',
+    tecnologia: 'Tecnología',
+    acessorios: 'Accesorios',
+    servicos: 'Servicios',
+    institucional: 'Institucional y socios',
   },
   categorias: {
     alimentacao: 'Alimentación',

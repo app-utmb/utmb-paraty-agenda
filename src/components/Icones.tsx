@@ -182,3 +182,9 @@ export const IconeCelular = ({ className }: Props) => (
     <path d="M10.6 5.6h2.8" />
   </svg>
 )
+
+export const IconeEstrela = ({ className, cheia = false }: Props & { cheia?: boolean }) => (
+  <svg {...base} className={className} width="21" height="21" fill={cheia ? 'currentColor' : 'none'}>
+    <path d="m12 3.6 2.6 5.5 5.9.8-4.3 4.2 1 6-5.2-2.8-5.2 2.8 1-6-4.3-4.2 5.9-.8z" />
+  </svg>
+)

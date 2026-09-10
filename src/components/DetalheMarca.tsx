@@ -61,7 +61,7 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
 
   const atividades = atividadesDaMarca(ponto, itens, idioma)
   const vantagens = beneficiosDaMarca(ponto, beneficios)
-  const segmento = ponto.segmento ? escolherIdioma(ponto.segmento, idioma) : ''
+  const segmento = ponto.segmentos.map((x) => t.segmentos[x]).join(' · ')
   const logoSrc = ponto.logo ? `${import.meta.env.BASE_URL}logos/${ponto.logo}.png` : null
 
   return (

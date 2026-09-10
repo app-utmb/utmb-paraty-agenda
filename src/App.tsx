@@ -29,6 +29,7 @@ import {
   type Tema,
 } from './tema'
 import { useDados } from './useDados'
+import { useFavoritos } from './useFavoritos'
 
 /** Ponto para os testes fixarem o "agora" das telas de Inicio e Programacao. */
 interface Props {
@@ -51,6 +52,7 @@ export function App({ referencia }: Props = {}) {
   const [beneficioAberto, setBeneficioAberto] = useState<Beneficio | null>(null)
   const [pontoAberto, setPontoAberto] = useState<PontoMapa | null>(null)
   const { dados, carregando, atualizando, erroRede, atualizar } = useDados()
+  const favoritos = useFavoritos()
 
   const definirIdioma = useCallback((novo: Idioma) => {
     setIdiomaEstado(novo)
@@ -166,6 +168,7 @@ export function App({ referencia }: Props = {}) {
                   <Programacao
                     dados={dados}
                     aoAbrirItem={setItemAberto}
+                    favoritos={favoritos}
                     referencia={referencia}
                   />
                 )}

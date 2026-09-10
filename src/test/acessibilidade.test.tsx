@@ -12,7 +12,7 @@ import { Programacao } from '../screens/Programacao'
 import { CHAVE_IDIOMA } from '../i18n'
 import type { ItemProgramacao } from '../data/types'
 import { DURANTE_KIT, dadosDeTeste } from './fixtures'
-import { renderizar } from './utilitarios'
+import { favoritosVazios, renderizar } from './utilitarios'
 
 const dados = dadosDeTeste()
 const item = (id: string) => dados.itens.find((i) => i.id === id) as ItemProgramacao
@@ -34,7 +34,12 @@ describe('acessibilidade das telas', () => {
 
   it('Programacao nao tem violacoes', async () => {
     const { container } = renderizar(
-      <Programacao dados={dados} aoAbrirItem={() => {}} referencia={DURANTE_KIT} />,
+      <Programacao
+        dados={dados}
+        aoAbrirItem={() => {}}
+        favoritos={favoritosVazios()}
+        referencia={DURANTE_KIT}
+      />,
     )
     expect(await axe(container, opcoesAxe)).toHaveNoViolations()
   })
@@ -91,7 +96,12 @@ describe('imagens e textos alternativos', () => {
 
   it('os icones da navegacao ficam escondidos do leitor de tela', () => {
     const { container } = renderizar(
-      <Programacao dados={dados} aoAbrirItem={() => {}} referencia={DURANTE_KIT} />,
+      <Programacao
+        dados={dados}
+        aoAbrirItem={() => {}}
+        favoritos={favoritosVazios()}
+        referencia={DURANTE_KIT}
+      />,
     )
     container.querySelectorAll('svg').forEach((svg) => {
       expect(svg).toHaveAttribute('aria-hidden', 'true')

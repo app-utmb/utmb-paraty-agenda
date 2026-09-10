@@ -172,12 +172,18 @@ describe('detalhe da marca', () => {
       />,
     )
 
+  it('junta os segmentos de um estande compartilhado', () => {
+    abrir('nnormal-coros')
+    const dialogo = screen.getByRole('dialog')
+    expect(within(dialogo).getByText(/Calçados · Tecnologia/i)).toBeInTheDocument()
+  })
+
   it('mostra o nome, o estande e o segmento', () => {
     abrir('liquidz')
     const dialogo = screen.getByRole('dialog')
     expect(within(dialogo).getByRole('heading', { name: 'Liquidz' })).toBeInTheDocument()
     expect(within(dialogo).getByText(/Estande C5/i)).toBeInTheDocument()
-    expect(within(dialogo).getByText(/Hidratacao e eletrolitos/i)).toBeInTheDocument()
+    expect(within(dialogo).getByText(/Hidratação e alimentação/i)).toBeInTheDocument()
   })
 
   it('avisa quando o estande nao tem ativacao cadastrada', () => {

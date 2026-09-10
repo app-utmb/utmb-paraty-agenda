@@ -27,6 +27,17 @@ export const pt = {
     boasVindas: 'Sua agenda do fim de semana',
     verTudoDoDia: 'Ver tudo do dia',
   },
+  agenda: {
+    titulo: 'Minha agenda',
+    chamada: 'Monte a sua agenda',
+    explicacao: 'Toque na estrela de um item para guardá-lo aqui.',
+    favoritar: 'Guardar na minha agenda',
+    remover: 'Tirar da minha agenda',
+    vazia: 'Sua agenda está vazia',
+    vaziaDica: 'Toque na estrela de qualquer item da programação para montar a sua.',
+    contagem: (n: number) => (n === 1 ? '1 item guardado' : `${n} itens guardados`),
+    verTudo: 'Ver a programação toda',
+  },
   programacao: {
     titulo: 'Programação',
     filtroPilar: 'Filtrar por pilar',
@@ -63,6 +74,17 @@ export const pt = {
   onde: {
     expo: 'Na Expo',
     cidade: 'Na cidade',
+  },
+  segmentos: {
+    nutricao: 'Nutrição e suplementação',
+    hidratacao: 'Hidratação e alimentação',
+    calcados: 'Calçados',
+    vestuario: 'Vestuário',
+    equipamentos: 'Equipamentos e acessórios',
+    tecnologia: 'Tecnologia',
+    acessorios: 'Acessórios',
+    servicos: 'Serviços',
+    institucional: 'Institucional e parceiros',
   },
   categorias: {
     alimentacao: 'Alimentação',
