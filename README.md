@@ -92,7 +92,7 @@ Mesmo caminho: suba a imagem em algum lugar público e cole o link em `mapa_expo
 1. Coloque o arquivo na pasta `public/` deste repositório, por exemplo `public/mapa-expo.png`.
 2. Faça o push.
 3. Na aba Config, use o endereço completo do app mais o nome do arquivo, por exemplo:
-   `https://phi-utmb.github.io/utmb-paraty-agenda/mapa-expo.png`
+   `https://app-utmb.github.io/utmb-paraty-agenda/mapa-expo.png`
 
 Vale o mesmo para a régua de patrocinadores.
 
@@ -143,7 +143,7 @@ Toda vez que você faz push na branch `main`, o GitHub Actions roda os testes, c
 
 O arquivo que cuida disso é `.github/workflows/deploy.yml`. Você não precisa mexer nele.
 
-O endereço público fica assim: `https://phi-utmb.github.io/utmb-paraty-agenda/`
+O endereço público fica assim: `https://app-utmb.github.io/utmb-paraty-agenda/`
 
 ---
 
