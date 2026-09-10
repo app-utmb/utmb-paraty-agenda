@@ -1391,3 +1391,39 @@ img {
 .dia-titulo:first-child {
   margin-top: 0;
 }
+
+/* ---------- Abertura do Inicio ---------- */
+
+.abertura {
+  margin: 0 0 22px;
+}
+
+.abertura__titulo {
+  margin: 0 0 8px;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+.abertura__texto {
+  margin: 0 0 12px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--texto-suave);
+}
+
+.abertura__datas {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--destaque);
+}
+
+@media (min-width: 420px) {
+  .abertura__titulo {
+    font-size: 30px;
+  }
+}

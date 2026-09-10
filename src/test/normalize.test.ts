@@ -17,7 +17,7 @@ import { lerCsv } from '../data/sheets'
 import type { ItemProgramacao } from '../data/types'
 
 const CABECALHO =
-  'id,data,dia_semana,hora_inicio,hora_fim,pilar,titulo_pt,titulo_es,titulo_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,palestrante,marca,logo_url,inscricao,link_inscricao,destaque'
+  'id,data,dia_semana,hora_inicio,hora_fim,data_fim,pilar,titulo_pt,titulo_es,titulo_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,palestrante,marca,logo_url,inscricao,link_inscricao,destaque'
 
 /** Monta uma linha CSV completa a partir de campos parciais. */
 function linha(campos: Partial<Record<string, string>>): string {
@@ -255,6 +255,37 @@ describe('normalizarProgramacao', () => {
     expect(dados).toHaveLength(1)
     expect((dados[0] as ItemProgramacao).horaFim).toBeNull()
     expect(problemas[0]).toMatchObject({ campo: 'hora_fim', gravidade: 'corrigida' })
+  })
+
+  it('aceita data de fim no dia seguinte', () => {
+    const { dados, problemas } = importar({
+      data: '2026-09-17',
+      hora_inicio: '17:00',
+      hora_fim: '17:00',
+      data_fim: '2026-09-18',
+    })
+    const item = dados[0] as ItemProgramacao
+    expect(item.dataFim).toBe('2026-09-18')
+    expect(item.horaFim).toBe('17:00')
+    expect(problemas).toHaveLength(0)
+  })
+
+  it('assume o fim do dia quando ha data de fim sem hora de fim', () => {
+    const { dados, problemas } = importar({ data_fim: '2026-09-18', hora_fim: '' })
+    expect((dados[0] as ItemProgramacao).horaFim).toBe('23:59')
+    expect(problemas[0]).toMatchObject({ campo: 'hora_fim', gravidade: 'corrigida' })
+  })
+
+  it('ignora data de fim invalida ou anterior a de inicio', () => {
+    expect((importar({ data_fim: 'ontem' }).dados[0] as ItemProgramacao).dataFim).toBeNull()
+    expect(
+      (importar({ data: '2026-09-18', data_fim: '2026-09-17' }).dados[0] as ItemProgramacao).dataFim,
+    ).toBeNull()
+  })
+
+  it('ignora data de fim igual a de inicio, que nao muda nada', () => {
+    const { dados } = importar({ data: '2026-09-17', data_fim: '2026-09-17' })
+    expect((dados[0] as ItemProgramacao).dataFim).toBeNull()
   })
 
   it('ignora hora de fim anterior a de inicio', () => {

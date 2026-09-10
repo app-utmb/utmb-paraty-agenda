@@ -35,7 +35,13 @@ export function Inicio({
 
   return (
     <div>
-      <h1 className="visualmente-oculto">{dados.config.eventoNome}</h1>
+      <header className="abertura">
+        <h1 className="abertura__titulo">{t.inicio.boasVindasTitulo}</h1>
+        <p className="abertura__texto">{t.inicio.boasVindasTexto}</p>
+        {dados.config.eventoDatas && (
+          <p className="abertura__datas">{dados.config.eventoDatas}</p>
+        )}
+      </header>
 
       <section aria-labelledby="titulo-agenda">
         <h2 className="secao-titulo" id="titulo-agenda">

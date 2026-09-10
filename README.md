@@ -48,6 +48,7 @@ Uma linha por item da agenda. As colunas de texto existem em três idiomas.
 | `dia_semana` | o dia por extenso, em português | `quinta-feira` |
 | `hora_inicio` | hora e minuto | `10:00` |
 | `hora_fim` | opcional, pode deixar vazio | `10:45` |
+| `data_fim` | só para item que vira a noite, no formato ano-mês-dia | `2026-09-19` |
 | `pilar` | `oficial`, `talks`, `ativacao` ou `filmes` | `talks` |
 | `titulo_pt` `titulo_es` `titulo_en` | o título nos três idiomas | `Nutrição no ultra` |
 | `descricao_pt` `descricao_es` `descricao_en` | opcional | |

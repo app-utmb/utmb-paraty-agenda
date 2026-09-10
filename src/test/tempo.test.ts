@@ -13,11 +13,12 @@ import {
   proximosItens,
 } from '../utils/tempo'
 
-const CSV = `id,data,hora_inicio,hora_fim,pilar,titulo_pt
-a,2026-09-17,10:00,11:00,oficial,Manha de quinta
-b,2026-09-17,14:00,,talks,Tarde de quinta sem fim
-c,2026-09-18,08:00,09:30,oficial,Largada sexta
-d,2026-09-19,05:00,,oficial,Largada sabado
+const CSV = `id,data,hora_inicio,hora_fim,data_fim,pilar,titulo_pt
+a,2026-09-17,10:00,11:00,,oficial,Manha de quinta
+b,2026-09-17,14:00,,,talks,Tarde de quinta sem fim
+c,2026-09-18,08:00,09:30,,oficial,Largada sexta
+d,2026-09-19,05:00,,,oficial,Largada sabado
+e,2026-09-17,17:00,17:00,2026-09-18,oficial,Vira a noite
 `
 const ITENS: ItemProgramacao[] = normalizarProgramacao(lerCsv(CSV)).dados
 
@@ -45,6 +46,25 @@ describe('acontecendoAgora', () => {
     expect(r.map((i) => i.id)).toEqual(['a'])
   })
 
+  it('mantem em andamento o item que atravessa a meia-noite', () => {
+    const noite = acontecendoAgora(ITENS, emSaoPaulo('2026-09-17T23:30:00'))
+    expect(noite.map((i) => i.id)).toContain('e')
+    const madrugada = acontecendoAgora(ITENS, emSaoPaulo('2026-09-18T03:00:00'))
+    expect(madrugada.map((i) => i.id)).toContain('e')
+    const manhaSeguinte = acontecendoAgora(ITENS, emSaoPaulo('2026-09-18T16:00:00'))
+    expect(manhaSeguinte.map((i) => i.id)).toContain('e')
+  })
+
+  it('encerra o item que atravessa a meia-noite na hora certa', () => {
+    const depois = acontecendoAgora(ITENS, emSaoPaulo('2026-09-18T17:30:00'))
+    expect(depois.map((i) => i.id)).not.toContain('e')
+  })
+
+  it('nao considera em andamento antes de comecar', () => {
+    const antes = acontecendoAgora(ITENS, emSaoPaulo('2026-09-17T16:00:00'))
+    expect(antes.map((i) => i.id)).not.toContain('e')
+  })
+
   it('inclui o minuto de inicio e exclui o de fim', () => {
     expect(acontecendoAgora(ITENS, emSaoPaulo('2026-09-17T10:00:00')).map((i) => i.id)).toEqual(['a'])
     expect(acontecendoAgora(ITENS, emSaoPaulo('2026-09-17T11:00:00'))).toEqual([])
@@ -56,14 +76,17 @@ describe('acontecendoAgora', () => {
   })
 
   it('nao mistura itens de outros dias', () => {
-    expect(acontecendoAgora(ITENS, emSaoPaulo('2026-09-18T10:30:00'))).toEqual([])
+    // As 10h30 de sexta o unico em andamento e o que vira a noite; os itens
+    // de quinta que terminam no proprio dia ficam de fora.
+    const r = acontecendoAgora(ITENS, emSaoPaulo('2026-09-18T10:30:00'))
+    expect(r.map((i) => i.id)).toEqual(['e'])
   })
 })
 
 describe('proximosItens', () => {
   it('lista os proximos em ordem cronologica atravessando os dias', () => {
-    const r = proximosItens(ITENS, emSaoPaulo('2026-09-17T12:00:00'), 3)
-    expect(r.map((i) => i.id)).toEqual(['b', 'c', 'd'])
+    const r = proximosItens(ITENS, emSaoPaulo('2026-09-17T12:00:00'), 4)
+    expect(r.map((i) => i.id)).toEqual(['b', 'e', 'c', 'd'])
   })
 
   it('respeita o limite pedido', () => {

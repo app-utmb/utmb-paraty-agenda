@@ -25,6 +25,9 @@ export const en: Dicionario = {
     abrirGuia: 'Athlete Guide',
     abrirMapa: 'Expo map',
     abrirBeneficios: 'Athlete perks',
+    boasVindasTitulo: 'Welcome to Paraty. You can breathe.',
+    boasVindasTexto:
+      'We gathered what you need to get ready, plan your day and enjoy the event with less rush.',
     boasVindas: 'Your weekend schedule',
     verTudoDoDia: 'See the whole day',
   },

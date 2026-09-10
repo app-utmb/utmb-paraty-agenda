@@ -25,6 +25,11 @@ export interface ItemProgramacao {
   diaSemana: string
   horaInicio: string
   horaFim: string | null
+  /**
+   * Data ISO do fim, quando o item atravessa a meia-noite. Vazia significa
+   * que comeca e termina no mesmo dia.
+   */
+  dataFim: string | null
   pilar: Pilar
   titulo: TextoMultilingue
   descricao: TextoMultilingue

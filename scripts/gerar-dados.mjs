@@ -11,7 +11,7 @@ const BASE_APP = 'https://app-utmb.github.io/utmb-paraty-agenda'
 /** Marca dos itens tocados pela organizacao, para o filtro por marca cobrir tudo. */
 const MARCA_EVENTO = 'Paraty Brazil by UTMB'
 
-const COL_PROG = 'id,data,dia_semana,hora_inicio,hora_fim,pilar,titulo_pt,titulo_es,titulo_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,palestrante,marca,logo_url,inscricao,link_inscricao,destaque'.split(',')
+const COL_PROG = 'id,data,dia_semana,hora_inicio,hora_fim,data_fim,pilar,titulo_pt,titulo_es,titulo_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,palestrante,marca,logo_url,inscricao,link_inscricao,destaque'.split(',')
 const COL_BEN = 'id,onde,categoria,nome,desconto_pt,desconto_es,desconto_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,condicoes_pt,condicoes_es,condicoes_en,validade,logo_url,link,mapa_url,destaque'.split(',')
 
 const DIAS = {
@@ -41,7 +41,7 @@ const PALCO = ['Palco Expo', 'Escenario Expo', 'Expo Stage']
 // ---------------------------------------------------------------- oficial
 function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '') {
   return {
-    id, data, dia_semana: DIAS[data].semana, hora_inicio: ini, hora_fim: fim,
+    id, data, dia_semana: DIAS[data].semana, hora_inicio: ini, hora_fim: fim, data_fim: '',
     pilar: 'oficial',
     titulo_pt: tit[0], titulo_es: tit[1], titulo_en: tit[2],
     descricao_pt: desc[0], descricao_es: desc[1], descricao_en: desc[2],
@@ -116,7 +116,7 @@ function ativacao({ slug, marca, tit, desc, dias, horas = null, local, inscricao
     const [ini, fim] = horas?.[data] ?? DIAS[data].expo
     return {
       id: `at-${slug}-${i + 1}`, data, dia_semana: DIAS[data].semana,
-      hora_inicio: ini, hora_fim: fim, pilar: 'ativacao',
+      hora_inicio: ini, hora_fim: fim, data_fim: '', pilar: 'ativacao',
       titulo_pt: tit[0], titulo_es: tit[1], titulo_en: tit[2],
       descricao_pt: desc[0], descricao_es: desc[1], descricao_en: desc[2],
       local_pt: local[0], local_es: local[1], local_en: local[2],
@@ -236,7 +236,7 @@ const ATIVACOES = [
 /** Item unico de palco, com pilar proprio e duracao fechada. */
 function palco({ id, data, ini, fim, pilar, tit, desc, palestrante = '', marca = '', logoArquivo = null }) {
   return {
-    id, data, dia_semana: DIAS[data].semana, hora_inicio: ini, hora_fim: fim, pilar,
+    id, data, dia_semana: DIAS[data].semana, hora_inicio: ini, hora_fim: fim, data_fim: '', pilar,
     titulo_pt: tit[0], titulo_es: tit[1], titulo_en: tit[2],
     descricao_pt: desc[0], descricao_es: desc[1], descricao_en: desc[2],
     local_pt: PALCO[0], local_es: PALCO[1], local_en: PALCO[2],
@@ -262,6 +262,25 @@ const PALCO_ITENS = [
            'Screening of the film with Fernanda Maciel.'],
     palestrante: 'Fernanda Maciel',
   }),
+]
+
+/**
+ * Item de teste pedido pelo evento, para ver como um item em andamento
+ * aparece em "acontecendo agora". Atravessa a meia-noite de proposito.
+ * Apague daqui quando nao precisar mais.
+ */
+const TESTE = [
+  {
+    id: 'teste-agora', data: '2026-09-10', dia_semana: 'quinta-feira',
+    hora_inicio: '17:00', hora_fim: '17:00', data_fim: '2026-09-11', pilar: 'oficial',
+    titulo_pt: 'Evento teste', titulo_es: 'Evento de prueba', titulo_en: 'Test event',
+    descricao_pt: 'Item de teste para conferir como aparece o que esta acontecendo agora.',
+    descricao_es: 'Item de prueba para ver como aparece lo que esta pasando ahora.',
+    descricao_en: 'Test item to check how something happening now looks.',
+    local_pt: 'Expo', local_es: 'Expo', local_en: 'Expo',
+    palestrante: '', marca: MARCA_EVENTO, logo_url: '',
+    inscricao: 'livre', link_inscricao: '', destaque: '',
+  },
 ]
 
 // ------------------------------------------------------------- beneficios
@@ -302,7 +321,7 @@ const paraCsv = (cols, linhas) =>
 const paraTsv = (cols, linhas) =>
   [cols.join('\t'), ...linhas.map((l) => cols.map((c) => (l[c] ?? '').replace(/[\t\n]/g, ' ')).join('\t'))].join('\n')
 
-const programacao = [...OFICIAL, ...ATIVACOES, ...PALCO_ITENS]
+const programacao = [...OFICIAL, ...ATIVACOES, ...PALCO_ITENS, ...TESTE]
 
 await mkdir(resolve(raiz, 'public/dados'), { recursive: true })
 await writeFile(resolve(raiz, 'planilha/Programacao.csv'), paraCsv(COL_PROG, programacao))
@@ -315,6 +334,6 @@ if (new Set(ids).size !== ids.length) throw new Error('id repetido na programaca
 
 console.log(
   `programacao: ${programacao.length} linhas (${OFICIAL.length} oficiais, ` +
-    `${ATIVACOES.length} ativacoes, ${PALCO_ITENS.length} de palco)`,
+    `${ATIVACOES.length} ativacoes, ${PALCO_ITENS.length} de palco, ${TESTE.length} de teste)`,
 )
 console.log(`beneficios:  ${BENEFICIOS.length} linhas`)

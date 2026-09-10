@@ -245,7 +245,32 @@ export function normalizarProgramacao(
     }
     const minutoInicio = paraMinutos(horaInicio) as number
     let minutoFim = horaFim ? paraMinutos(horaFim) : null
-    if (minutoFim !== null && minutoFim < minutoInicio) {
+
+    // Um item pode terminar no dia seguinte, como uma prova que vira a noite.
+    let dataFim: string | null = null
+    const dataFimCrua = texto(l.datafim)
+    if (dataFimCrua) {
+      if (!dataValida(dataFimCrua)) {
+        problemas.push({
+          linha,
+          campo: 'data_fim',
+          motivo: `data invalida "${dataFimCrua}", ignorada`,
+          gravidade: 'corrigida',
+        })
+      } else if (dataFimCrua < data) {
+        problemas.push({
+          linha,
+          campo: 'data_fim',
+          motivo: 'data de fim antes da data de inicio, ignorada',
+          gravidade: 'corrigida',
+        })
+      } else if (dataFimCrua > data) {
+        dataFim = dataFimCrua
+      }
+    }
+
+    // So faz sentido cobrar hora de fim depois da de inicio no mesmo dia.
+    if (!dataFim && minutoFim !== null && minutoFim < minutoInicio) {
       problemas.push({
         linha,
         campo: 'hora_fim',
@@ -254,6 +279,16 @@ export function normalizarProgramacao(
       })
       horaFim = null
       minutoFim = null
+    }
+    if (dataFim && !horaFim) {
+      problemas.push({
+        linha,
+        campo: 'hora_fim',
+        motivo: 'data de fim sem hora de fim, assumido o fim do dia',
+        gravidade: 'corrigida',
+      })
+      horaFim = '23:59'
+      minutoFim = 23 * 60 + 59
     }
 
     let pilar = normalizarPilar(texto(l.pilar))
@@ -316,6 +351,7 @@ export function normalizarProgramacao(
       diaSemana: texto(l.diasemana),
       horaInicio,
       horaFim,
+      dataFim,
       pilar,
       titulo,
       descricao: multilingue(l, 'descricao'),

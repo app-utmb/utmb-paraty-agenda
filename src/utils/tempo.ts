@@ -26,10 +26,18 @@ export function agoraNoEvento(referencia: Date = new Date()): {
 /** Duracao padrao assumida quando o item nao tem hora_fim, em minutos. */
 export const DURACAO_PADRAO_MIN = 60
 
+/** Junta data e minuto num numero comparavel, ex 2026-09-18 as 14:30. */
+function instante(data: string, minutos: number): number {
+  return Number(data.replace(/-/g, '')) * 1440 + minutos
+}
+
 export function estaAcontecendo(item: ItemProgramacao, data: string, minutos: number): boolean {
-  if (item.data !== data) return false
-  const fim = item.minutoFim ?? item.minutoInicio + DURACAO_PADRAO_MIN
-  return minutos >= item.minutoInicio && minutos < fim
+  const agora = instante(data, minutos)
+  const comeco = instante(item.data, item.minutoInicio)
+  const fim = item.dataFim
+    ? instante(item.dataFim, item.minutoFim ?? 23 * 60 + 59)
+    : instante(item.data, item.minutoFim ?? item.minutoInicio + DURACAO_PADRAO_MIN)
+  return agora >= comeco && agora < fim
 }
 
 /** Itens em andamento agora, em ordem de inicio. */

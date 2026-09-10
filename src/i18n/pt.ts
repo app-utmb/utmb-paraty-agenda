@@ -23,6 +23,9 @@ export const pt = {
     abrirGuia: 'Guia do Atleta',
     abrirMapa: 'Mapa da Expo',
     abrirBeneficios: 'Benefícios do atleta',
+    boasVindasTitulo: 'Bem-vindo a Paraty. Pode respirar.',
+    boasVindasTexto:
+      'Reunimos o que você precisa para se preparar, montar seu dia e viver o evento com mais calma.',
     boasVindas: 'Sua agenda do fim de semana',
     verTudoDoDia: 'Ver tudo do dia',
   },
