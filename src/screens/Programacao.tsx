@@ -7,6 +7,7 @@ import { LOCALES, useIdioma } from '../i18n'
 import { diaDoMes, diaPadrao, mesCurto, nomeDiaSemana } from '../utils/tempo'
 
 type FiltroPilar = 'todos' | Pilar
+type FiltroMarca = 'todas' | string
 
 interface Props {
   dados: DadosApp
@@ -27,13 +28,32 @@ export function Programacao({ dados, aoAbrirItem, referencia }: Props) {
 
   const [dia, setDia] = useState(() => diaPadrao(dias, referencia ?? new Date()))
   const [pilar, setPilar] = useState<FiltroPilar>('todos')
+  const [marca, setMarca] = useState<FiltroMarca>('todas')
 
   const diaAtivo = dias.includes(dia) ? dia : (dias[0] ?? dia)
 
+  // So oferece marcas que aparecem no recorte de dia e pilar, para o filtro
+  // nunca devolver lista vazia.
+  const marcas = useMemo(() => {
+    const base = dados.itens.filter(
+      (i) => i.data === diaAtivo && (pilar === 'todos' || i.pilar === pilar),
+    )
+    return [...new Set(base.map((i) => i.marca).filter((m): m is string => Boolean(m)))].sort(
+      (a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' }),
+    )
+  }, [dados.itens, diaAtivo, pilar])
+
+  const marcaAtiva = marca !== 'todas' && marcas.includes(marca) ? marca : 'todas'
+
   const itens = useMemo(
     () =>
-      dados.itens.filter((i) => i.data === diaAtivo && (pilar === 'todos' || i.pilar === pilar)),
-    [dados.itens, diaAtivo, pilar],
+      dados.itens.filter(
+        (i) =>
+          i.data === diaAtivo &&
+          (pilar === 'todos' || i.pilar === pilar) &&
+          (marcaAtiva === 'todas' || i.marca === marcaAtiva),
+      ),
+    [dados.itens, diaAtivo, pilar, marcaAtiva],
   )
 
   return (
@@ -84,6 +104,30 @@ export function Programacao({ dados, aoAbrirItem, referencia }: Props) {
           </button>
         ))}
       </div>
+
+      {marcas.length > 1 && (
+        <div className="chips chips--secundario" role="group" aria-label={t.programacao.filtroMarca}>
+          <button
+            type="button"
+            className="chip chip--pequeno"
+            aria-pressed={marcaAtiva === 'todas'}
+            onClick={() => setMarca('todas')}
+          >
+            {t.programacao.todasMarcas}
+          </button>
+          {marcas.map((m) => (
+            <button
+              key={m}
+              type="button"
+              className="chip chip--pequeno"
+              aria-pressed={marcaAtiva === m}
+              onClick={() => setMarca(m)}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+      )}
 
       <p className="secao-titulo" aria-live="polite">
         {t.programacao.itensContagem(itens.length)}

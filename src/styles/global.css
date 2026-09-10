@@ -39,6 +39,39 @@
   color-scheme: dark;
 }
 
+/* Tema claro. As cores dos pilares sao versoes mais escuras das do tema
+   escuro, porque a mesma cor que brilha sobre #070d1c some sobre branco.
+   Todas as combinacoes sao medidas em src/test/contraste.test.ts. */
+:root[data-tema='claro'] {
+  --fundo: #eef1f7;
+  --fundo-elevado: #ffffff;
+  --fundo-cartao: #ffffff;
+  --fundo-cartao-ativo: #e4eaf6;
+  --borda: #d5dde9;
+  --borda-forte: #aab7cc;
+
+  --texto: #0b1220;
+  --texto-suave: #37425a;
+  --texto-fraco: #545e75;
+
+  --oficial: #0e6f3c;
+  --oficial-fundo: #ddf1e6;
+  --talks: #124d90;
+  --talks-fundo: #dfe9f8;
+  --ativacao: #77500b;
+  --ativacao-fundo: #f8ecd3;
+  --filmes: #64349b;
+  --filmes-fundo: #efe5fa;
+
+  --acento: #0e6f3c;
+  --acento-texto: #ffffff;
+  --perigo: #a4231c;
+
+  --sombra: 0 6px 24px rgb(11 18 32 / 16%);
+
+  color-scheme: light;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -156,6 +189,31 @@ img {
   text-overflow: ellipsis;
 }
 
+.cabecalho__logo {
+  display: block;
+  height: 42px;
+  width: auto;
+}
+
+.cabecalho__acoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.botao-tema {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--borda-forte);
+  border-radius: 999px;
+  background: var(--fundo-cartao);
+  color: var(--texto);
+}
+
 .cabecalho__datas {
   font-size: 11.5px;
   color: var(--texto-fraco);
@@ -252,6 +310,13 @@ img {
   background: var(--fundo-elevado);
   border-bottom: 1px solid var(--borda);
   overflow: hidden;
+}
+
+/* A arte da regua tem fundo escuro chapado, entao no tema claro ela recebe
+   um leito da mesma cor em vez de flutuar sobre o branco. */
+:root[data-tema='claro'] .regua {
+  background: #0b1b3a;
+  border-bottom-color: #0b1b3a;
 }
 
 .regua__img {

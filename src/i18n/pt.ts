@@ -1,6 +1,12 @@
 export const pt = {
   idiomaNome: 'Português',
   trocarIdioma: 'Trocar idioma',
+  tema: {
+    rotulo: 'Tema',
+    sistema: 'Igual ao aparelho',
+    claro: 'Tema claro',
+    escuro: 'Tema escuro',
+  },
   abas: {
     inicio: 'Início',
     programacao: 'Programação',
@@ -24,6 +30,8 @@ export const pt = {
   programacao: {
     titulo: 'Programação',
     filtroPilar: 'Filtrar por pilar',
+    filtroMarca: 'Filtrar por marca',
+    todasMarcas: 'Todas as marcas',
     seletorDia: 'Escolher o dia',
     todos: 'Todos',
     vazio: 'Nenhum item para este filtro',

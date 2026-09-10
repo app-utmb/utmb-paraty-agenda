@@ -121,3 +121,23 @@ export const IconeAoVivo = ({ className }: Props) => (
     <path d="M6.7 6.7a7.5 7.5 0 0 0 0 10.6M17.3 17.3a7.5 7.5 0 0 0 0-10.6" />
   </svg>
 )
+
+export const IconeLua = ({ className }: Props) => (
+  <svg {...base} className={className} width="19" height="19">
+    <path d="M20.2 14.2A8.4 8.4 0 0 1 9.8 3.8a8.4 8.4 0 1 0 10.4 10.4Z" />
+  </svg>
+)
+
+export const IconeSol = ({ className }: Props) => (
+  <svg {...base} className={className} width="19" height="19">
+    <circle cx="12" cy="12" r="4.2" />
+    <path d="M12 2.6v2.2M12 19.2v2.2M4.4 4.4l1.6 1.6M18 18l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.4 19.6 6 18M18 6l1.6-1.6" />
+  </svg>
+)
+
+export const IconeMonitor = ({ className }: Props) => (
+  <svg {...base} className={className} width="19" height="19">
+    <rect x="3" y="4.4" width="18" height="12.4" rx="2" />
+    <path d="M8.4 20.4h7.2M12 16.8v3.6" />
+  </svg>
+)

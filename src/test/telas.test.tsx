@@ -131,6 +131,29 @@ describe('tela Programacao', () => {
     expect(screen.queryByText('Entrada livre')).not.toBeInTheDocument()
   })
 
+  it('filtra por marca', async () => {
+    abrir()
+    await userEvent.click(screen.getByRole('button', { name: 'The North Face' }))
+    expect(screen.getByText('Teste de calcados')).toBeInTheDocument()
+    expect(screen.queryByText('Retirada de kits')).not.toBeInTheDocument()
+    expect(screen.getByText('1 item')).toBeInTheDocument()
+  })
+
+  it('so oferece marcas presentes no recorte de dia e pilar', async () => {
+    abrir()
+    expect(screen.getByRole('button', { name: 'Paraty Brazil by UTMB' })).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Talks' }))
+    expect(screen.queryByRole('button', { name: 'The North Face' })).not.toBeInTheDocument()
+  })
+
+  it('solta o filtro de marca quando ela some do recorte', async () => {
+    abrir()
+    await userEvent.click(screen.getByRole('button', { name: 'The North Face' }))
+    expect(screen.getByText('1 item')).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('tab', { name: /18/ }))
+    expect(screen.getByText('2 itens')).toBeInTheDocument()
+  })
+
   it('mostra os dias oficiais quando a planilha esta vazia', () => {
     renderizar(
       <Programacao

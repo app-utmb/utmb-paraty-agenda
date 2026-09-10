@@ -61,11 +61,16 @@ describe('pontos do mapa', () => {
     lerCsv(readFileSync(resolve(process.cwd(), arquivo), 'utf8'))
       .map((l) => (l[nome] ?? '').trim())
 
-  it('toda marca da programacao real tem um ponto no mapa', () => {
+  /** A organizacao nao e expositora, entao nao tem estande no mapa. */
+  const MARCA_EVENTO = 'paraty brazil by utmb'
+
+  it('toda marca expositora da programacao real tem um ponto no mapa', () => {
     const noMapa = new Set(PONTOS_MAPA.flatMap((p) => p.marcas.map((m) => m.toLowerCase())))
     const semPonto = [...new Set(coluna('planilha/Programacao.csv', 'marca'))]
       .filter(Boolean)
-      .filter((m) => !noMapa.has(m.toLowerCase()))
+      .map((m) => m.toLowerCase())
+      .filter((m) => m !== MARCA_EVENTO)
+      .filter((m) => !noMapa.has(m))
     expect(semPonto).toEqual([])
   })
 

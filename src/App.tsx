@@ -8,6 +8,7 @@ import { NavInferior } from './components/NavInferior'
 import { PuxarParaAtualizar } from './components/PuxarParaAtualizar'
 import { ReguaPatrocinadores } from './components/ReguaPatrocinadores'
 import { SeletorIdioma } from './components/SeletorIdioma'
+import { SeletorTema } from './components/SeletorTema'
 import { StatusAtualizacao } from './components/StatusAtualizacao'
 import type { PontoMapa } from './data/mapa'
 import type { Beneficio, ItemProgramacao } from './data/types'
@@ -19,6 +20,14 @@ import { Inicio } from './screens/Inicio'
 import { Info } from './screens/Info'
 import { MapaExpo } from './screens/MapaExpo'
 import { Programacao } from './screens/Programacao'
+import {
+  aplicarTema,
+  proximoTema,
+  salvarTema,
+  temaEfetivo,
+  temaInicial,
+  type Tema,
+} from './tema'
 import { useDados } from './useDados'
 
 /** Ponto para os testes fixarem o "agora" das telas de Inicio e Programacao. */
@@ -37,6 +46,7 @@ export function App({ referencia }: Props = {}) {
     }
     return 'inicio'
   })
+  const [tema, setTema] = useState<Tema>(() => temaInicial())
   const [itemAberto, setItemAberto] = useState<ItemProgramacao | null>(null)
   const [beneficioAberto, setBeneficioAberto] = useState<Beneficio | null>(null)
   const [pontoAberto, setPontoAberto] = useState<PontoMapa | null>(null)
@@ -64,6 +74,25 @@ export function App({ referencia }: Props = {}) {
     document.documentElement.lang = LOCALES[idioma]
   }, [idioma])
 
+  useEffect(() => {
+    aplicarTema(tema)
+    if (tema !== 'sistema') return
+    // Seguindo o aparelho, o app acompanha a troca em tempo real.
+    const consulta = window.matchMedia?.('(prefers-color-scheme: light)')
+    if (!consulta?.addEventListener) return
+    const aoMudar = () => aplicarTema('sistema')
+    consulta.addEventListener('change', aoMudar)
+    return () => consulta.removeEventListener('change', aoMudar)
+  }, [tema])
+
+  const trocarTema = useCallback(() => {
+    setTema((atual) => {
+      const novo = proximoTema(atual)
+      salvarTema(novo)
+      return novo
+    })
+  }, [])
+
   const contexto = useMemo(
     () => ({ idioma, definirIdioma, t: DICIONARIOS[idioma] }),
     [idioma, definirIdioma],
@@ -71,6 +100,7 @@ export function App({ referencia }: Props = {}) {
   const t = contexto.t
 
   const config = dados?.config
+  const temaAtivo = temaEfetivo(tema)
 
   return (
     <IdiomaContext.Provider value={contexto}>
@@ -81,10 +111,21 @@ export function App({ referencia }: Props = {}) {
       <div className="app">
         <header className="cabecalho">
           <div className="cabecalho__marca">
-            <p className="cabecalho__nome">{config?.eventoNome ?? 'Paraty Brazil by UTMB'}</p>
+            <img
+              className="cabecalho__logo"
+              src={`${import.meta.env.BASE_URL}${
+                temaAtivo === 'claro' ? 'logo-evento-escura.png' : 'logo-evento.png'
+              }`}
+              alt={config?.eventoNome ?? 'Paraty Brazil by UTMB'}
+              width={900}
+              height={479}
+            />
             <span className="cabecalho__datas">{config?.eventoDatas ?? ''}</span>
           </div>
-          <SeletorIdioma />
+          <div className="cabecalho__acoes">
+            <SeletorTema tema={tema} aoTrocar={trocarTema} />
+            <SeletorIdioma />
+          </div>
         </header>
 
         <PuxarParaAtualizar aoAtualizar={atualizar} atualizando={atualizando}>

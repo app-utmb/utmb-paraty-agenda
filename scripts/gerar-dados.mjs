@@ -8,6 +8,8 @@ import { fileURLToPath } from 'node:url'
 
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE_APP = 'https://app-utmb.github.io/utmb-paraty-agenda'
+/** Marca dos itens tocados pela organizacao, para o filtro por marca cobrir tudo. */
+const MARCA_EVENTO = 'Paraty Brazil by UTMB'
 
 const COL_PROG = 'id,data,dia_semana,hora_inicio,hora_fim,pilar,titulo_pt,titulo_es,titulo_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,palestrante,marca,logo_url,inscricao,link_inscricao,destaque'.split(',')
 const COL_BEN = 'id,onde,categoria,nome,desconto_pt,desconto_es,desconto_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,condicoes_pt,condicoes_es,condicoes_en,validade,logo_url,link,mapa_url,destaque'.split(',')
@@ -43,7 +45,7 @@ function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '
     titulo_pt: tit[0], titulo_es: tit[1], titulo_en: tit[2],
     descricao_pt: desc[0], descricao_es: desc[1], descricao_en: desc[2],
     local_pt: loc[0], local_es: loc[1], local_en: loc[2],
-    palestrante: '', marca: '', logo_url: '',
+    palestrante: '', marca: MARCA_EVENTO, logo_url: '',
     inscricao: 'livre', link_inscricao: '', destaque,
   }
 }

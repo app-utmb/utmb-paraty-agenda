@@ -3,6 +3,12 @@ import type { Dicionario } from './pt'
 export const es: Dicionario = {
   idiomaNome: 'Español',
   trocarIdioma: 'Cambiar idioma',
+  tema: {
+    rotulo: 'Tema',
+    sistema: 'Igual que el dispositivo',
+    claro: 'Tema claro',
+    escuro: 'Tema oscuro',
+  },
   abas: {
     inicio: 'Inicio',
     programacao: 'Programa',
@@ -26,6 +32,8 @@ export const es: Dicionario = {
   programacao: {
     titulo: 'Programa',
     filtroPilar: 'Filtrar por pilar',
+    filtroMarca: 'Filtrar por marca',
+    todasMarcas: 'Todas las marcas',
     seletorDia: 'Elegir el día',
     todos: 'Todos',
     vazio: 'Ningún elemento para este filtro',

@@ -3,10 +3,10 @@ import { lerCsv } from '../data/sheets'
 import type { DadosApp } from '../data/types'
 
 const CSV_PROG = `id,data,dia_semana,hora_inicio,hora_fim,pilar,titulo_pt,titulo_es,titulo_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,palestrante,marca,logo_url,inscricao,link_inscricao,destaque
-a1,2026-09-17,quinta-feira,10:00,11:00,oficial,Retirada de kits,Retiro de kits,Bib pickup,Leve documento com foto,Lleva documento con foto,Bring photo ID,Expo,Expo,Expo,,,,livre,,sim
+a1,2026-09-17,quinta-feira,10:00,11:00,oficial,Retirada de kits,Retiro de kits,Bib pickup,Leve documento com foto,Lleva documento con foto,Bring photo ID,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,sim
 a2,2026-09-17,quinta-feira,14:00,14:45,talks,Nutricao no ultra,Nutricion en el ultra,Nutrition in ultra,Estrategia de calorias,Estrategia de calorias,Calorie strategy,Palco Expo,Escenario Expo,Expo Stage,Ana Souza,,,livre,,
 a3,2026-09-17,quinta-feira,16:00,17:00,ativacao,Teste de calcados,Prueba de calzado,Shoe demo,Experimente na trilha,Prueba en el sendero,Try on the trail,Estande,Stand,Booth,,The North Face,https://exemplo.com/logo.png,previa,https://exemplo.com/inscricao,
-a4,2026-09-18,sexta-feira,08:00,,oficial,Largada 100K,Salida 100K,100K start,Concentracao 40 min antes,Concentracion 40 min antes,Gather 40 min before,Arco,Arco,Arch,,,,livre,,sim
+a4,2026-09-18,sexta-feira,08:00,,oficial,Largada 100K,Salida 100K,100K start,Concentracao 40 min antes,Concentracion 40 min antes,Gather 40 min before,Arco,Arco,Arch,,Paraty Brazil by UTMB,,livre,,sim
 a5,2026-09-18,sexta-feira,15:00,16:00,ativacao,Oficina de bastoes,Taller de bastones,Poles workshop,,,,Estande Leki,Stand Leki,Leki booth,,Leki,,invite,,
 `
 

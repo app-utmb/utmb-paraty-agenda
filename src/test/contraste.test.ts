@@ -8,9 +8,25 @@ import { describe, expect, it } from 'vitest'
  */
 const css = readFileSync(resolve(process.cwd(), 'src/styles/global.css'), 'utf8')
 
-function variavel(nome: string): string {
-  const m = new RegExp(`--${nome}:\\s*(#[0-9a-fA-F]{3,8});`).exec(css)
-  if (!m?.[1]) throw new Error(`variavel --${nome} nao encontrada no global.css`)
+/** Recorta o bloco de um seletor, para nao misturar os dois temas. */
+function bloco(seletor: string): string {
+  const i = css.indexOf(seletor)
+  if (i < 0) throw new Error(`bloco ${seletor} nao encontrado no global.css`)
+  const abre = css.indexOf('{', i)
+  const fecha = css.indexOf('}', abre)
+  return css.slice(abre, fecha)
+}
+
+const TEMAS = {
+  escuro: bloco(':root {'),
+  claro: bloco(":root[data-tema='claro'] {"),
+} as const
+
+type NomeTema = keyof typeof TEMAS
+
+function variavelDe(tema: NomeTema, nome: string): string {
+  const m = new RegExp(`--${nome}:\\s*(#[0-9a-fA-F]{3,8});`).exec(TEMAS[tema])
+  if (!m?.[1]) throw new Error(`--${nome} nao encontrada no tema ${tema}`)
   return m[1]
 }
 
@@ -49,63 +65,50 @@ export function contraste(frente: string, fundo: string): number {
 const AA_TEXTO = 4.5
 const AA_GRANDE = 3
 
-describe('contraste do tema escuro', () => {
-  const fundos = ['fundo', 'fundo-elevado', 'fundo-cartao', 'fundo-cartao-ativo']
+const FUNDOS = ['fundo', 'fundo-elevado', 'fundo-cartao', 'fundo-cartao-ativo'] as const
+const PILARES = ['oficial', 'talks', 'ativacao', 'filmes'] as const
+const NOMES: NomeTema[] = ['escuro', 'claro']
 
-  it.each(fundos)('texto principal sobre --%s passa em AA', (fundo) => {
-    expect(contraste(variavel('texto'), variavel(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
+describe.each(NOMES)('contraste do tema %s', (tema) => {
+  const v = (nome: string) => variavelDe(tema, nome)
+
+  it.each(FUNDOS)('texto principal sobre --%s passa em AA', (fundo) => {
+    expect(contraste(v('texto'), v(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
   })
 
-  it.each(fundos)('texto suave sobre --%s passa em AA', (fundo) => {
-    expect(contraste(variavel('texto-suave'), variavel(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
+  it.each(FUNDOS)('texto suave sobre --%s passa em AA', (fundo) => {
+    expect(contraste(v('texto-suave'), v(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
   })
 
-  it.each(fundos)('texto fraco sobre --%s passa em AA', (fundo) => {
-    expect(contraste(variavel('texto-fraco'), variavel(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
+  it.each(FUNDOS)('texto fraco sobre --%s passa em AA', (fundo) => {
+    expect(contraste(v('texto-fraco'), v(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
   })
 
-  it.each(['oficial', 'talks', 'ativacao', 'filmes'])(
-    'a cor do pilar %s passa em AA sobre o fundo do app',
-    (pilar) => {
-      expect(contraste(variavel(pilar), variavel('fundo'))).toBeGreaterThanOrEqual(AA_TEXTO)
-    },
-  )
+  it.each(PILARES)('a cor do pilar %s passa em AA sobre o fundo do app', (pilar) => {
+    expect(contraste(v(pilar), v('fundo'))).toBeGreaterThanOrEqual(AA_TEXTO)
+  })
 
-  it.each(['oficial', 'talks', 'ativacao', 'filmes'])(
-    'a etiqueta do pilar %s passa em AA sobre o proprio fundo',
-    (pilar) => {
-      expect(contraste(variavel(pilar), variavel(`${pilar}-fundo`))).toBeGreaterThanOrEqual(
-        AA_TEXTO,
-      )
-    },
-  )
+  it.each(PILARES)('a etiqueta do pilar %s passa em AA sobre o proprio fundo', (pilar) => {
+    expect(contraste(v(pilar), v(`${pilar}-fundo`))).toBeGreaterThanOrEqual(AA_TEXTO)
+  })
 
-  it.each(['oficial', 'talks', 'ativacao', 'filmes'])(
-    'a cor do pilar %s passa em AA sobre o fundo do cartao',
-    (pilar) => {
-      expect(contraste(variavel(pilar), variavel('fundo-cartao'))).toBeGreaterThanOrEqual(
-        AA_TEXTO,
-      )
-    },
-  )
+  it.each(PILARES)('a cor do pilar %s passa em AA sobre o fundo do cartao', (pilar) => {
+    expect(contraste(v(pilar), v('fundo-cartao'))).toBeGreaterThanOrEqual(AA_TEXTO)
+  })
 
   it('o texto do botao principal passa em AA sobre o acento', () => {
-    expect(contraste(variavel('acento-texto'), variavel('acento'))).toBeGreaterThanOrEqual(
-      AA_TEXTO,
-    )
+    expect(contraste(v('acento-texto'), v('acento'))).toBeGreaterThanOrEqual(AA_TEXTO)
   })
 
   it('o anel de foco se destaca do fundo', () => {
-    expect(contraste(variavel('acento'), variavel('fundo'))).toBeGreaterThanOrEqual(AA_GRANDE)
+    expect(contraste(v('acento'), v('fundo'))).toBeGreaterThanOrEqual(AA_GRANDE)
   })
 
   it('a borda dos cartoes se distingue do fundo', () => {
-    expect(contraste(variavel('borda-forte'), variavel('fundo'))).toBeGreaterThanOrEqual(1.4)
+    expect(contraste(v('borda-forte'), v('fundo'))).toBeGreaterThanOrEqual(1.4)
   })
 
   it('o texto de erro passa em AA', () => {
-    expect(contraste(variavel('perigo'), variavel('fundo-cartao'))).toBeGreaterThanOrEqual(
-      AA_TEXTO,
-    )
+    expect(contraste(v('perigo'), v('fundo-cartao'))).toBeGreaterThanOrEqual(AA_TEXTO)
   })
 })
