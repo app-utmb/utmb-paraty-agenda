@@ -1,4 +1,4 @@
-export const ABAS = ['inicio', 'programacao', 'mapa', 'guia', 'info'] as const
+export const ABAS = ['inicio', 'programacao', 'beneficios', 'mapa', 'guia', 'info'] as const
 export type Aba = (typeof ABAS)[number]
 
 export const CHAVE_ABA = 'paraty.aba.v1'

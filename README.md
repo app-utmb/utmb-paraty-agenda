@@ -27,10 +27,13 @@ O conteúdo está em duas planilhas do Google, as duas no seu Drive e já public
 
 | planilha | o que tem | link para editar |
 |---|---|---|
-| **Paraty Agenda 2026 Programacao** | a agenda, uma linha por item | [abrir](https://docs.google.com/spreadsheets/d/13KL1g2goztgvLgSz6x0e6_Kpo32le02QOtSi557Epfg/edit) |
-| **Paraty Agenda 2026 Config** | links do guia, do mapa, contatos | [abrir](https://docs.google.com/spreadsheets/d/1BWONpCDI5QWtjXo9ZkS4XcLZlyrnBRSGKVkkPZOWUDU/edit) |
+| **Programacao v2** | a agenda, uma linha por item | [abrir](https://docs.google.com/spreadsheets/d/1mWcfP7G4kyBL51pX19amupz3tXwz1X5_P5LrH389Wl0/edit) |
+| **Beneficios** | descontos na Expo e na cidade | [abrir](https://docs.google.com/spreadsheets/d/1h4Fkx_bqcXW8pdKJWcPw8SUFlY6s9WTuITqjt0E9wdE/edit) |
+| **Config** | links do guia, do mapa, contatos | [abrir](https://docs.google.com/spreadsheets/d/1BWONpCDI5QWtjXo9ZkS4XcLZlyrnBRSGKVkkPZOWUDU/edit) |
 
-São dois arquivos separados em vez de duas abas de um só. Para o app dá no mesmo, e para você fica mais difícil mexer sem querer na Config enquanto edita a agenda.
+São três arquivos separados em vez de abas de um só. Para o app dá no mesmo, e para você fica mais difícil mexer sem querer na Config enquanto edita a agenda.
+
+Existe no Drive uma planilha chamada **ZZ Paraty Agenda 2026 Programacao (antiga)**. Ela não alimenta mais o app e pode ser apagada.
 
 Se um dia precisar recriar do zero, a pasta `planilha/` deste repositório tem o modelo **Paraty-Agenda.xlsx** com os cabeçalhos certos e exemplos preenchidos.
 
@@ -45,7 +48,7 @@ Uma linha por item da agenda. As colunas de texto existem em três idiomas.
 | `dia_semana` | o dia por extenso, em português | `quinta-feira` |
 | `hora_inicio` | hora e minuto | `10:00` |
 | `hora_fim` | opcional, pode deixar vazio | `10:45` |
-| `pilar` | `oficial`, `talks` ou `ativacao` | `talks` |
+| `pilar` | `oficial`, `talks`, `ativacao` ou `filmes` | `talks` |
 | `titulo_pt` `titulo_es` `titulo_en` | o título nos três idiomas | `Nutrição no ultra` |
 | `descricao_pt` `descricao_es` `descricao_en` | opcional | |
 | `local_pt` `local_es` `local_en` | onde acontece | `Palco Expo` |
@@ -75,10 +78,56 @@ Duas colunas: `chave` e `valor`. Não mude os nomes das chaves.
 | `contato_whatsapp` | link do tipo `https://wa.me/55...` |
 | `contato_email` | email de contato |
 | `site_oficial` | site do evento |
+| `faq_url` | página de perguntas frequentes |
+| `ao_vivo_url` | acompanhamento ao vivo da prova |
 | `local_maps` | link do Google Maps do local |
 | `regua_patrocinadores_url` | link da imagem da régua de patrocinadores |
 
 ---
+
+### Planilha Beneficios
+
+Uma linha por estabelecimento. É a lista de descontos que aparece na aba Benefícios.
+
+| coluna | o que é | exemplo |
+|---|---|---|
+| `id` | um código único | `b-001` |
+| `onde` | `expo` ou `cidade` | `expo` |
+| `categoria` | `alimentacao`, `equipamentos`, `hospedagem`, `servicos` ou `experiencias` | `alimentacao` |
+| `nome` | nome do estabelecimento, não traduz | `Banana da Terra` |
+| `desconto_pt` `desconto_es` `desconto_en` | o desconto em si, aparece em destaque | `15% de desconto` |
+| `descricao_pt` `descricao_es` `descricao_en` | opcional | |
+| `local_pt` `local_es` `local_en` | onde encontrar | `Estande A12` |
+| `condicoes_pt` `condicoes_es` `condicoes_en` | regras de uso | `Mediante apresentação do número de peito` |
+| `validade` | texto livre | `17 a 20 de setembro` |
+| `logo_url` | opcional | |
+| `link` | site ou rede social, opcional | |
+| `mapa_url` | link do Google Maps, opcional | |
+| `destaque` | `sim` para fixar no topo | |
+
+Vale a mesma tolerância da agenda: linha sem `id`, sem `nome` ou sem `desconto_pt` é ignorada, e `onde` ou `categoria` inválidos são corrigidos em vez de derrubar a lista.
+
+A lista tem busca por nome, filtro de lugar e filtro de categoria, então aguenta bem passar de 50 estabelecimentos.
+
+### Os quatro pilares da programação
+
+| pilar | o que entra | cor |
+|---|---|---|
+| `oficial` | largadas, chegadas, briefings, retirada de kit, premiação | verde |
+| `talks` | palestras, painéis e rodas de conversa | azul |
+| `ativacao` | ativações das marcas nos estandes | âmbar |
+| `filmes` | filmes e documentários | lilás |
+
+### Os locais padrão
+
+Para a lista ficar consistente, use sempre estes nomes na coluna de local:
+
+- **Expo**
+- **Palco Expo**
+- **Estande [nome da marca]**, por exemplo `Estande Salomon`
+- **Arena de largada e chegada**
+- **Arena e Expo**, quando vale nos dois
+- **Fazenda Bananal**
 
 ## Trocar o Guia do Atleta
 

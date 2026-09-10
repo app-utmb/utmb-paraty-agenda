@@ -2,11 +2,16 @@ import Papa from 'papaparse'
 import {
   INTERVALO_REVALIDACAO_MS,
   TIMEOUT_REDE_MS,
+  URL_CSV_BENEFICIOS,
   URL_CSV_CONFIG,
   URL_CSV_PROGRAMACAO,
 } from '../config'
-import { CSV_CONFIG_EXEMPLO, CSV_PROGRAMACAO_EXEMPLO } from './exemplo'
-import { normalizarConfig, normalizarProgramacao } from './normalize'
+import {
+  CSV_BENEFICIOS_EXEMPLO,
+  CSV_CONFIG_EXEMPLO,
+  CSV_PROGRAMACAO_EXEMPLO,
+} from './exemplo'
+import { normalizarBeneficios, normalizarConfig, normalizarProgramacao } from './normalize'
 import type { DadosApp, ProblemaImportacao } from './types'
 
 export const CHAVE_CACHE = 'paraty.dados.v1'
@@ -48,14 +53,22 @@ async function baixarTexto(url: string, sinal?: AbortSignal): Promise<string> {
 function montar(
   csvProgramacao: string,
   csvConfig: string,
+  csvBeneficios: string,
   origem: DadosApp['origem'],
   atualizadoEm: string,
 ): { dados: DadosApp; problemas: ProblemaImportacao[] } {
   const prog = normalizarProgramacao(lerCsv(csvProgramacao))
   const conf = normalizarConfig(lerCsv(csvConfig))
+  const ben = normalizarBeneficios(lerCsv(csvBeneficios))
   return {
-    dados: { itens: prog.dados, config: conf.dados, atualizadoEm, origem },
-    problemas: [...prog.problemas, ...conf.problemas],
+    dados: {
+      itens: prog.dados,
+      beneficios: ben.dados,
+      config: conf.dados,
+      atualizadoEm,
+      origem,
+    },
+    problemas: [...prog.problemas, ...conf.problemas, ...ben.problemas],
   }
 }
 
@@ -65,7 +78,8 @@ export function lerCache(): DadosApp | null {
     if (!cru) return null
     const salvo = JSON.parse(cru) as DadosApp
     if (!Array.isArray(salvo.itens) || !salvo.config) return null
-    return { ...salvo, origem: 'cache' }
+    // Cache gravado por uma versao anterior pode nao ter beneficios.
+    return { ...salvo, beneficios: salvo.beneficios ?? [], origem: 'cache' }
   } catch {
     return null
   }
@@ -91,6 +105,7 @@ export async function carregarDados(sinal?: AbortSignal): Promise<ResultadoCarga
     const { dados, problemas } = montar(
       CSV_PROGRAMACAO_EXEMPLO,
       CSV_CONFIG_EXEMPLO,
+      CSV_BENEFICIOS_EXEMPLO,
       'exemplo',
       new Date().toISOString(),
     )
@@ -98,13 +113,19 @@ export async function carregarDados(sinal?: AbortSignal): Promise<ResultadoCarga
   }
 
   try {
-    const [csvProgramacao, csvConfig] = await Promise.all([
+    // A aba de beneficios e opcional: se ainda nao existe, a lista fica vazia
+    // e o resto do app segue normalmente.
+    const [csvProgramacao, csvConfig, csvBeneficios] = await Promise.all([
       baixarTexto(URL_CSV_PROGRAMACAO, sinal),
       baixarTexto(URL_CSV_CONFIG, sinal),
+      URL_CSV_BENEFICIOS
+        ? baixarTexto(URL_CSV_BENEFICIOS, sinal).catch(() => '')
+        : Promise.resolve(''),
     ])
     const { dados, problemas } = montar(
       csvProgramacao,
       csvConfig,
+      csvBeneficios,
       'rede',
       new Date().toISOString(),
     )
@@ -118,6 +139,7 @@ export async function carregarDados(sinal?: AbortSignal): Promise<ResultadoCarga
     const { dados, problemas } = montar(
       CSV_PROGRAMACAO_EXEMPLO,
       CSV_CONFIG_EXEMPLO,
+      CSV_BENEFICIOS_EXEMPLO,
       'exemplo',
       new Date().toISOString(),
     )

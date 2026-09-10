@@ -100,3 +100,24 @@ export const IconeNuvemCortada = ({ className }: Props) => (
     <path d="M3 3l18 18" />
   </svg>
 )
+
+export const IconeBusca = ({ className }: Props) => (
+  <svg {...base} className={className} width="18" height="18">
+    <circle cx="10.8" cy="10.8" r="6.4" />
+    <path d="m15.6 15.6 4 4" />
+  </svg>
+)
+
+export const IconeEtiqueta = ({ className }: Props) => (
+  <svg {...base} className={className}>
+    <path d="M11 3.6H4.6a1 1 0 0 0-1 1V11a2 2 0 0 0 .6 1.4l7.4 7.4a2 2 0 0 0 2.8 0l5.6-5.6a2 2 0 0 0 0-2.8L12.4 4.2A2 2 0 0 0 11 3.6Z" />
+    <path d="M7.9 7.9h.01" />
+  </svg>
+)
+
+export const IconeAoVivo = ({ className }: Props) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="12" r="3.2" />
+    <path d="M6.7 6.7a7.5 7.5 0 0 0 0 10.6M17.3 17.3a7.5 7.5 0 0 0 0-10.6" />
+  </svg>
+)

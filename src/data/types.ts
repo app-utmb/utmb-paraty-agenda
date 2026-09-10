@@ -1,7 +1,11 @@
 export const IDIOMAS = ['pt', 'es', 'en'] as const
 export type Idioma = (typeof IDIOMAS)[number]
 
-export const PILARES = ['oficial', 'talks', 'ativacao'] as const
+/**
+ * Pilares da programacao. "talks" cobre palestras, paineis e rodas de conversa,
+ * porque para o atleta e tudo conteudo de palco no mesmo lugar.
+ */
+export const PILARES = ['oficial', 'talks', 'ativacao', 'filmes'] as const
 export type Pilar = (typeof PILARES)[number]
 
 export const INSCRICOES = ['livre', 'previa', 'invite'] as const
@@ -45,6 +49,8 @@ export interface ConfigEvento {
   contatoWhatsapp: string
   contatoEmail: string
   siteOficial: string
+  faqUrl: string
+  aoVivoUrl: string
   localMaps: string
   reguaPatrocinadoresUrl: string
 }
@@ -64,10 +70,44 @@ export interface ResultadoImportacao<T> {
 
 export interface DadosApp {
   itens: ItemProgramacao[]
+  beneficios: Beneficio[]
   config: ConfigEvento
   /** Timestamp ISO de quando os dados foram buscados com sucesso. */
   atualizadoEm: string
   /** "rede" quando veio do CSV agora, "cache" quando veio do armazenamento local,
    *  "exemplo" quando caiu nos dados de demonstracao embutidos. */
   origem: 'rede' | 'cache' | 'exemplo'
+}
+
+export const LOCAIS_BENEFICIO = ['expo', 'cidade'] as const
+export type LocalBeneficio = (typeof LOCAIS_BENEFICIO)[number]
+
+export const CATEGORIAS_BENEFICIO = [
+  'alimentacao',
+  'equipamentos',
+  'hospedagem',
+  'servicos',
+  'experiencias',
+] as const
+export type CategoriaBeneficio = (typeof CATEGORIAS_BENEFICIO)[number]
+
+/** Um desconto ou vantagem oferecida ao atleta, na Expo ou na cidade. */
+export interface Beneficio {
+  id: string
+  onde: LocalBeneficio
+  categoria: CategoriaBeneficio
+  /** Nome do estabelecimento ou da marca. Nao traduz. */
+  nome: string
+  /** O desconto em si, ex "20% de desconto". E o dado que o atleta procura. */
+  desconto: TextoMultilingue
+  descricao: TextoMultilingue
+  /** Onde encontrar, ex "Estande A12" ou "Rua da Matriz 120". */
+  local: TextoMultilingue
+  /** Regras de uso, ex "mediante apresentacao do numero de peito". */
+  condicoes: TextoMultilingue
+  validade: string | null
+  logoUrl: string | null
+  link: string | null
+  mapaUrl: string | null
+  destaque: boolean
 }

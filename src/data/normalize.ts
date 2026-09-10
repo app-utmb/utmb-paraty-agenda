@@ -1,14 +1,17 @@
 import type {
+  Beneficio,
+  CategoriaBeneficio,
   ConfigEvento,
   Idioma,
   Inscricao,
   ItemProgramacao,
+  LocalBeneficio,
   Pilar,
   ProblemaImportacao,
   ResultadoImportacao,
   TextoMultilingue,
 } from './types'
-import { INSCRICOES, PILARES } from './types'
+import { CATEGORIAS_BENEFICIO, INSCRICOES, LOCAIS_BENEFICIO, PILARES } from './types'
 
 /** Linha crua do papaparse: cabecalho -> valor, tudo string. */
 export type LinhaCrua = Record<string, string | undefined>
@@ -75,8 +78,17 @@ function semAcento(v: string): string {
     .trim()
 }
 
+/**
+ * Chave de comparacao para os apelidos: alem de tirar acento e caixa,
+ * remove espacos e pontuacao. Assim "Na Expo", "na-expo" e "naexpo" batem
+ * na mesma entrada, e "roda de conversa" tambem e reconhecida.
+ */
+function chaveApelido(v: string): string {
+  return semAcento(v).replace(/[^a-z0-9]/g, '')
+}
+
 export function normalizarPilar(valor: string): Pilar | null {
-  const v = semAcento(valor)
+  const v = chaveApelido(valor)
   if (!v) return null
   // Aceita sinonimos comuns que eu possa digitar na planilha.
   const apelidos: Record<string, Pilar> = {
@@ -88,6 +100,18 @@ export function normalizarPilar(valor: string): Pilar | null {
     palco: 'talks',
     palestra: 'talks',
     palestras: 'talks',
+    painel: 'talks',
+    paineis: 'talks',
+    roda: 'talks',
+    rodadeconversa: 'talks',
+    rodasdeconversa: 'talks',
+    conversa: 'talks',
+    filme: 'filmes',
+    filmes: 'filmes',
+    cinema: 'filmes',
+    documentario: 'filmes',
+    documentarios: 'filmes',
+    mostra: 'filmes',
     ativacao: 'ativacao',
     ativacoes: 'ativacao',
     activation: 'ativacao',
@@ -99,7 +123,7 @@ export function normalizarPilar(valor: string): Pilar | null {
 }
 
 export function normalizarInscricao(valor: string): Inscricao | null {
-  const v = semAcento(valor)
+  const v = chaveApelido(valor)
   if (!v) return null
   const apelidos: Record<string, Inscricao> = {
     livre: 'livre',
@@ -117,7 +141,7 @@ export function normalizarInscricao(valor: string): Inscricao | null {
 
 /** "sim", "s", "x", "true", "1", "yes" contam como verdadeiro. */
 export function ehVerdadeiro(valor: string): boolean {
-  const v = semAcento(valor)
+  const v = chaveApelido(valor)
   return ['sim', 's', 'x', 'true', '1', 'yes', 'y', 'verdadeiro'].includes(v)
 }
 
@@ -328,6 +352,8 @@ export const CONFIG_PADRAO: ConfigEvento = {
   contatoWhatsapp: '',
   contatoEmail: '',
   siteOficial: 'https://paraty.utmb.world/pt',
+  faqUrl: '',
+  aoVivoUrl: '',
   localMaps: '',
   reguaPatrocinadoresUrl: '',
 }
@@ -388,9 +414,193 @@ export function normalizarConfig(linhas: LinhaCrua[]): ResultadoImportacao<Confi
     contatoWhatsapp: url('contatowhatsapp'),
     contatoEmail: bruto.get('contatoemail') || '',
     siteOficial: url('siteoficial') || CONFIG_PADRAO.siteOficial,
+    faqUrl: url('faqurl'),
+    aoVivoUrl: url('aovivourl'),
     localMaps: url('localmaps'),
     reguaPatrocinadoresUrl: url('reguapatrocinadoresurl'),
   }
 
   return { dados: config, problemas }
+}
+
+/** Aceita "expo" ou "cidade", com alguns apelidos comuns. */
+export function normalizarOnde(valor: string): LocalBeneficio | null {
+  const v = chaveApelido(valor)
+  if (!v) return null
+  const apelidos: Record<string, LocalBeneficio> = {
+    expo: 'expo',
+    naexpo: 'expo',
+    estande: 'expo',
+    stand: 'expo',
+    cidade: 'cidade',
+    nacidade: 'cidade',
+    paraty: 'cidade',
+    centro: 'cidade',
+    city: 'cidade',
+  }
+  return apelidos[v] ?? ((LOCAIS_BENEFICIO as readonly string[]).includes(v) ? (v as LocalBeneficio) : null)
+}
+
+/** Aceita as cinco categorias de beneficio, com apelidos do dia a dia. */
+export function normalizarCategoria(valor: string): CategoriaBeneficio | null {
+  const v = chaveApelido(valor)
+  if (!v) return null
+  const apelidos: Record<string, CategoriaBeneficio> = {
+    alimentacao: 'alimentacao',
+    comida: 'alimentacao',
+    restaurante: 'alimentacao',
+    restaurantes: 'alimentacao',
+    bar: 'alimentacao',
+    cafe: 'alimentacao',
+    equipamento: 'equipamentos',
+    equipamentos: 'equipamentos',
+    loja: 'equipamentos',
+    lojas: 'equipamentos',
+    material: 'equipamentos',
+    hospedagem: 'hospedagem',
+    hotel: 'hospedagem',
+    hoteis: 'hospedagem',
+    pousada: 'hospedagem',
+    pousadas: 'hospedagem',
+    servico: 'servicos',
+    servicos: 'servicos',
+    fisioterapia: 'servicos',
+    massagem: 'servicos',
+    experiencia: 'experiencias',
+    experiencias: 'experiencias',
+    passeio: 'experiencias',
+    passeios: 'experiencias',
+    turismo: 'experiencias',
+  }
+  return (
+    apelidos[v] ??
+    ((CATEGORIAS_BENEFICIO as readonly string[]).includes(v) ? (v as CategoriaBeneficio) : null)
+  )
+}
+
+/**
+ * Converte as linhas cruas da aba Beneficios em itens validados.
+ * Segue a mesma regra da programacao: linha ruim e corrigida ou descartada,
+ * nunca derruba a lista inteira.
+ */
+export function normalizarBeneficios(linhas: LinhaCrua[]): ResultadoImportacao<Beneficio[]> {
+  const problemas: ProblemaImportacao[] = []
+  const itens: Beneficio[] = []
+  const idsVistos = new Set<string>()
+
+  linhas.forEach((cru, indice) => {
+    const linha = indice + 2
+    const l = reindexar(cru)
+
+    if (Object.values(l).every((v) => texto(v) === '')) return
+
+    const id = texto(l.id)
+    if (!id) {
+      problemas.push({ linha, campo: 'id', motivo: 'sem id', gravidade: 'descartada' })
+      return
+    }
+    if (idsVistos.has(id)) {
+      problemas.push({ linha, campo: 'id', motivo: `id repetido "${id}"`, gravidade: 'descartada' })
+      return
+    }
+
+    const nome = texto(l.nome)
+    if (!nome) {
+      problemas.push({ linha, campo: 'nome', motivo: 'sem nome', gravidade: 'descartada' })
+      return
+    }
+
+    const desconto = multilingue(l, 'desconto')
+    if (!desconto.pt) {
+      problemas.push({
+        linha,
+        campo: 'desconto_pt',
+        motivo: 'desconto em portugues vazio',
+        gravidade: 'descartada',
+      })
+      return
+    }
+
+    let onde = normalizarOnde(texto(l.onde))
+    if (!onde) {
+      problemas.push({
+        linha,
+        campo: 'onde',
+        motivo: `valor invalido "${texto(l.onde)}", assumido "cidade"`,
+        gravidade: 'corrigida',
+      })
+      onde = 'cidade'
+    }
+
+    let categoria = normalizarCategoria(texto(l.categoria))
+    if (!categoria) {
+      problemas.push({
+        linha,
+        campo: 'categoria',
+        motivo: `categoria invalida "${texto(l.categoria)}", assumida "servicos"`,
+        gravidade: 'corrigida',
+      })
+      categoria = 'servicos'
+    }
+
+    const logoUrl = urlSegura(texto(l.logourl))
+    if (texto(l.logourl) && !logoUrl) {
+      problemas.push({
+        linha,
+        campo: 'logo_url',
+        motivo: 'logo nao e uma URL http(s) valida, ignorada',
+        gravidade: 'corrigida',
+      })
+    }
+    const link = urlSegura(texto(l.link))
+    if (texto(l.link) && !link) {
+      problemas.push({
+        linha,
+        campo: 'link',
+        motivo: 'link nao e uma URL http(s) valida, ignorado',
+        gravidade: 'corrigida',
+      })
+    }
+    const mapaUrl = urlSegura(texto(l.mapaurl))
+    if (texto(l.mapaurl) && !mapaUrl) {
+      problemas.push({
+        linha,
+        campo: 'mapa_url',
+        motivo: 'mapa nao e uma URL http(s) valida, ignorado',
+        gravidade: 'corrigida',
+      })
+    }
+
+    idsVistos.add(id)
+    itens.push({
+      id,
+      onde,
+      categoria,
+      nome,
+      desconto,
+      descricao: multilingue(l, 'descricao'),
+      local: multilingue(l, 'local'),
+      condicoes: multilingue(l, 'condicoes'),
+      validade: texto(l.validade) || null,
+      logoUrl,
+      link,
+      mapaUrl,
+      destaque: ehVerdadeiro(texto(l.destaque)),
+    })
+  })
+
+  return { dados: ordenarBeneficios(itens), problemas }
+}
+
+/** Destaques primeiro, depois em ordem alfabetica de nome. */
+export function ordenarBeneficios(itens: Beneficio[]): Beneficio[] {
+  return [...itens].sort((a, b) => {
+    if (a.destaque !== b.destaque) return a.destaque ? -1 : 1
+    return a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' })
+  })
+}
+
+/** Normaliza para busca: sem acento, sem caixa, sem espaco nas pontas. */
+export function paraBusca(valor: string): string {
+  return semAcento(valor).replace(/\s+/g, ' ').trim()
 }

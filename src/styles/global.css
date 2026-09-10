@@ -19,6 +19,8 @@
   --talks-fundo: #0d2340;
   --ativacao: #fcbf49;
   --ativacao-fundo: #2e2109;
+  --filmes: #d8a7ff;
+  --filmes-fundo: #291436;
 
   --acento: #4ade80;
   --acento-texto: #04180d;
@@ -26,7 +28,7 @@
 
   --raio: 14px;
   --raio-pequeno: 9px;
-  --alt-nav: 60px;
+  --alt-nav: 58px;
   --alt-regua: 44px;
   --alt-cabecalho: 56px;
   --sombra: 0 6px 24px rgb(0 0 0 / 45%);
@@ -260,7 +262,13 @@ img {
 
 .nav {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+}
+
+@media (max-width: 359px) {
+  .nav__item {
+    font-size: 9px;
+  }
 }
 
 .nav__item {
@@ -270,10 +278,21 @@ img {
   justify-content: center;
   gap: 3px;
   min-height: var(--alt-nav);
-  padding: 6px 2px;
-  font-size: 10.5px;
+  padding: 6px 1px;
+  font-size: 10px;
   font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-align: center;
   color: var(--texto-fraco);
+}
+
+.nav__rotulo {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nav__item[aria-current='page'] {
@@ -281,8 +300,8 @@ img {
 }
 
 .nav__item svg {
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
 }
 
 /* ---------- Cartoes e listas ---------- */
@@ -377,6 +396,11 @@ img {
 .etiqueta--ativacao {
   color: var(--ativacao);
   background: var(--ativacao-fundo);
+}
+
+.etiqueta--filmes {
+  color: var(--filmes);
+  background: var(--filmes-fundo);
 }
 
 .etiqueta--destaque {
@@ -733,4 +757,138 @@ img {
 .bloco h3 {
   margin: 0 0 9px;
   font-size: 15px;
+}
+
+/* ---------- Busca ---------- */
+
+.busca {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.busca__icone {
+  position: absolute;
+  left: 13px;
+  color: var(--texto-fraco);
+  pointer-events: none;
+}
+
+.busca__campo {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 44px 10px 40px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  color: var(--texto);
+  font: inherit;
+  font-size: 16px; /* 16px evita o zoom automatico do iOS ao focar */
+}
+
+.busca__campo::placeholder {
+  color: var(--texto-fraco);
+}
+
+.busca__campo::-webkit-search-cancel-button {
+  display: none;
+}
+
+.busca__limpar {
+  position: absolute;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  color: var(--texto-suave);
+}
+
+.chips--secundario {
+  padding-bottom: 6px;
+}
+
+.chip--pequeno {
+  min-height: 36px;
+  padding: 6px 13px;
+  font-size: 13px;
+}
+
+/* ---------- Cartao de beneficio ---------- */
+
+.cartao--beneficio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left-width: 1px;
+  border-left-color: var(--borda);
+}
+
+.beneficio__logo {
+  flex: 0 0 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: var(--fundo-cartao-ativo);
+  border: 1px solid var(--borda);
+  overflow: hidden;
+}
+
+.beneficio__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+  padding: 3px;
+}
+
+.beneficio__inicial {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--texto-suave);
+}
+
+.beneficio__corpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.beneficio__corpo .cartao__titulo {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 15.5px;
+}
+
+.beneficio__local {
+  display: block;
+  margin-top: 3px;
+  font-size: 12.5px;
+  color: var(--texto-fraco);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.beneficio__desconto {
+  flex: 0 0 auto;
+  max-width: 96px;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--acento);
+}
+
+.beneficio__desconto--grande {
+  display: block;
+  max-width: none;
+  margin: 12px 0 6px;
+  text-align: left;
+  font-size: 24px;
 }

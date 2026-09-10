@@ -96,6 +96,14 @@ describe('pilar', () => {
     expect(normalizarPilar('ativacoes')).toBe('ativacao')
   })
 
+  it('reconhece os pilares novos e apelidos com espaco', () => {
+    expect(normalizarPilar('Filmes')).toBe('filmes')
+    expect(normalizarPilar('documentário')).toBe('filmes')
+    expect(normalizarPilar('roda de conversa')).toBe('talks')
+    expect(normalizarPilar('Rodas de Conversa')).toBe('talks')
+    expect(normalizarPilar('painel')).toBe('talks')
+  })
+
   it('recusa pilar desconhecido ou vazio', () => {
     expect(normalizarPilar('workshop')).toBeNull()
     expect(normalizarPilar('')).toBeNull()

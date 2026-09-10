@@ -1,11 +1,19 @@
 import { useIdioma } from '../i18n'
 import type { Aba } from '../abas'
 import { ABAS } from '../abas'
-import { IconeCalendario, IconeInfo, IconeInicio, IconeLivro, IconeMapa } from './Icones'
+import {
+  IconeCalendario,
+  IconeEtiqueta,
+  IconeInfo,
+  IconeInicio,
+  IconeLivro,
+  IconeMapa,
+} from './Icones'
 
 const ICONES = {
   inicio: IconeInicio,
   programacao: IconeCalendario,
+  beneficios: IconeEtiqueta,
   mapa: IconeMapa,
   guia: IconeLivro,
   info: IconeInfo,
@@ -32,7 +40,7 @@ export function NavInferior({ ativa, aoTrocar }: Props) {
             onClick={() => aoTrocar(aba)}
           >
             <Icone />
-            <span>{t.abas[aba]}</span>
+            <span className="nav__rotulo">{t.abas[aba]}</span>
           </button>
         )
       })}

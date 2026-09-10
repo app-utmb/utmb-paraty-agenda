@@ -25,12 +25,19 @@ describe('App', () => {
     )
   })
 
-  it('mostra as cinco abas na barra de baixo', async () => {
+  it('mostra as seis abas na barra de baixo', async () => {
     await abrirApp()
     const rotulos = within(nav())
       .getAllByRole('button')
       .map((b) => b.textContent)
-    expect(rotulos).toEqual(['Início', 'Programação', 'Mapa', 'Guia', 'Info'])
+    expect(rotulos).toEqual([
+      'Início',
+      'Programação',
+      'Benefícios',
+      'Mapa',
+      'Guia',
+      'Info',
+    ])
   })
 
   it('navega entre as abas', async () => {

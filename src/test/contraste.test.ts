@@ -64,14 +64,14 @@ describe('contraste do tema escuro', () => {
     expect(contraste(variavel('texto-fraco'), variavel(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
   })
 
-  it.each(['oficial', 'talks', 'ativacao'])(
+  it.each(['oficial', 'talks', 'ativacao', 'filmes'])(
     'a cor do pilar %s passa em AA sobre o fundo do app',
     (pilar) => {
       expect(contraste(variavel(pilar), variavel('fundo'))).toBeGreaterThanOrEqual(AA_TEXTO)
     },
   )
 
-  it.each(['oficial', 'talks', 'ativacao'])(
+  it.each(['oficial', 'talks', 'ativacao', 'filmes'])(
     'a etiqueta do pilar %s passa em AA sobre o proprio fundo',
     (pilar) => {
       expect(contraste(variavel(pilar), variavel(`${pilar}-fundo`))).toBeGreaterThanOrEqual(
@@ -80,7 +80,7 @@ describe('contraste do tema escuro', () => {
     },
   )
 
-  it.each(['oficial', 'talks', 'ativacao'])(
+  it.each(['oficial', 'talks', 'ativacao', 'filmes'])(
     'a cor do pilar %s passa em AA sobre o fundo do cartao',
     (pilar) => {
       expect(contraste(variavel(pilar), variavel('fundo-cartao'))).toBeGreaterThanOrEqual(

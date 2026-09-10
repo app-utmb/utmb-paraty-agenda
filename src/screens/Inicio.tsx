@@ -67,6 +67,14 @@ export function Inicio({ dados, aoAbrirItem, aoIrPara, referencia }: Props) {
         <button
           type="button"
           className="botao botao--secundario"
+          onClick={() => aoIrPara('beneficios')}
+        >
+          {t.inicio.abrirBeneficios}
+          <IconeSeta />
+        </button>
+        <button
+          type="button"
+          className="botao botao--secundario"
           onClick={() => aoIrPara('mapa')}
         >
           {t.inicio.abrirMapa}

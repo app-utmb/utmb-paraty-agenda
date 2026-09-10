@@ -12,6 +12,8 @@ export function Info({ dados }: Props) {
 
   const links: { rotulo: string; href: string }[] = []
   if (config.localMaps) links.push({ rotulo: t.info.comoChegar, href: config.localMaps })
+  if (config.aoVivoUrl) links.push({ rotulo: t.info.aoVivo, href: config.aoVivoUrl })
+  if (config.faqUrl) links.push({ rotulo: t.info.faq, href: config.faqUrl })
   if (config.siteOficial) links.push({ rotulo: t.info.site, href: config.siteOficial })
   if (config.contatoWhatsapp) links.push({ rotulo: t.info.whatsapp, href: config.contatoWhatsapp })
   if (config.contatoEmail)

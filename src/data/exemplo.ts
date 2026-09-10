@@ -28,6 +28,17 @@ mapa_expo_url,
 contato_whatsapp,
 contato_email,paraty@service.utmb.world
 site_oficial,https://paraty.utmb.world/pt
+faq_url,
+ao_vivo_url,
 local_maps,https://maps.app.goo.gl/
 regua_patrocinadores_url,
+`
+
+export const CSV_BENEFICIOS_EXEMPLO = `id,onde,categoria,nome,desconto_pt,desconto_es,desconto_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,condicoes_pt,condicoes_es,condicoes_en,validade,logo_url,link,mapa_url,destaque
+b-001,expo,equipamentos,The North Face,20% de desconto,20% de descuento,20% off,Toda a linha de trail running disponivel no estande.,Toda la linea de trail running en el stand.,The full trail running line at the booth.,Estande The North Face,Stand The North Face,The North Face booth,Mediante apresentacao do numero de peito.,Presentando el dorsal.,Show your race bib.,17 a 20 de setembro,,,,sim
+b-002,cidade,alimentacao,Restaurante Banana da Terra,15% de desconto,15% de descuento,15% off,Cozinha caicara no centro historico.,Cocina caicara en el centro historico.,Local cuisine in the historic centre.,Rua Doutor Samuel Costa 198,Rua Doutor Samuel Costa 198,Rua Doutor Samuel Costa 198,Nao acumulativo com outras promocoes.,No acumulable con otras promociones.,Not combinable with other offers.,17 a 20 de setembro,,,,
+b-003,cidade,hospedagem,Pousada do Ouro,10% de desconto,10% de descuento,10% off,Reservas diretas pelo telefone ou site.,Reservas directas por telefono o sitio.,Direct bookings by phone or website.,Rua Doutor Pereira 145,Rua Doutor Pereira 145,Rua Doutor Pereira 145,Sujeito a disponibilidade.,Sujeto a disponibilidad.,Subject to availability.,15 a 22 de setembro,,,,
+b-004,expo,alimentacao,Cafe da Trilha,Segundo cafe por 1 real,Segundo cafe por 1 real,Second coffee for 1 real,Cafe especial e paes na area de convivencia.,Cafe de especialidad y panes.,Speciality coffee and bread.,Praca de alimentacao da Expo,Plaza de comidas de la Expo,Expo food court,Uma vez por dia por atleta.,Una vez al dia por atleta.,Once a day per athlete.,17 a 20 de setembro,,,,
+b-005,cidade,experiencias,Paraty Tours,25% no passeio de escuna,25% en el paseo en goleta,25% off the schooner tour,Saidas diarias pelo cais.,Salidas diarias desde el muelle.,Daily departures from the pier.,Cais de Paraty,Muelle de Paraty,Paraty pier,Reserva antecipada obrigatoria.,Reserva previa obligatoria.,Advance booking required.,17 a 21 de setembro,,,,
+b-006,cidade,servicos,Espaco Recuperar,30% na sessao de massagem,30% en la sesion de masaje,30% off the massage session,Massagem esportiva pos prova.,Masaje deportivo post carrera.,Post race sports massage.,Avenida Roberto Silveira 90,Avenida Roberto Silveira 90,Avenida Roberto Silveira 90,Agendamento pelo WhatsApp.,Agenda por WhatsApp.,Book by WhatsApp.,19 a 21 de setembro,,,,
 `

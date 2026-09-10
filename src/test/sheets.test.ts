@@ -51,6 +51,7 @@ describe('lerCsv', () => {
 describe('cache local', () => {
   const exemplo: DadosApp = {
     itens: [],
+    beneficios: [],
     config: CONFIG_PADRAO,
     atualizadoEm: '2026-09-17T13:00:00.000Z',
     origem: 'rede',
