@@ -153,6 +153,42 @@ export const es: Dicionario = {
       exemplo: 'Datos de ejemplo',
     },
   },
+  ajuda: {
+    titulo: 'Ayuda',
+    comoNavegar: 'Cómo navegar',
+    comoNavegarTexto:
+      'Usa la barra de abajo para cambiar de sección. La app recuerda la última sección abierta y vuelve donde lo dejaste.',
+    inicioTexto:
+      'Muestra lo que está pasando ahora y lo que viene después, con accesos a las otras secciones.',
+    programacaoTexto:
+      'Elige el día arriba y filtra por pilar o por marca. Toca un elemento para ver lugar, horario, descripción e inscripción.',
+    beneficiosTexto:
+      'Descuentos en la Expo y en la ciudad. Busca por nombre del lugar o filtra por dónde está y por tipo.',
+    mapaTexto:
+      'Plano de la Expo. Usa dos dedos para hacer zoom y toca un stand para ver la marca y lo que pasa allí.',
+    guiaTexto: 'Abre el PDF de la Guía del Atleta en el idioma elegido.',
+    offline: 'Usar sin internet',
+    offlineTexto:
+      'Tras el primer acceso la app funciona sin señal, con la última versión guardada en el dispositivo. Desliza hacia abajo para actualizar cuando vuelvas a tener internet.',
+    instalarTexto:
+      'En iPhone toca Compartir y luego Añadir a pantalla de inicio. En Android, toca el menú del navegador y luego Instalar app.',
+  },
+  secoes: {
+    sobre: 'Sobre el evento',
+    local: 'Lugar',
+    site: 'Sitio oficial',
+    contato: 'Contacto',
+    acompanhar: 'Seguimiento',
+    instalar: 'Instalar',
+  },
+  rotulos: {
+    email: 'Email',
+    whatsapp: 'WhatsApp',
+    abrirMaps: 'Abrir en Google Maps',
+    aoVivo: 'Resultados en vivo',
+    faq: 'Preguntas frecuentes',
+    instalarApp: 'Añadir a pantalla de inicio',
+  },
   status: {
     atualizadoAs: (hora: string) => `actualizado a las ${hora}`,
     atualizando: 'actualizando',

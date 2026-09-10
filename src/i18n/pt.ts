@@ -151,6 +151,42 @@ export const pt = {
       exemplo: 'Dados de exemplo',
     },
   },
+  ajuda: {
+    titulo: 'Ajuda',
+    comoNavegar: 'Como navegar',
+    comoNavegarTexto:
+      'Use a barra de baixo para trocar de seção. O app guarda a última seção aberta, então ele volta onde você parou.',
+    inicioTexto:
+      'Mostra o que está acontecendo agora e o que vem em seguida, com atalhos para as outras seções.',
+    programacaoTexto:
+      'Escolha o dia no topo e filtre por pilar ou por marca. Toque num item para ver local, horário, descrição e inscrição.',
+    beneficiosTexto:
+      'Descontos na Expo e na cidade. Busque pelo nome do lugar ou filtre por onde fica e por tipo.',
+    mapaTexto:
+      'Planta da Expo. Use dois dedos para dar zoom e toque num estande para ver a marca e o que acontece nele.',
+    guiaTexto: 'Abre o PDF do Guia do Atleta no idioma escolhido.',
+    offline: 'Usar sem internet',
+    offlineTexto:
+      'Depois do primeiro acesso o app funciona sem sinal, com a última versão da agenda salva no aparelho. Puxe a tela para baixo para atualizar quando voltar a ter internet.',
+    instalarTexto:
+      'No iPhone toque em Compartilhar e depois em Adicionar à Tela de Início. No Android, toque no menu do navegador e depois em Instalar app.',
+  },
+  secoes: {
+    sobre: 'Sobre o evento',
+    local: 'Local',
+    site: 'Site oficial',
+    contato: 'Contato',
+    acompanhar: 'Acompanhar',
+    instalar: 'Instalar',
+  },
+  rotulos: {
+    email: 'E-mail',
+    whatsapp: 'WhatsApp',
+    abrirMaps: 'Abrir no Google Maps',
+    aoVivo: 'Resultados ao vivo',
+    faq: 'Perguntas frequentes',
+    instalarApp: 'Adicionar à tela de início',
+  },
   status: {
     atualizadoAs: (hora: string) => `atualizado às ${hora}`,
     atualizando: 'atualizando',

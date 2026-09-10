@@ -111,4 +111,8 @@ describe.each(NOMES)('contraste do tema %s', (tema) => {
   it('o texto de erro passa em AA', () => {
     expect(contraste(v('perigo'), v('fundo-cartao'))).toBeGreaterThanOrEqual(AA_TEXTO)
   })
+
+  it.each(FUNDOS)('a cor de destaque passa em AA sobre --%s', (fundo) => {
+    expect(contraste(v('destaque'), v(fundo))).toBeGreaterThanOrEqual(AA_TEXTO)
+  })
 })

@@ -141,3 +141,44 @@ export const IconeMonitor = ({ className }: Props) => (
     <path d="M8.4 20.4h7.2M12 16.8v3.6" />
   </svg>
 )
+
+export const IconeChevron = ({ className }: Props) => (
+  <svg {...base} className={className} width="17" height="17">
+    <path d="m9.4 5.6 6.4 6.4-6.4 6.4" />
+  </svg>
+)
+
+export const IconePino = ({ className }: Props) => (
+  <svg {...base} className={className}>
+    <path d="M19 10.4c0 5.2-7 10.4-7 10.4s-7-5.2-7-10.4a7 7 0 0 1 14 0Z" />
+    <circle cx="12" cy="10.2" r="2.6" />
+  </svg>
+)
+
+export const IconeLink = ({ className }: Props) => (
+  <svg {...base} className={className}>
+    <path d="M10.2 13.8a3.6 3.6 0 0 0 5.4.4l2.6-2.6a3.7 3.7 0 0 0-5.2-5.2l-1.5 1.5" />
+    <path d="M13.8 10.2a3.6 3.6 0 0 0-5.4-.4l-2.6 2.6a3.7 3.7 0 0 0 5.2 5.2l1.5-1.5" />
+  </svg>
+)
+
+export const IconeEnvelope = ({ className }: Props) => (
+  <svg {...base} className={className}>
+    <rect x="3" y="5.4" width="18" height="13.2" rx="2.4" />
+    <path d="m3.6 7 7.3 5.2a2 2 0 0 0 2.2 0L20.4 7" />
+  </svg>
+)
+
+export const IconeWhatsapp = ({ className }: Props) => (
+  <svg {...base} className={className}>
+    <path d="M20.2 11.6a8.2 8.2 0 0 1-12.1 7.2L3.8 20.2l1.4-4.2A8.2 8.2 0 1 1 20.2 11.6Z" />
+    <path d="M9.2 9.1c.3 2.4 2.3 4.4 4.7 4.7l1-1.2 1.5.8-.3 1.5c-2.9.5-6.5-3.1-6-6l1.5-.3.8 1.5z" />
+  </svg>
+)
+
+export const IconeCelular = ({ className }: Props) => (
+  <svg {...base} className={className}>
+    <rect x="6.4" y="2.8" width="11.2" height="18.4" rx="2.6" />
+    <path d="M10.6 5.6h2.8" />
+  </svg>
+)

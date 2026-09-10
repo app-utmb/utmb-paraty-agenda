@@ -1,4 +1,19 @@
-import { IconeSeta } from '../components/Icones'
+import { Grupo, LinhaExplicativa, LinhaLink } from '../components/LinhaInfo'
+import {
+  IconeAoVivo,
+  IconeCalendario,
+  IconeCelular,
+  IconeEnvelope,
+  IconeEtiqueta,
+  IconeInfo,
+  IconeInicio,
+  IconeLink,
+  IconeLivro,
+  IconeMapa,
+  IconeNuvemCortada,
+  IconePino,
+  IconeWhatsapp,
+} from '../components/Icones'
 import type { DadosApp } from '../data/types'
 import { useIdioma } from '../i18n'
 
@@ -6,61 +21,130 @@ interface Props {
   dados: DadosApp
 }
 
+/** Extrai "paraty.utmb.world" de uma URL, para mostrar sem o ruido do http. */
+function dominio(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
+}
+
+/** Deixa o numero do WhatsApp legivel a partir do link wa.me. */
+function telefone(url: string): string {
+  const so = url.replace(/\D/g, '')
+  if (so.length < 12) return url
+  return `+${so.slice(0, 2)} ${so.slice(2, 4)} ${so.slice(4, 9)}-${so.slice(9)}`
+}
+
 export function Info({ dados }: Props) {
   const { t } = useIdioma()
   const { config } = dados
 
-  const links: { rotulo: string; href: string }[] = []
-  if (config.localMaps) links.push({ rotulo: t.info.comoChegar, href: config.localMaps })
-  if (config.aoVivoUrl) links.push({ rotulo: t.info.aoVivo, href: config.aoVivoUrl })
-  if (config.faqUrl) links.push({ rotulo: t.info.faq, href: config.faqUrl })
-  if (config.siteOficial) links.push({ rotulo: t.info.site, href: config.siteOficial })
-  if (config.contatoWhatsapp) links.push({ rotulo: t.info.whatsapp, href: config.contatoWhatsapp })
-  if (config.contatoEmail)
-    links.push({ rotulo: t.info.email, href: `mailto:${config.contatoEmail}` })
-
   return (
     <div>
-      <h1 className="secao-titulo">{t.info.titulo}</h1>
+      <h1 className="visualmente-oculto">{t.info.titulo}</h1>
 
-      <div className="bloco">
-        <h2 style={{ margin: '0 0 6px', fontSize: 18 }}>{config.eventoNome}</h2>
-        <p style={{ color: 'var(--texto-fraco)' }}>{config.eventoDatas}</p>
-        <p>{t.info.sobreTexto}</p>
-      </div>
+      <Grupo titulo={t.ajuda.titulo}>
+        <LinhaExplicativa
+          icone={IconeInfo}
+          rotulo={t.ajuda.comoNavegar}
+          texto={t.ajuda.comoNavegarTexto}
+        />
+        <LinhaExplicativa
+          icone={IconeInicio}
+          rotulo={t.abas.inicio}
+          texto={t.ajuda.inicioTexto}
+        />
+        <LinhaExplicativa
+          icone={IconeCalendario}
+          rotulo={t.abas.programacao}
+          texto={t.ajuda.programacaoTexto}
+        />
+        <LinhaExplicativa
+          icone={IconeEtiqueta}
+          rotulo={t.abas.beneficios}
+          texto={t.ajuda.beneficiosTexto}
+        />
+        <LinhaExplicativa icone={IconeMapa} rotulo={t.abas.mapa} texto={t.ajuda.mapaTexto} />
+        <LinhaExplicativa icone={IconeLivro} rotulo={t.guia.titulo} texto={t.ajuda.guiaTexto} />
+        <LinhaExplicativa
+          icone={IconeNuvemCortada}
+          rotulo={t.ajuda.offline}
+          texto={t.ajuda.offlineTexto}
+        />
+        <LinhaExplicativa
+          icone={IconeCelular}
+          rotulo={t.rotulos.instalarApp}
+          texto={t.ajuda.instalarTexto}
+        />
+      </Grupo>
 
-      {links.length > 0 && (
-        <>
-          <h2 className="secao-titulo">{t.info.links}</h2>
-          <ul className="lista-links">
-            {links.map((l) => (
-              <li key={l.href}>
-                <a
-                  className="botao botao--secundario botao--pequeno"
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {l.rotulo}
-                  <IconeSeta />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
+      <section className="grupo">
+        <h2 className="grupo__titulo">{t.secoes.sobre}</h2>
+        <p className="bloco-texto">{t.info.sobreTexto}</p>
+      </section>
+
+      {config.localMaps && (
+        <Grupo titulo={t.secoes.local}>
+          <LinhaLink
+            icone={IconePino}
+            rotulo="Paraty, RJ"
+            sub={t.rotulos.abrirMaps}
+            href={config.localMaps}
+          />
+        </Grupo>
       )}
 
-      <h2 className="secao-titulo">{t.info.instalar}</h2>
-      <div className="bloco">
-        <p>{t.info.instalarIos}</p>
-        <p>{t.info.instalarAndroid}</p>
-        <p>{t.info.offline}</p>
-      </div>
+      {(config.aoVivoUrl || config.faqUrl || config.siteOficial) && (
+        <Grupo titulo={t.secoes.acompanhar}>
+          {config.aoVivoUrl && (
+            <LinhaLink
+              icone={IconeAoVivo}
+              rotulo={t.rotulos.aoVivo}
+              sub={dominio(config.aoVivoUrl)}
+              href={config.aoVivoUrl}
+            />
+          )}
+          {config.faqUrl && (
+            <LinhaLink icone={IconeInfo} rotulo={t.rotulos.faq} href={config.faqUrl} />
+          )}
+          {config.siteOficial && (
+            <LinhaLink
+              icone={IconeLink}
+              rotulo={dominio(config.siteOficial)}
+              sub={t.secoes.site}
+              href={config.siteOficial}
+            />
+          )}
+        </Grupo>
+      )}
 
-      <h2 className="secao-titulo">{t.info.versaoDados}</h2>
-      <div className="bloco">
-        <p>{t.info.origem[dados.origem]}</p>
-      </div>
+      {(config.contatoEmail || config.contatoWhatsapp) && (
+        <Grupo titulo={t.secoes.contato}>
+          {config.contatoEmail && (
+            <LinhaLink
+              icone={IconeEnvelope}
+              rotulo={config.contatoEmail}
+              sub={t.rotulos.email}
+              href={`mailto:${config.contatoEmail}`}
+            />
+          )}
+          {config.contatoWhatsapp && (
+            <LinhaLink
+              icone={IconeWhatsapp}
+              rotulo={telefone(config.contatoWhatsapp)}
+              sub={t.rotulos.whatsapp}
+              href={config.contatoWhatsapp}
+            />
+          )}
+        </Grupo>
+      )}
+
+      <section className="grupo">
+        <h2 className="grupo__titulo">{t.info.versaoDados}</h2>
+        <p className="bloco-texto">{t.info.origem[dados.origem]}</p>
+      </section>
     </div>
   )
 }

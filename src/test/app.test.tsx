@@ -45,7 +45,7 @@ describe('App', () => {
     await userEvent.click(within(nav()).getByRole('button', { name: 'Programação' }))
     expect(screen.getAllByRole('tab').length).toBeGreaterThan(0)
     await userEvent.click(within(nav()).getByRole('button', { name: 'Info' }))
-    expect(screen.getByText(/sobre o evento|trail running/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /sobre o evento/i })).toBeInTheDocument()
   })
 
   it('lembra a aba escolhida no aparelho', async () => {

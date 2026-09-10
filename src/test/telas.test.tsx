@@ -266,21 +266,49 @@ describe('tela Mapa da Expo', () => {
 describe('tela Info', () => {
   it('mostra os links de contato e do evento', () => {
     renderizar(<Info dados={dados} />)
-    expect(screen.getByRole('link', { name: /ver no mapa/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /abrir no google maps/i })).toHaveAttribute(
       'href',
       'https://maps.app.goo.gl/exemplo',
     )
-    expect(screen.getByRole('link', { name: /enviar email/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /paraty@service\.utmb\.world/i })).toHaveAttribute(
       'href',
       'mailto:paraty@service.utmb.world',
     )
     expect(screen.getByRole('link', { name: /whatsapp/i })).toBeInTheDocument()
   })
 
-  it('explica como instalar e usar offline', () => {
+  it('agrupa os links em secoes com titulo', () => {
     renderizar(<Info dados={dados} />)
-    expect(screen.getByText(/adicionar à tela de início/i)).toBeInTheDocument()
-    expect(screen.getByText(/funciona sem internet/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /^ajuda$/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /^contato$/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /^local$/i })).toBeInTheDocument()
+  })
+
+  it('mostra o resultado ao vivo e a FAQ', () => {
+    renderizar(<Info dados={dados} />)
+    expect(screen.getByRole('link', { name: /resultados ao vivo/i })).toHaveAttribute(
+      'href',
+      'https://live.utmb.world/pt/paraty/2026',
+    )
+    expect(screen.getByRole('link', { name: /perguntas frequentes/i })).toBeInTheDocument()
+  })
+
+  it('abre e fecha a explicacao de cada item da ajuda', async () => {
+    renderizar(<Info dados={dados} />)
+    const linha = screen.getByRole('button', { name: /usar sem internet/i })
+    expect(linha).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByText(/funciona sem sinal/i)).not.toBeVisible()
+    await userEvent.click(linha)
+    expect(linha).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByText(/funciona sem sinal/i)).toBeVisible()
+    await userEvent.click(linha)
+    expect(screen.getByText(/funciona sem sinal/i)).not.toBeVisible()
+  })
+
+  it('explica como instalar', async () => {
+    renderizar(<Info dados={dados} />)
+    await userEvent.click(screen.getByRole('button', { name: /adicionar à tela de início/i }))
+    expect(screen.getByText(/adicionar à tela de início\./i)).toBeVisible()
   })
 
   it('mostra a origem dos dados', () => {
@@ -288,9 +316,10 @@ describe('tela Info', () => {
     expect(screen.getByText(/última versão salva no aparelho/i)).toBeInTheDocument()
   })
 
-  it('esconde links que a planilha nao preencheu', () => {
+  it('esconde secoes que a planilha nao preencheu', () => {
     renderizar(<Info dados={dadosDeTeste({ config: CONFIG_PADRAO })} />)
     expect(screen.queryByRole('link', { name: /whatsapp/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: /^local$/i })).not.toBeInTheDocument()
   })
 })
 
