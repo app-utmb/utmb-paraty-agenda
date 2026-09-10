@@ -92,7 +92,7 @@ Mesmo caminho: suba a imagem em algum lugar público e cole o link em `mapa_expo
 1. Coloque o arquivo na pasta `public/` deste repositório, por exemplo `public/mapa-expo.png`.
 2. Faça o push.
 3. Na aba Config, use o endereço completo do app mais o nome do arquivo, por exemplo:
-   `https://SEU-USUARIO.github.io/paraty-agenda/mapa-expo.png`
+   `https://SEU-USUARIO.github.io/utmb-paraty-agenda/mapa-expo.png`
 
 Vale o mesmo para a régua de patrocinadores.
 

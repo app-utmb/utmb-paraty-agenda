@@ -6,7 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 // No GitHub Pages de projeto a URL e https://<usuario>.github.io/<repo>/,
 // entao o base precisa ser "/<repo>/". O workflow do GitHub Actions define
 // VITE_BASE automaticamente a partir do nome do repositorio.
-const base = process.env.VITE_BASE ?? '/paraty-agenda/'
+const base = process.env.VITE_BASE ?? '/utmb-paraty-agenda/'
 
 export default defineConfig({
   base,
