@@ -7,7 +7,12 @@ import { DetalheMarca } from '../components/DetalheMarca'
 import { PONTOS_MAPA, REFERENCIA, type PontoMapa } from '../data/mapa'
 import { lerCsv } from '../data/sheets'
 import { MapaExpo } from '../screens/MapaExpo'
-import { atividadesDaMarca, beneficiosDaMarca, listarDias } from '../utils/marca'
+import {
+  atividadesDaMarca,
+  beneficiosDaMarca,
+  listarDias,
+  localPrincipal,
+} from '../utils/marca'
 import { dadosDeTeste } from './fixtures'
 import { renderizar, screen, within } from './utilitarios'
 
@@ -91,12 +96,9 @@ describe('agrupamento por marca', () => {
   })
 
   it('mostra o horario quando ele e igual em todos os dias', () => {
-    const itens = [
-      ...dados.itens.filter((i) => i.marca === 'The North Face'),
-    ]
     const p = { ...ponto('hoka'), marcas: ['The North Face'] }
-    const r = atividadesDaMarca(p, itens, 'pt')
-    expect(r[0]?.horario).toBe('16:00 - 17:00')
+    const r = atividadesDaMarca(p, dados.itens, 'pt')
+    expect(r.find((a) => a.chave === 'Teste de calcados')?.horario).toBe('16:00 - 17:00')
   })
 
   it('acha o beneficio pelo nome da marca, ignorando caixa e acento', () => {
@@ -107,6 +109,24 @@ describe('agrupamento por marca', () => {
   it('devolve vazio para estande sem marca', () => {
     expect(atividadesDaMarca(ponto('banheiros'), dados.itens, 'pt')).toEqual([])
     expect(beneficiosDaMarca(ponto('banheiros'), dados.beneficios)).toEqual([])
+  })
+
+  it('usa o local das ativacoes como estande da marca, mesmo com empate', () => {
+    // A marca tem uma ativacao no estande e uma palestra no palco. O estande
+    // e o das ativacoes, senao o empate escolheria um dos dois a esmo.
+    const p = { ...ponto('hoka'), marcas: ['The North Face'] }
+    const atividades = atividadesDaMarca(p, dados.itens, 'pt')
+    expect(localPrincipal(atividades)).toBe('Estande')
+  })
+
+  it('sem ativacao, cai no local mais repetido', () => {
+    const so = [{ chave: 'x', titulo: 'x', descricao: '', dias: ['2026-09-17'], horario: null,
+      pilar: 'talks' as const, local: 'Palco Expo', inscricao: 'livre' as const, linkInscricao: null }]
+    expect(localPrincipal(so)).toBe('Palco Expo')
+  })
+
+  it('devolve nulo quando nao ha atividade', () => {
+    expect(localPrincipal([])).toBeNull()
   })
 
   it('lista os dias em linguagem natural', () => {
@@ -184,6 +204,23 @@ describe('detalhe da marca', () => {
     expect(within(dialogo).getByRole('heading', { name: 'Liquidz' })).toBeInTheDocument()
     expect(within(dialogo).getByText(/Estande C5/i)).toBeInTheDocument()
     expect(within(dialogo).getByText(/Hidratação e alimentação/i)).toBeInTheDocument()
+  })
+
+  it('avisa onde acontece o que e fora do estande da marca', () => {
+    renderizar(
+      <DetalheMarca
+        ponto={{ ...ponto('hoka'), marcas: ['The North Face'] }}
+        itens={dados.itens}
+        beneficios={dados.beneficios}
+        aoFechar={vi.fn()}
+      />,
+    )
+    const dialogo = screen.getByRole('dialog')
+    // A palestra e no palco, entao leva o pilar e o local.
+    expect(within(dialogo).getByText('Palco Expo')).toBeInTheDocument()
+    expect(within(dialogo).getByText('Talks')).toBeInTheDocument()
+    // A ativacao no proprio estande nao repete o local.
+    expect(within(dialogo).queryByText('Estande')).not.toBeInTheDocument()
   })
 
   it('avisa quando o estande nao tem ativacao cadastrada', () => {

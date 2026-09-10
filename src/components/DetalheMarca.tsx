@@ -3,7 +3,12 @@ import { escolherIdioma } from '../data/normalize'
 import type { PontoMapa } from '../data/mapa'
 import type { Beneficio, ItemProgramacao } from '../data/types'
 import { useIdioma } from '../i18n'
-import { atividadesDaMarca, beneficiosDaMarca, listarDias } from '../utils/marca'
+import {
+  atividadesDaMarca,
+  beneficiosDaMarca,
+  listarDias,
+  localPrincipal,
+} from '../utils/marca'
 import { IconeFechar, IconeSeta } from './Icones'
 
 interface Props {
@@ -60,6 +65,8 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
   }, [aoFechar])
 
   const atividades = atividadesDaMarca(ponto, itens, idioma)
+  // O que acontece fora do estande da marca precisa dizer onde acontece.
+  const ondeQuaseTudo = localPrincipal(atividades)
   const vantagens = beneficiosDaMarca(ponto, beneficios)
   const segmento = ponto.segmentos.map((x) => t.segmentos[x]).join(' · ')
   const logoSrc = ponto.logo ? `${import.meta.env.BASE_URL}logos/${ponto.logo}.png` : null
@@ -143,6 +150,12 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
                       {listarDias(a.dias, t.mapa.conectorDias)} {t.mapa.setembro}
                       {a.horario ? ` · ${a.horario}` : ''}
                     </p>
+                    {a.local && a.local !== ondeQuaseTudo && (
+                      <p className="atividade__fora">
+                        <span className={`etiqueta etiqueta--${a.pilar}`}>{t.pilares[a.pilar]}</span>
+                        <span>{a.local}</span>
+                      </p>
+                    )}
                     {a.descricao && <p className="atividade__desc">{a.descricao}</p>}
                     {a.inscricao !== 'livre' && (
                       <span className="etiqueta etiqueta--inscricao">

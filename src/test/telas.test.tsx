@@ -159,7 +159,7 @@ describe('tela Programacao', () => {
     await userEvent.click(screen.getByRole('option', { name: 'The North Face' }))
     expect(screen.getByText('Teste de calcados')).toBeInTheDocument()
     expect(screen.queryByText('Retirada de kits')).not.toBeInTheDocument()
-    expect(screen.getByText('1 item')).toBeInTheDocument()
+    expect(screen.getByText('2 itens')).toBeInTheDocument()
   })
 
   it('busca a marca dentro do menu', async () => {
@@ -203,7 +203,7 @@ describe('tela Programacao', () => {
     abrir()
     await abrirMarcas()
     await userEvent.click(screen.getByRole('option', { name: 'The North Face' }))
-    expect(screen.getByText('1 item')).toBeInTheDocument()
+    expect(screen.getByText('2 itens')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('tab', { name: /18/ }))
     expect(screen.getByText('2 itens')).toBeInTheDocument()
   })

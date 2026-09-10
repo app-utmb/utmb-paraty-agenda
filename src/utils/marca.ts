@@ -1,6 +1,6 @@
 import { escolherIdioma, paraBusca } from '../data/normalize'
 import type { PontoMapa } from '../data/mapa'
-import type { Beneficio, Idioma, ItemProgramacao } from '../data/types'
+import type { Beneficio, Idioma, ItemProgramacao, Pilar } from '../data/types'
 
 /** Uma ativacao que acontece em varios dias vira uma linha so. */
 export interface AtividadeResumida {
@@ -11,6 +11,9 @@ export interface AtividadeResumida {
   dias: string[]
   /** "10:00 - 20:00" quando o horario e igual em todos os dias, senao null. */
   horario: string | null
+  pilar: Pilar
+  /** Onde acontece. Nem toda acao da marca e no estande dela. */
+  local: string
   inscricao: ItemProgramacao['inscricao']
   linkInscricao: string | null
 }
@@ -64,6 +67,8 @@ export function atividadesDaMarca(
           ? `${primeiro.horaInicio} - ${primeiro.horaFim}`
           : primeiro.horaInicio
         : null,
+      pilar: primeiro.pilar,
+      local: escolherIdioma(primeiro.local, idioma),
       inscricao: primeiro.inscricao,
       linkInscricao: primeiro.linkInscricao,
     }
@@ -75,4 +80,31 @@ export function listarDias(dias: readonly string[], conector: string): string {
   const numeros = dias.map((d) => String(Number(d.slice(8, 10))))
   if (numeros.length <= 1) return numeros[0] ?? ''
   return `${numeros.slice(0, -1).join(', ')} ${conector} ${numeros[numeros.length - 1]}`
+}
+
+/**
+ * O estande da marca. Ativacao e, por definicao, o que a marca faz no
+ * proprio estande, entao o local delas e a referencia. Palestra e filme
+ * acontecem no palco e ficam de fora da conta, senao uma marca com uma
+ * ativacao e uma palestra daria empate e a escolha sairia arbitraria.
+ * Sem nenhuma ativacao, vale o local mais repetido.
+ */
+export function localPrincipal(atividades: readonly AtividadeResumida[]): string | null {
+  const maisRepetido = (lista: readonly AtividadeResumida[]): string | null => {
+    const conta = new Map<string, number>()
+    for (const a of lista) {
+      if (!a.local) continue
+      conta.set(a.local, (conta.get(a.local) ?? 0) + 1)
+    }
+    let melhor: string | null = null
+    let maior = 0
+    for (const [local, n] of conta) {
+      if (n > maior) {
+        melhor = local
+        maior = n
+      }
+    }
+    return melhor
+  }
+  return maisRepetido(atividades.filter((a) => a.pilar === 'ativacao')) ?? maisRepetido(atividades)
 }

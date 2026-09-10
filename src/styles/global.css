@@ -1427,3 +1427,15 @@ img {
     font-size: 30px;
   }
 }
+
+/* Linha que avisa que a acao acontece fora do estande da marca. */
+.atividade__fora {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
