@@ -113,14 +113,13 @@ export async function carregarDados(sinal?: AbortSignal): Promise<ResultadoCarga
   }
 
   try {
-    // A aba de beneficios e opcional: se ainda nao existe, a lista fica vazia
-    // e o resto do app segue normalmente.
+    // A planilha de beneficios so e opcional quando nem foi configurada. Com
+    // a URL preenchida, uma falha dela conta como falha da carga inteira, para
+    // o app cair no cache em vez de mostrar a lista de descontos vazia.
     const [csvProgramacao, csvConfig, csvBeneficios] = await Promise.all([
       baixarTexto(URL_CSV_PROGRAMACAO, sinal),
       baixarTexto(URL_CSV_CONFIG, sinal),
-      URL_CSV_BENEFICIOS
-        ? baixarTexto(URL_CSV_BENEFICIOS, sinal).catch(() => '')
-        : Promise.resolve(''),
+      URL_CSV_BENEFICIOS ? baixarTexto(URL_CSV_BENEFICIOS, sinal) : Promise.resolve(''),
     ])
     const { dados, problemas } = montar(
       csvProgramacao,
@@ -130,6 +129,12 @@ export async function carregarDados(sinal?: AbortSignal): Promise<ResultadoCarga
       new Date().toISOString(),
     )
     if (dados.itens.length === 0) throw new Error('planilha sem itens validos')
+    if (URL_CSV_BENEFICIOS && dados.beneficios.length === 0) {
+      // Melhor manter a lista anterior do que publicar "sem beneficios" por
+      // causa de uma resposta truncada do Google.
+      const cache = lerCache()
+      if (cache && cache.beneficios.length > 0) dados.beneficios = cache.beneficios
+    }
     gravarCache(dados)
     return { dados, problemas, erroRede: null }
   } catch (erro) {

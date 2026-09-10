@@ -7,6 +7,12 @@ const CSV_PROG = `id,data,hora_inicio,pilar,titulo_pt
 n1,2026-09-17,10:00,talks,Da rede
 `
 const CSV_CONF = 'chave,valor\nevento_nome,Vindo da rede\n'
+const CSV_BEN =
+  'id,onde,categoria,nome,desconto_pt\nb1,expo,equipamentos,Marca Teste,10% de desconto\n'
+
+/** Devolve o CSV certo para cada uma das tres planilhas. */
+const porUrl = (url: string) =>
+  url.includes('prog') ? CSV_PROG : url.includes('ben') ? CSV_BEN : CSV_CONF
 
 /** Recarrega o modulo com URLs de planilha definidas, para testar a rede. */
 async function comPlanilhaConectada() {
@@ -17,6 +23,7 @@ async function comPlanilhaConectada() {
       ...real,
       URL_CSV_PROGRAMACAO: 'https://docs.google.com/prog.csv',
       URL_CSV_CONFIG: 'https://docs.google.com/conf.csv',
+      URL_CSV_BENEFICIOS: 'https://docs.google.com/ben.csv',
     }
   })
   return import('../data/sheets')
@@ -108,9 +115,7 @@ describe('carregarDados com planilha conectada', () => {
   it('busca as duas abas e monta os dados', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(async (url: string) =>
-        respostaOk(url.includes('prog') ? CSV_PROG : CSV_CONF),
-      ),
+      vi.fn(async (url: string) => respostaOk(porUrl(url))),
     )
     const { carregarDados } = await comPlanilhaConectada()
     const r = await carregarDados()
@@ -123,7 +128,7 @@ describe('carregarDados com planilha conectada', () => {
   it('salva no cache o que veio da rede', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(async (url: string) => respostaOk(url.includes('prog') ? CSV_PROG : CSV_CONF)),
+      vi.fn(async (url: string) => respostaOk(porUrl(url))),
     )
     const { carregarDados } = await comPlanilhaConectada()
     await carregarDados()
@@ -133,7 +138,7 @@ describe('carregarDados com planilha conectada', () => {
   it('cai no cache quando a rede falha', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(async (url: string) => respostaOk(url.includes('prog') ? CSV_PROG : CSV_CONF)),
+      vi.fn(async (url: string) => respostaOk(porUrl(url))),
     )
     const primeiro = await comPlanilhaConectada()
     await primeiro.carregarDados()
@@ -169,11 +174,40 @@ describe('carregarDados com planilha conectada', () => {
     expect(r.dados.origem).toBe('exemplo')
   })
 
+  it('trata falha na planilha de beneficios como falha da carga inteira', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) => {
+        if (url.includes('ben')) throw new Error('beneficios fora do ar')
+        return respostaOk(porUrl(url))
+      }),
+    )
+    const { carregarDados } = await comPlanilhaConectada()
+    const r = await carregarDados()
+    expect(r.erroRede).toBe('beneficios fora do ar')
+  })
+
+  it('mantem os beneficios do cache quando a planilha volta vazia', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => respostaOk(porUrl(url))))
+    const primeiro = await comPlanilhaConectada()
+    await primeiro.carregarDados()
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) =>
+        respostaOk(url.includes('ben') ? 'id,onde,categoria,nome,desconto_pt\n' : porUrl(url)),
+      ),
+    )
+    const segundo = await comPlanilhaConectada()
+    const r = await segundo.carregarDados()
+    expect(r.dados.beneficios.map((b) => b.nome)).toEqual(['Marca Teste'])
+  })
+
   it('trata planilha sem itens validos como falha, para nao esvaziar a tela', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(async (url: string) =>
-        respostaOk(url.includes('prog') ? 'id,data,hora_inicio,titulo_pt\n' : CSV_CONF),
+        respostaOk(url.includes('prog') ? 'id,data,hora_inicio,titulo_pt\n' : porUrl(url)),
       ),
     )
     const { carregarDados } = await comPlanilhaConectada()
