@@ -708,7 +708,7 @@ img {
 
 .mapa-caixa {
   position: relative;
-  height: min(66vh, 520px);
+  height: min(58vh, 460px);
   overflow: hidden;
   border: 1px solid var(--borda);
   border-radius: var(--raio);
@@ -716,14 +716,93 @@ img {
   touch-action: none;
 }
 
-.mapa-img {
+.mapa-palco {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
   transform-origin: 0 0;
-  max-width: none;
+}
+
+.mapa-img {
+  display: block;
+  width: 100%;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+/* Um alvo tocavel por estande, posicionado em porcentagem sobre a imagem,
+   dentro do mesmo elemento transformado para acompanhar o zoom. */
+.mapa-ponto {
+  position: absolute;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.mapa-ponto--marca:active,
+.mapa-ponto--marca:hover {
+  border-color: var(--acento);
+  background: rgb(74 222 128 / 26%);
+}
+
+.mapa-ponto--servico:active,
+.mapa-ponto--servico:hover {
+  border-color: var(--talks);
+  background: rgb(99 176 255 / 22%);
+}
+
+.mapa-ponto:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 1px;
+}
+
+.marca__estande {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--texto-fraco);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.atividades {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.atividade {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--borda);
+}
+
+.atividade:last-child {
+  border-bottom: 0;
+}
+
+.atividade__titulo {
+  margin: 0 0 3px;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+
+.atividade__quando {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--acento);
+  font-variant-numeric: tabular-nums;
+}
+
+.atividade__desc {
+  margin: 5px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--texto-suave);
 }
 
 .mapa-controles {

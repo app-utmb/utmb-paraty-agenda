@@ -1,24 +1,33 @@
 import { useCallback, useRef, useState } from 'react'
 import { IconeMais, IconeMenos } from '../components/Icones'
+import { PONTOS_MAPA, type PontoMapa } from '../data/mapa'
 import type { ConfigEvento } from '../data/types'
 import { useIdioma } from '../i18n'
 
 const ZOOM_MIN = 1
 const ZOOM_MAX = 5
 const PASSO = 0.5
+/** Arrastar mais que isto cancela o toque no estande. */
+const TOLERANCIA_TOQUE = 8
 
 interface Props {
   config: ConfigEvento
+  aoAbrirPonto: (p: PontoMapa) => void
 }
 
-/** Mapa da Expo com pinca para zoom, arraste e botoes equivalentes para teclado. */
-export function MapaExpo({ config }: Props) {
+/**
+ * Mapa da Expo com pinca para zoom, arraste e um ponto tocavel por estande.
+ * Os pontos ficam dentro do mesmo elemento transformado da imagem, entao
+ * acompanham o zoom sem calculo extra.
+ */
+export function MapaExpo({ config, aoAbrirPonto }: Props) {
   const { t } = useIdioma()
   const [zoom, setZoom] = useState(1)
   const [pos, setPos] = useState({ x: 0, y: 0 })
   const [falhou, setFalhou] = useState(false)
   const arraste = useRef<{ x: number; y: number } | null>(null)
   const pinca = useRef<{ distancia: number; zoom: number } | null>(null)
+  const andou = useRef(0)
 
   const limitar = useCallback((v: number) => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v)), [])
 
@@ -32,6 +41,7 @@ export function MapaExpo({ config }: Props) {
     Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY)
 
   const aoTocar = (e: React.TouchEvent) => {
+    andou.current = 0
     if (e.touches.length === 2) {
       const [a, b] = [e.touches[0], e.touches[1]]
       if (a && b) pinca.current = { distancia: distancia(a, b), zoom }
@@ -46,19 +56,28 @@ export function MapaExpo({ config }: Props) {
     if (e.touches.length === 2 && pinca.current) {
       const [a, b] = [e.touches[0], e.touches[1]]
       if (!a || !b) return
-      const fator = distancia(a, b) / pinca.current.distancia
-      ajustarZoom(pinca.current.zoom * fator)
+      andou.current += TOLERANCIA_TOQUE + 1
+      ajustarZoom(pinca.current.zoom * (distancia(a, b) / pinca.current.distancia))
       return
     }
     const toque = e.touches[0]
     if (e.touches.length === 1 && arraste.current && toque && zoom > 1) {
-      setPos({ x: toque.clientX - arraste.current.x, y: toque.clientY - arraste.current.y })
+      const x = toque.clientX - arraste.current.x
+      const y = toque.clientY - arraste.current.y
+      andou.current += Math.abs(x - pos.x) + Math.abs(y - pos.y)
+      setPos({ x, y })
     }
   }
 
   const aoSoltar = () => {
     arraste.current = null
     pinca.current = null
+  }
+
+  const abrir = (ponto: PontoMapa) => {
+    // Um arraste que termina em cima de um estande nao deve abrir o detalhe.
+    if (andou.current > TOLERANCIA_TOQUE) return
+    aoAbrirPonto(ponto)
   }
 
   if (!config.mapaExpoUrl || falhou) {
@@ -77,7 +96,7 @@ export function MapaExpo({ config }: Props) {
     <div>
       <h1 className="secao-titulo">{t.mapa.titulo}</h1>
       <p className="vazio__dica" style={{ marginBottom: 10 }}>
-        {t.mapa.ajuda}
+        {t.mapa.interativo}
       </p>
 
       <div
@@ -87,17 +106,37 @@ export function MapaExpo({ config }: Props) {
         onTouchEnd={aoSoltar}
         onTouchCancel={aoSoltar}
       >
-        <img
-          className="mapa-img"
-          src={config.mapaExpoUrl}
-          alt={t.mapa.alt}
-          decoding="async"
-          onError={() => setFalhou(true)}
-          style={{
-            transform: `translate(${pos.x}px, ${pos.y}px) scale(${zoom})`,
-            width: '100%',
-          }}
-        />
+        <div
+          className="mapa-palco"
+          style={{ transform: `translate(${pos.x}px, ${pos.y}px) scale(${zoom})` }}
+        >
+          <img
+            className="mapa-img"
+            src={config.mapaExpoUrl}
+            alt={t.mapa.alt}
+            decoding="async"
+            onError={() => setFalhou(true)}
+          />
+          {PONTOS_MAPA.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              className={`mapa-ponto mapa-ponto--${p.tipo}`}
+              style={{
+                left: `${p.x * 100}%`,
+                top: `${p.y * 100}%`,
+                width: `${p.w * 100}%`,
+                height: `${p.h * 100}%`,
+              }}
+              onClick={() => abrir(p)}
+            >
+              <span className="visualmente-oculto">
+                {p.nome}
+                {p.estande ? `, ${t.mapa.estande} ${p.estande}` : ''}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="mapa-controles">

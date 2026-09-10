@@ -40,7 +40,7 @@ describe('acessibilidade das telas', () => {
   })
 
   it('Mapa nao tem violacoes', async () => {
-    const { container } = renderizar(<MapaExpo config={dados.config} />)
+    const { container } = renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
     expect(await axe(container, opcoesAxe)).toHaveNoViolations()
   })
 
@@ -79,7 +79,7 @@ describe('acessibilidade das telas', () => {
 
 describe('imagens e textos alternativos', () => {
   it('a imagem do mapa tem alt descritivo', () => {
-    renderizar(<MapaExpo config={dados.config} />)
+    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
     expect(screen.getByRole('img', { name: /planta da área da expo/i })).toBeInTheDocument()
   })
 

@@ -2,12 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { CHAVE_ABA, ehAba, type Aba } from './abas'
 import { DetalheBeneficio } from './components/DetalheBeneficio'
 import { DetalheItem } from './components/DetalheItem'
+import { DetalheMarca } from './components/DetalheMarca'
 import { IconeNuvemCortada } from './components/Icones'
 import { NavInferior } from './components/NavInferior'
 import { PuxarParaAtualizar } from './components/PuxarParaAtualizar'
 import { ReguaPatrocinadores } from './components/ReguaPatrocinadores'
 import { SeletorIdioma } from './components/SeletorIdioma'
 import { StatusAtualizacao } from './components/StatusAtualizacao'
+import type { PontoMapa } from './data/mapa'
 import type { Beneficio, ItemProgramacao } from './data/types'
 import type { Idioma } from './data/types'
 import { DICIONARIOS, IdiomaContext, LOCALES, idiomaInicial, salvarIdioma } from './i18n'
@@ -37,6 +39,7 @@ export function App({ referencia }: Props = {}) {
   })
   const [itemAberto, setItemAberto] = useState<ItemProgramacao | null>(null)
   const [beneficioAberto, setBeneficioAberto] = useState<Beneficio | null>(null)
+  const [pontoAberto, setPontoAberto] = useState<PontoMapa | null>(null)
   const { dados, carregando, atualizando, erroRede, atualizar } = useDados()
 
   const definirIdioma = useCallback((novo: Idioma) => {
@@ -48,6 +51,7 @@ export function App({ referencia }: Props = {}) {
     setAba(nova)
     setItemAberto(null)
     setBeneficioAberto(null)
+    setPontoAberto(null)
     try {
       localStorage.setItem(CHAVE_ABA, nova)
     } catch {
@@ -128,7 +132,9 @@ export function App({ referencia }: Props = {}) {
                 {aba === 'beneficios' && (
                   <Beneficios beneficios={dados.beneficios} aoAbrir={setBeneficioAberto} />
                 )}
-                {aba === 'mapa' && <MapaExpo config={dados.config} />}
+                {aba === 'mapa' && (
+                  <MapaExpo config={dados.config} aoAbrirPonto={setPontoAberto} />
+                )}
                 {aba === 'guia' && <GuiaAtleta config={dados.config} />}
                 {aba === 'info' && <Info dados={dados} />}
 
@@ -156,6 +162,15 @@ export function App({ referencia }: Props = {}) {
         <DetalheBeneficio
           beneficio={beneficioAberto}
           aoFechar={() => setBeneficioAberto(null)}
+        />
+      )}
+
+      {pontoAberto && dados && (
+        <DetalheMarca
+          ponto={pontoAberto}
+          itens={dados.itens}
+          beneficios={dados.beneficios}
+          aoFechar={() => setPontoAberto(null)}
         />
       )}
     </IdiomaContext.Provider>

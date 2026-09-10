@@ -218,7 +218,7 @@ describe('tela Guia do Atleta', () => {
 
 describe('tela Mapa da Expo', () => {
   it('mostra a imagem com texto alternativo', () => {
-    renderizar(<MapaExpo config={dados.config} />)
+    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
     expect(screen.getByRole('img', { name: /planta da área da expo/i })).toHaveAttribute(
       'src',
       'https://exemplo.com/mapa.png',
@@ -226,7 +226,7 @@ describe('tela Mapa da Expo', () => {
   })
 
   it('oferece controles de zoom para quem nao usa pinca', async () => {
-    renderizar(<MapaExpo config={dados.config} />)
+    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
     const ampliar = screen.getByRole('button', { name: /ampliar/i })
     const reduzir = screen.getByRole('button', { name: /reduzir/i })
     expect(reduzir).toBeDisabled()
@@ -235,7 +235,7 @@ describe('tela Mapa da Expo', () => {
   })
 
   it('avisa quando o mapa ainda nao foi publicado', () => {
-    renderizar(<MapaExpo config={CONFIG_PADRAO} />)
+    renderizar(<MapaExpo config={CONFIG_PADRAO} aoAbrirPonto={vi.fn()} />)
     expect(screen.getByText(/mapa ainda não foi publicado/i)).toBeInTheDocument()
   })
 })
