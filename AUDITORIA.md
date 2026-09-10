@@ -1,6 +1,8 @@
 # Relatório de auto-auditoria
 
-App da agenda do atleta, Paraty Brazil by UTMB. Versão 1.0, 9 de setembro de 2026.
+App da agenda do atleta, Paraty Brazil by UTMB. Versão 1.0, 10 de setembro de 2026.
+
+Publicado em https://app-utmb.github.io/utmb-paraty-agenda/ e lendo as planilhas do Google ao vivo.
 
 ## Resumo
 
@@ -84,6 +86,7 @@ O ponto mais frágil de um app alimentado por planilha é a planilha. Se uma lin
 3. **localStorage do Node 25** se sobrepunha ao do navegador simulado e quebrava os testes. Os testes agora usam um armazenamento próprio, determinístico.
 4. **Rótulo de inscrição no detalhe** estava sendo montado cortando outro texto, o que quebraria em qualquer tradução. Virou uma chave própria nos três dicionários.
 5. **Regra do React sobre estado dentro de efeito** apontava a busca inicial dos dados. Verificado que é o caso legítimo de sincronizar com sistema externo, e documentado no código.
+6. **Testes batendo na planilha de produção.** Assim que as URLs reais entraram em `src/config.ts`, nove testes passaram a depender da rede e do conteúdo atual da planilha. Os testes agora rodam sempre com URLs vazias, contra os dados de exemplo embutidos, então são determinísticos e não dependem do que está publicado.
 
 ## Riscos que continuam de pé
 
@@ -93,11 +96,15 @@ O ponto mais frágil de um app alimentado por planilha é a planilha. Se uma lin
 
 3. **O PDF do Guia do Atleta precisa estar compartilhado como "qualquer pessoa com o link".** Se ficar restrito, o atleta cai numa tela de pedir permissão. O app não tem como detectar isso de fora.
 
-4. **O app depende de a planilha continuar publicada.** Se a publicação na web for desfeita, os atletas que já abriram o app continuam vendo a última versão salva no aparelho, mas quem abrir pela primeira vez vê os dados de exemplo. Vale conferir a publicação na véspera do evento.
+4. **O app depende de as planilhas continuarem publicadas.** Se a publicação na web for desfeita em qualquer uma das duas, os atletas que já abriram o app continuam vendo a última versão salva no aparelho, mas quem abrir pela primeira vez vê os dados de exemplo. Vale conferir a publicação na véspera do evento.
+
+   Verificado em 10 de setembro de 2026: as duas planilhas respondem em CSV e mandam o cabeçalho de CORS liberando o domínio do app, que é o que permite o navegador ler o conteúdo.
 
 5. **Fuso horário fixo em São Paulo.** O "acontecendo agora" usa o horário do evento, não o do aparelho. É o comportamento certo para um atleta estrangeiro que não mudou o relógio, mas significa que os cartões não acompanham quem estiver em outro fuso.
 
 6. **Sem teste em aparelho real.** A instalação como PWA e o pinch to zoom do mapa foram verificados em navegador simulado. Vale um teste rápido num iPhone e num Android antes do evento.
+
+7. **A conta do GitHub foi renomeada de phi-utmb para app-utmb.** O endereço antigo do app deixou de funcionar. Como ninguém tinha o link ainda, não houve impacto, mas qualquer link antigo que exista por aí precisa ser trocado.
 
 ## Como repetir esta auditoria
 

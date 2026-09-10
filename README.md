@@ -21,13 +21,20 @@ Não precisa mexer em código. Não precisa avisar ninguém. Não precisa republ
 
 ---
 
-## A planilha
+## As planilhas
 
-A planilha tem duas abas, com estes nomes exatos: **Programacao** e **Config**.
+O conteúdo está em duas planilhas do Google, as duas no seu Drive e já publicadas:
 
-Na pasta `planilha/` deste repositório tem o arquivo pronto **Paraty-Agenda.xlsx**, já com as duas abas, os cabeçalhos certos e exemplos preenchidos. Suba ele no Google Drive e abra com o Google Sheets.
+| planilha | o que tem | link para editar |
+|---|---|---|
+| **Paraty Agenda 2026 Programacao** | a agenda, uma linha por item | [abrir](https://docs.google.com/spreadsheets/d/13KL1g2goztgvLgSz6x0e6_Kpo32le02QOtSi557Epfg/edit) |
+| **Paraty Agenda 2026 Config** | links do guia, do mapa, contatos | [abrir](https://docs.google.com/spreadsheets/d/1BWONpCDI5QWtjXo9ZkS4XcLZlyrnBRSGKVkkPZOWUDU/edit) |
 
-### Aba Programacao
+São dois arquivos separados em vez de duas abas de um só. Para o app dá no mesmo, e para você fica mais difícil mexer sem querer na Config enquanto edita a agenda.
+
+Se um dia precisar recriar do zero, a pasta `planilha/` deste repositório tem o modelo **Paraty-Agenda.xlsx** com os cabeçalhos certos e exemplos preenchidos.
+
+### Planilha Programacao
 
 Uma linha por item da agenda. As colunas de texto existem em três idiomas.
 
@@ -53,7 +60,7 @@ Uma linha por item da agenda. As colunas de texto existem em três idiomas.
 
 **Se você errar alguma coisa, o app não quebra.** Uma linha sem `id`, sem data válida ou sem título em português é simplesmente ignorada, e o resto da agenda aparece normalmente. Um `pilar` que não existe vira `oficial`. Uma `inscricao` marcada como `previa` sem link vira entrada livre.
 
-### Aba Config
+### Planilha Config
 
 Duas colunas: `chave` e `valor`. Não mude os nomes das chaves.
 
@@ -79,11 +86,11 @@ Duas colunas: `chave` e `valor`. Não mude os nomes das chaves.
 2. Clique com o botão direito no arquivo, escolha **Compartilhar**.
 3. Em "Acesso geral", troque para **Qualquer pessoa com o link**, com permissão de **Leitor**. Sem isso o atleta vê uma tela de pedir permissão.
 4. Copie o link.
-5. Cole na aba **Config**, na linha `guia_atleta_url_pt` (e nas de espanhol e inglês, se tiver versões traduzidas).
+5. Cole na planilha **Config**, na linha `guia_atleta_url_pt` (e nas de espanhol e inglês, se tiver versões traduzidas).
 
 ## Trocar a imagem do Mapa da Expo
 
-Mesmo caminho: suba a imagem em algum lugar público e cole o link em `mapa_expo_url`, na aba Config.
+Mesmo caminho: suba a imagem em algum lugar público e cole o link em `mapa_expo_url`, na planilha Config.
 
 > **Atenção com o Google Drive para imagens.** Link de imagem do Drive costuma não funcionar quando o app tenta exibir a imagem direto (o Drive bloqueia esse tipo de uso). Se o mapa ou a régua não aparecerem, use a alternativa abaixo.
 
@@ -91,14 +98,14 @@ Mesmo caminho: suba a imagem em algum lugar público e cole o link em `mapa_expo
 
 1. Coloque o arquivo na pasta `public/` deste repositório, por exemplo `public/mapa-expo.png`.
 2. Faça o push.
-3. Na aba Config, use o endereço completo do app mais o nome do arquivo, por exemplo:
+3. Na planilha Config, use o endereço completo do app mais o nome do arquivo, por exemplo:
    `https://app-utmb.github.io/utmb-paraty-agenda/mapa-expo.png`
 
 Vale o mesmo para a régua de patrocinadores.
 
 ## Trocar a régua de patrocinadores
 
-A régua é a faixa fina que fica em cima da barra de navegação, visível em todas as telas. Cole o link da imagem em `regua_patrocinadores_url`, na aba Config. Se o campo ficar vazio ou a imagem falhar, a faixa some sozinha e nada quebra no layout.
+A régua é a faixa fina que fica em cima da barra de navegação, visível em todas as telas. Cole o link da imagem em `regua_patrocinadores_url`, na planilha Config. Se o campo ficar vazio ou a imagem falhar, a faixa some sozinha e nada quebra no layout.
 
 Dica de formato: uma imagem larga e baixa, tipo 1600 por 200 pixels, com fundo transparente ou escuro, fica bem.
 
@@ -114,24 +121,18 @@ Dica de formato: uma imagem larga e baixa, tipo 1600 por 200 pixels, com fundo t
 
 ---
 
-## Ligar o app na sua planilha
+## Ligar o app numa planilha nova
 
-Feito uma vez só, no setup.
+Isso **já está feito**. Você só precisa disto se um dia trocar de planilha.
 
 1. Na planilha, vá em **Arquivo > Compartilhar > Publicar na web**.
-2. Em "Vincular", escolha a aba **Programacao** e o formato **Valores separados por vírgula (.csv)**.
+2. Escolha o formato **Valores separados por vírgula (.csv)**.
 3. Clique em **Publicar** e copie o link.
-4. Repita para a aba **Config**.
-5. Abra o arquivo `src/config.ts` e cole os dois links:
-
-```ts
-export const URL_CSV_PROGRAMACAO = 'cole aqui o link da aba Programacao'
-export const URL_CSV_CONFIG = 'cole aqui o link da aba Config'
-```
-
+4. Repita na outra planilha.
+5. Abra o arquivo `src/config.ts` e troque os dois links.
 6. Faça o push. O app se publica sozinho.
 
-Enquanto esses dois campos estiverem vazios, o app roda com dados de exemplo, para você ver como fica.
+Se os dois campos ficarem vazios, o app volta a rodar com dados de exemplo em vez de mostrar tela em branco.
 
 ---
 
@@ -143,7 +144,7 @@ Toda vez que você faz push na branch `main`, o GitHub Actions roda os testes, c
 
 O arquivo que cuida disso é `.github/workflows/deploy.yml`. Você não precisa mexer nele.
 
-O endereço público fica assim: `https://app-utmb.github.io/utmb-paraty-agenda/`
+O endereço público é **https://app-utmb.github.io/utmb-paraty-agenda/**
 
 ---
 
