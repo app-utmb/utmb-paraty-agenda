@@ -732,6 +732,16 @@ img {
   color: var(--texto-fraco);
 }
 
+.vazio--acionavel {
+  display: block;
+  width: 100%;
+}
+
+.vazio--acionavel .vazio__titulo,
+.vazio--acionavel .vazio__dica {
+  display: block;
+}
+
 .status-atualizacao {
   display: flex;
   align-items: center;

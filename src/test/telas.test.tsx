@@ -18,7 +18,14 @@ const item = (id: string) => dados.itens.find((i) => i.id === id) as ItemProgram
 describe('tela Inicio', () => {
   it('mostra o que esta acontecendo agora', () => {
     renderizar(
-      <Inicio dados={dados} aoAbrirItem={vi.fn()} aoIrPara={vi.fn()} referencia={DURANTE_KIT} />,
+      <Inicio
+        dados={dados}
+        aoAbrirItem={vi.fn()}
+        aoIrPara={vi.fn()}
+        favoritos={favoritosVazios()}
+        aoAbrirAgenda={vi.fn()}
+        referencia={DURANTE_KIT}
+      />,
     )
     const secao = screen.getByRole('region', { name: /acontecendo agora/i })
     expect(within(secao).getByText('Retirada de kits')).toBeInTheDocument()
@@ -26,7 +33,14 @@ describe('tela Inicio', () => {
 
   it('mostra os proximos itens em ordem', () => {
     renderizar(
-      <Inicio dados={dados} aoAbrirItem={vi.fn()} aoIrPara={vi.fn()} referencia={DURANTE_KIT} />,
+      <Inicio
+        dados={dados}
+        aoAbrirItem={vi.fn()}
+        aoIrPara={vi.fn()}
+        favoritos={favoritosVazios()}
+        aoAbrirAgenda={vi.fn()}
+        referencia={DURANTE_KIT}
+      />,
     )
     const secao = screen.getByRole('region', { name: /a seguir/i })
     const titulos = within(secao)
@@ -42,6 +56,8 @@ describe('tela Inicio', () => {
         dados={dados}
         aoAbrirItem={vi.fn()}
         aoIrPara={vi.fn()}
+        favoritos={favoritosVazios()}
+        aoAbrirAgenda={vi.fn()}
         referencia={new Date('2026-09-17T03:00:00-03:00')}
       />,
     )
@@ -51,7 +67,14 @@ describe('tela Inicio', () => {
   it('leva para as outras abas pelos atalhos', async () => {
     const irPara = vi.fn()
     renderizar(
-      <Inicio dados={dados} aoAbrirItem={vi.fn()} aoIrPara={irPara} referencia={DURANTE_KIT} />,
+      <Inicio
+        dados={dados}
+        aoAbrirItem={vi.fn()}
+        aoIrPara={irPara}
+        favoritos={favoritosVazios()}
+        aoAbrirAgenda={vi.fn()}
+        referencia={DURANTE_KIT}
+      />,
     )
     await userEvent.click(screen.getByRole('button', { name: /ver programação/i }))
     expect(irPara).toHaveBeenCalledWith('programacao')
@@ -62,7 +85,14 @@ describe('tela Inicio', () => {
   it('abre o detalhe ao tocar em um item', async () => {
     const abrir = vi.fn()
     renderizar(
-      <Inicio dados={dados} aoAbrirItem={abrir} aoIrPara={vi.fn()} referencia={DURANTE_KIT} />,
+      <Inicio
+        dados={dados}
+        aoAbrirItem={abrir}
+        aoIrPara={vi.fn()}
+        favoritos={favoritosVazios()}
+        aoAbrirAgenda={vi.fn()}
+        referencia={DURANTE_KIT}
+      />,
     )
     await userEvent.click(screen.getByText('Retirada de kits'))
     expect(abrir).toHaveBeenCalledWith(expect.objectContaining({ id: 'a1' }))
@@ -75,6 +105,8 @@ describe('tela Programacao', () => {
         dados={dados}
         aoAbrirItem={vi.fn()}
         favoritos={favoritosVazios()}
+        agendaAberta={false}
+        aoAlternarAgenda={() => {}}
         referencia={DURANTE_KIT}
       />)
 
@@ -216,6 +248,8 @@ describe('tela Programacao', () => {
         dados={dadosDeTeste({ itens: [] })}
         aoAbrirItem={vi.fn()}
         favoritos={favoritosVazios()}
+        agendaAberta={false}
+        aoAlternarAgenda={() => {}}
         referencia={DURANTE_KIT}
       />,
     )

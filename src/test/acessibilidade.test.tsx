@@ -27,7 +27,14 @@ const opcoesAxe = { rules: { 'color-contrast': { enabled: false } } }
 describe('acessibilidade das telas', () => {
   it('Inicio nao tem violacoes', async () => {
     const { container } = renderizar(
-      <Inicio dados={dados} aoAbrirItem={() => {}} aoIrPara={() => {}} referencia={DURANTE_KIT} />,
+      <Inicio
+        dados={dados}
+        aoAbrirItem={() => {}}
+        aoIrPara={() => {}}
+        favoritos={favoritosVazios()}
+        aoAbrirAgenda={() => {}}
+        referencia={DURANTE_KIT}
+      />,
     )
     expect(await axe(container, opcoesAxe)).toHaveNoViolations()
   })
@@ -38,6 +45,8 @@ describe('acessibilidade das telas', () => {
         dados={dados}
         aoAbrirItem={() => {}}
         favoritos={favoritosVazios()}
+        agendaAberta={false}
+        aoAlternarAgenda={() => {}}
         referencia={DURANTE_KIT}
       />,
     )
@@ -100,6 +109,8 @@ describe('imagens e textos alternativos', () => {
         dados={dados}
         aoAbrirItem={() => {}}
         favoritos={favoritosVazios()}
+        agendaAberta={false}
+        aoAlternarAgenda={() => {}}
         referencia={DURANTE_KIT}
       />,
     )

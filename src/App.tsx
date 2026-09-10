@@ -53,6 +53,7 @@ export function App({ referencia }: Props = {}) {
   const [pontoAberto, setPontoAberto] = useState<PontoMapa | null>(null)
   const { dados, carregando, atualizando, erroRede, atualizar } = useDados()
   const favoritos = useFavoritos()
+  const [agendaAberta, setAgendaAberta] = useState(false)
 
   const definirIdioma = useCallback((novo: Idioma) => {
     setIdiomaEstado(novo)
@@ -161,6 +162,11 @@ export function App({ referencia }: Props = {}) {
                     dados={dados}
                     aoAbrirItem={setItemAberto}
                     aoIrPara={trocarAba}
+                    favoritos={favoritos}
+                    aoAbrirAgenda={() => {
+                      setAgendaAberta(true)
+                      trocarAba('programacao')
+                    }}
                     referencia={referencia}
                   />
                 )}
@@ -169,6 +175,8 @@ export function App({ referencia }: Props = {}) {
                     dados={dados}
                     aoAbrirItem={setItemAberto}
                     favoritos={favoritos}
+                    agendaAberta={agendaAberta}
+                    aoAlternarAgenda={setAgendaAberta}
                     referencia={referencia}
                   />
                 )}

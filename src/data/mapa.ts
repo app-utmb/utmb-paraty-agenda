@@ -71,7 +71,7 @@ const BRUTOS: Bruto[] = [
     segmentos: ['equipamentos'], logo: null, tipo: 'marca', px: [628, 230, 110, 64],
   },
   {
-    id: 'dr-peanut', nome: 'DR PEANUT e Probiotica', estande: 'D4', marcas: ['DR PEANUT'],
+    id: 'dr-peanut', nome: 'DR PEANUT', estande: 'D4', marcas: ['DR PEANUT'],
     segmentos: ['nutricao'],
     logo: 'dr-peanut', tipo: 'marca', px: [744, 230, 52, 64],
   },
@@ -196,7 +196,7 @@ const BRUTOS: Bruto[] = [
     segmentos: ['acessorios'], logo: null, tipo: 'marca', px: [688, 510, 50, 62],
   },
   {
-    id: 'nautika', nome: 'NTK Nautika', estande: 'F4 a F6', marcas: ['NTK', 'Nautika'],
+    id: 'nautika', nome: 'NTK Nautika e Azteq', estande: 'F4 a F6', marcas: ['NTK', 'Nautika', 'Azteq'],
     segmentos: ['equipamentos'],
     logo: 'nautika', tipo: 'marca', px: [748, 510, 168, 62],
   },

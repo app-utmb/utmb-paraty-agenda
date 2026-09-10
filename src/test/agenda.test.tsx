@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { act, renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
+import { Inicio } from '../screens/Inicio'
 import { Programacao } from '../screens/Programacao'
 import { CHAVE_FAVORITOS, useFavoritos } from '../useFavoritos'
 import { DURANTE_KIT, dadosDeTeste } from './fixtures'
@@ -51,11 +53,14 @@ describe('guarda dos favoritos', () => {
 /** Renderiza a programacao com uma guarda de favoritos de verdade. */
 function TelaComAgenda() {
   const favoritos = useFavoritos()
+  const [agendaAberta, setAgendaAberta] = useState(false)
   return (
     <Programacao
       dados={dados}
       aoAbrirItem={vi.fn()}
       favoritos={favoritos}
+      agendaAberta={agendaAberta}
+      aoAlternarAgenda={setAgendaAberta}
       referencia={DURANTE_KIT}
     />
   )
@@ -88,11 +93,14 @@ describe('agenda do atleta na programacao', () => {
     const abrir = vi.fn()
     const Tela = () => {
       const favoritos = useFavoritos()
+      const [agendaAberta, setAgendaAberta] = useState(false)
       return (
         <Programacao
           dados={dados}
           aoAbrirItem={abrir}
           favoritos={favoritos}
+          agendaAberta={agendaAberta}
+          aoAlternarAgenda={setAgendaAberta}
           referencia={DURANTE_KIT}
         />
       )
@@ -150,6 +158,70 @@ describe('agenda do atleta na programacao', () => {
     expect(
       screen.getByRole('button', { name: /guardar na minha agenda: retirada de kits/i }),
     ).toBeInTheDocument()
+  })
+
+  it('a agenda tambem aparece no Inicio', async () => {
+    const Tela = () => {
+      const favoritos = useFavoritos()
+      return (
+        <Inicio
+          dados={dados}
+          aoAbrirItem={vi.fn()}
+          aoIrPara={vi.fn()}
+          favoritos={favoritos}
+          aoAbrirAgenda={vi.fn()}
+          referencia={DURANTE_KIT}
+        />
+      )
+    }
+    renderizar(<Tela />)
+    const secao = screen.getByRole('region', { name: /minha agenda/i })
+    expect(within(secao).getByText(/monte a sua agenda/i)).toBeInTheDocument()
+  })
+
+  it('o Inicio lista os proximos itens guardados e leva para a agenda', async () => {
+    localStorage.setItem(CHAVE_FAVORITOS, JSON.stringify(['a2', 'a4']))
+    const abrirAgenda = vi.fn()
+    const Tela = () => {
+      const favoritos = useFavoritos()
+      return (
+        <Inicio
+          dados={dados}
+          aoAbrirItem={vi.fn()}
+          aoIrPara={vi.fn()}
+          favoritos={favoritos}
+          aoAbrirAgenda={abrirAgenda}
+          referencia={DURANTE_KIT}
+        />
+      )
+    }
+    renderizar(<Tela />)
+    const secao = screen.getByRole('region', { name: /minha agenda/i })
+    expect(within(secao).getByText('Nutricao no ultra')).toBeInTheDocument()
+    await userEvent.click(within(secao).getByRole('button', { name: /2 itens guardados/i }))
+    expect(abrirAgenda).toHaveBeenCalled()
+  })
+
+  it('o Inicio nao mostra item guardado que ja passou', () => {
+    // O a1 acaba as 11h e a referencia e 10h30, entao ele ainda conta.
+    localStorage.setItem(CHAVE_FAVORITOS, JSON.stringify(['a1']))
+    const Tela = () => {
+      const favoritos = useFavoritos()
+      return (
+        <Inicio
+          dados={dados}
+          aoAbrirItem={vi.fn()}
+          aoIrPara={vi.fn()}
+          favoritos={favoritos}
+          aoAbrirAgenda={vi.fn()}
+          referencia={new Date('2026-09-19T12:00:00-03:00')}
+        />
+      )
+    }
+    renderizar(<Tela />)
+    const secao = screen.getByRole('region', { name: /minha agenda/i })
+    expect(within(secao).queryByText('Retirada de kits')).not.toBeInTheDocument()
+    expect(within(secao).getByRole('button', { name: /1 item guardado/i })).toBeInTheDocument()
   })
 
   it('nao tem violacoes de acessibilidade', async () => {

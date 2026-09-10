@@ -16,10 +16,19 @@ interface Props {
   dados: DadosApp
   aoAbrirItem: (item: ItemProgramacao) => void
   favoritos: EstadoFavoritos
+  agendaAberta: boolean
+  aoAlternarAgenda: (aberta: boolean) => void
   referencia?: Date
 }
 
-export function Programacao({ dados, aoAbrirItem, favoritos, referencia }: Props) {
+export function Programacao({
+  dados,
+  aoAbrirItem,
+  favoritos,
+  agendaAberta,
+  aoAlternarAgenda,
+  referencia,
+}: Props) {
   const { idioma, t } = useIdioma()
   const locale = LOCALES[idioma]
 
@@ -33,7 +42,6 @@ export function Programacao({ dados, aoAbrirItem, favoritos, referencia }: Props
   const [dia, setDia] = useState(() => diaPadrao(dias, referencia ?? new Date()))
   const [pilar, setPilar] = useState<FiltroPilar>('todos')
   const [marca, setMarca] = useState<FiltroMarca>('todas')
-  const [soAgenda, setSoAgenda] = useState(false)
 
   const diaAtivo = dias.includes(dia) ? dia : (dias[0] ?? dia)
 
@@ -83,10 +91,10 @@ export function Programacao({ dados, aoAbrirItem, favoritos, referencia }: Props
       type="button"
       className="agenda-barra"
       aria-label={t.agenda.titulo}
-      aria-pressed={soAgenda}
-      onClick={() => setSoAgenda((v) => !v)}
+      aria-pressed={agendaAberta}
+      onClick={() => aoAlternarAgenda(!agendaAberta)}
     >
-      <IconeEstrela className="agenda-barra__icone" cheia={soAgenda} />
+      <IconeEstrela className="agenda-barra__icone" cheia={agendaAberta} />
       <span className="agenda-barra__texto">
         {favoritos.total > 0 ? t.agenda.titulo : t.agenda.chamada}
       </span>
@@ -96,7 +104,7 @@ export function Programacao({ dados, aoAbrirItem, favoritos, referencia }: Props
     </button>
   )
 
-  if (soAgenda) {
+  if (agendaAberta) {
     return (
       <div>
         <h1 className="visualmente-oculto">{t.agenda.titulo}</h1>
@@ -127,7 +135,7 @@ export function Programacao({ dados, aoAbrirItem, favoritos, referencia }: Props
               type="button"
               className="botao botao--secundario botao--pequeno"
               style={{ marginTop: 14 }}
-              onClick={() => setSoAgenda(false)}
+              onClick={() => aoAlternarAgenda(false)}
             >
               {t.agenda.verTudo}
             </button>
