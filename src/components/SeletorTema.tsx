@@ -1,24 +1,21 @@
-import { IconeLua, IconeMonitor, IconeSol } from './Icones'
+import { IconeLua, IconeSol } from './Icones'
 import { useIdioma } from '../i18n'
 import type { Tema } from '../tema'
-
-const ICONES = { sistema: IconeMonitor, claro: IconeSol, escuro: IconeLua } as const
 
 interface Props {
   tema: Tema
   aoTrocar: () => void
 }
 
-/** Botao unico que cicla entre seguir o aparelho, tema claro e tema escuro. */
+/** Alterna entre tema claro e escuro. O icone mostra para onde o toque leva. */
 export function SeletorTema({ tema, aoTrocar }: Props) {
   const { t } = useIdioma()
-  const Icone = ICONES[tema]
+  const proximo: Tema = tema === 'claro' ? 'escuro' : 'claro'
+  const Icone = proximo === 'escuro' ? IconeLua : IconeSol
   return (
-    <button type="button" className="botao-tema" onClick={aoTrocar} title={t.tema[tema]}>
+    <button type="button" className="botao-tema" onClick={aoTrocar} title={t.tema[proximo]}>
       <Icone />
-      <span className="visualmente-oculto">
-        {t.tema.rotulo}: {t.tema[tema]}
-      </span>
+      <span className="visualmente-oculto">{t.tema[proximo]}</span>
     </button>
   )
 }

@@ -6,7 +6,6 @@ import { DetalheMarca } from './components/DetalheMarca'
 import { IconeNuvemCortada } from './components/Icones'
 import { NavInferior } from './components/NavInferior'
 import { PuxarParaAtualizar } from './components/PuxarParaAtualizar'
-import { ReguaPatrocinadores } from './components/ReguaPatrocinadores'
 import { SeletorIdioma } from './components/SeletorIdioma'
 import { SeletorTema } from './components/SeletorTema'
 import { StatusAtualizacao } from './components/StatusAtualizacao'
@@ -20,14 +19,7 @@ import { Inicio } from './screens/Inicio'
 import { Info } from './screens/Info'
 import { MapaExpo } from './screens/MapaExpo'
 import { Programacao } from './screens/Programacao'
-import {
-  aplicarTema,
-  proximoTema,
-  salvarTema,
-  temaEfetivo,
-  temaInicial,
-  type Tema,
-} from './tema'
+import { aplicarTema, proximoTema, salvarTema, temaInicial, type Tema } from './tema'
 import { useDados } from './useDados'
 import { useFavoritos } from './useFavoritos'
 
@@ -79,13 +71,6 @@ export function App({ referencia }: Props = {}) {
 
   useEffect(() => {
     aplicarTema(tema)
-    if (tema !== 'sistema') return
-    // Seguindo o aparelho, o app acompanha a troca em tempo real.
-    const consulta = window.matchMedia?.('(prefers-color-scheme: light)')
-    if (!consulta?.addEventListener) return
-    const aoMudar = () => aplicarTema('sistema')
-    consulta.addEventListener('change', aoMudar)
-    return () => consulta.removeEventListener('change', aoMudar)
   }, [tema])
 
   const trocarTema = useCallback(() => {
@@ -103,7 +88,7 @@ export function App({ referencia }: Props = {}) {
   const t = contexto.t
 
   const config = dados?.config
-  const temaAtivo = temaEfetivo(tema)
+  const temaAtivo = tema
 
   return (
     <IdiomaContext.Provider value={contexto}>
@@ -161,7 +146,6 @@ export function App({ referencia }: Props = {}) {
                   <Inicio
                     dados={dados}
                     aoAbrirItem={setItemAberto}
-                    aoIrPara={trocarAba}
                     favoritos={favoritos}
                     aoAbrirAgenda={() => {
                       setAgendaAberta(true)
@@ -201,7 +185,6 @@ export function App({ referencia }: Props = {}) {
 
         <div className="rodape-fixo">
           <div className="rodape-fixo__interno">
-            <ReguaPatrocinadores url={config?.reguaPatrocinadoresUrl ?? ''} />
             <NavInferior ativa={aba} aoTrocar={trocarAba} />
           </div>
         </div>

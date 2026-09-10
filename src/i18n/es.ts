@@ -5,7 +5,6 @@ export const es: Dicionario = {
   trocarIdioma: 'Cambiar idioma',
   tema: {
     rotulo: 'Tema',
-    sistema: 'Igual que el dispositivo',
     claro: 'Tema claro',
     escuro: 'Tema oscuro',
   },

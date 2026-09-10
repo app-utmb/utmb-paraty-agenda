@@ -167,7 +167,6 @@ describe('agenda do atleta na programacao', () => {
         <Inicio
           dados={dados}
           aoAbrirItem={vi.fn()}
-          aoIrPara={vi.fn()}
           favoritos={favoritos}
           aoAbrirAgenda={vi.fn()}
           referencia={DURANTE_KIT}
@@ -188,7 +187,6 @@ describe('agenda do atleta na programacao', () => {
         <Inicio
           dados={dados}
           aoAbrirItem={vi.fn()}
-          aoIrPara={vi.fn()}
           favoritos={favoritos}
           aoAbrirAgenda={abrirAgenda}
           referencia={DURANTE_KIT}
@@ -211,7 +209,6 @@ describe('agenda do atleta na programacao', () => {
         <Inicio
           dados={dados}
           aoAbrirItem={vi.fn()}
-          aoIrPara={vi.fn()}
           favoritos={favoritos}
           aoAbrirAgenda={vi.fn()}
           referencia={new Date('2026-09-19T12:00:00-03:00')}
@@ -231,7 +228,6 @@ describe('agenda do atleta na programacao', () => {
         <Inicio
           dados={dados}
           aoAbrirItem={vi.fn()}
-          aoIrPara={vi.fn()}
           favoritos={favoritos}
           aoAbrirAgenda={vi.fn()}
           referencia={DURANTE_KIT}
@@ -250,7 +246,6 @@ describe('agenda do atleta na programacao', () => {
         <Inicio
           dados={dados}
           aoAbrirItem={vi.fn()}
-          aoIrPara={vi.fn()}
           favoritos={favoritos}
           aoAbrirAgenda={vi.fn()}
           referencia={DURANTE_KIT}
@@ -263,6 +258,20 @@ describe('agenda do atleta na programacao', () => {
       .find((b) => b.className.includes('cartao__estrela')) as HTMLElement
     await userEvent.click(estrela)
     expect(JSON.parse(localStorage.getItem(CHAVE_FAVORITOS) ?? '[]')).toHaveLength(1)
+  })
+
+  it('a chamada da agenda cabe na caixa, com a explicacao em linha propria', () => {
+    const { container } = renderizar(<TelaComAgenda />)
+    const dica = container.querySelector('.agenda-barra__dica')
+    expect(dica).toHaveTextContent(/toque na estrela/i)
+    expect(container.querySelector('.agenda-barra__conta')).toBeNull()
+  })
+
+  it('com itens guardados a barra mostra so o numero', async () => {
+    localStorage.setItem(CHAVE_FAVORITOS, JSON.stringify(['a1', 'a4']))
+    const { container } = renderizar(<TelaComAgenda />)
+    expect(container.querySelector('.agenda-barra__conta')).toHaveTextContent('2')
+    expect(container.querySelector('.agenda-barra__dica')).toBeNull()
   })
 
   it('nao tem violacoes de acessibilidade', async () => {

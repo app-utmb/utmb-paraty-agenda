@@ -36,6 +36,7 @@ const estande = (marca, codigo = '') => {
   return [`Estande ${marca}${suf}`, `Stand ${marca}${suf}`, `${marca} booth${suf}`]
 }
 const aConfirmar = ['A confirmar', 'Por confirmar', 'To be confirmed']
+const PALCO = ['Palco Expo', 'Escenario Expo', 'Expo Stage']
 
 // ---------------------------------------------------------------- oficial
 function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '') {
@@ -231,6 +232,38 @@ const ATIVACOES = [
   }),
 ]
 
+// ---------------------------------------------------------- palco da Expo
+/** Item unico de palco, com pilar proprio e duracao fechada. */
+function palco({ id, data, ini, fim, pilar, tit, desc, palestrante = '', marca = '', logoArquivo = null }) {
+  return {
+    id, data, dia_semana: DIAS[data].semana, hora_inicio: ini, hora_fim: fim, pilar,
+    titulo_pt: tit[0], titulo_es: tit[1], titulo_en: tit[2],
+    descricao_pt: desc[0], descricao_es: desc[1], descricao_en: desc[2],
+    local_pt: PALCO[0], local_es: PALCO[1], local_en: PALCO[2],
+    palestrante, marca, logo_url: logo(logoArquivo),
+    inscricao: 'livre', link_inscricao: '', destaque: '',
+  }
+}
+
+const PALCO_ITENS = [
+  palco({
+    id: 'talk-liquidz-hidratacao', data: '2026-09-18', ini: '14:00', fim: '14:15', pilar: 'talks',
+    tit: ['Hidratacao funcional', 'Hidratacion funcional', 'Functional hydration'],
+    desc: ['Estrategias praticas de hidratacao para o Paraty Brazil by UTMB.',
+           'Estrategias practicas de hidratacion para el Paraty Brazil by UTMB.',
+           'Practical hydration strategies for Paraty Brazil by UTMB.'],
+    palestrante: 'Talita Cristina', marca: 'Liquidz', logoArquivo: 'liquidz',
+  }),
+  palco({
+    id: 'filme-tala', data: '2026-09-18', ini: '13:00', fim: '13:15', pilar: 'filmes',
+    tit: ['Tala', 'Tala', 'Tala'],
+    desc: ['Exibicao do filme com Fernanda Maciel.',
+           'Proyeccion de la pelicula con Fernanda Maciel.',
+           'Screening of the film with Fernanda Maciel.'],
+    palestrante: 'Fernanda Maciel',
+  }),
+]
+
 // ------------------------------------------------------------- beneficios
 function beneficio({ id, onde, categoria, nome, desconto, descricao, local, condicoes, validade, logoArquivo = null, link = '', mapa = '', destaque = '' }) {
   return {
@@ -269,7 +302,7 @@ const paraCsv = (cols, linhas) =>
 const paraTsv = (cols, linhas) =>
   [cols.join('\t'), ...linhas.map((l) => cols.map((c) => (l[c] ?? '').replace(/[\t\n]/g, ' ')).join('\t'))].join('\n')
 
-const programacao = [...OFICIAL, ...ATIVACOES]
+const programacao = [...OFICIAL, ...ATIVACOES, ...PALCO_ITENS]
 
 await mkdir(resolve(raiz, 'public/dados'), { recursive: true })
 await writeFile(resolve(raiz, 'planilha/Programacao.csv'), paraCsv(COL_PROG, programacao))
@@ -280,5 +313,8 @@ await writeFile(resolve(raiz, 'public/dados/beneficios.tsv'), paraTsv(COL_BEN, B
 const ids = programacao.map((l) => l.id)
 if (new Set(ids).size !== ids.length) throw new Error('id repetido na programacao')
 
-console.log(`programacao: ${programacao.length} linhas (${OFICIAL.length} oficiais, ${ATIVACOES.length} ativacoes)`)
+console.log(
+  `programacao: ${programacao.length} linhas (${OFICIAL.length} oficiais, ` +
+    `${ATIVACOES.length} ativacoes, ${PALCO_ITENS.length} de palco)`,
+)
 console.log(`beneficios:  ${BENEFICIOS.length} linhas`)

@@ -6,7 +6,6 @@ import { Info } from '../screens/Info'
 import { MapaExpo } from '../screens/MapaExpo'
 import { Programacao } from '../screens/Programacao'
 import { DetalheItem } from '../components/DetalheItem'
-import { ReguaPatrocinadores } from '../components/ReguaPatrocinadores'
 import { CONFIG_PADRAO } from '../data/normalize'
 import type { ItemProgramacao } from '../data/types'
 import { DURANTE_KIT, dadosDeTeste } from './fixtures'
@@ -21,7 +20,6 @@ describe('tela Inicio', () => {
       <Inicio
         dados={dados}
         aoAbrirItem={vi.fn()}
-        aoIrPara={vi.fn()}
         favoritos={favoritosVazios()}
         aoAbrirAgenda={vi.fn()}
         referencia={DURANTE_KIT}
@@ -36,7 +34,6 @@ describe('tela Inicio', () => {
       <Inicio
         dados={dados}
         aoAbrirItem={vi.fn()}
-        aoIrPara={vi.fn()}
         favoritos={favoritosVazios()}
         aoAbrirAgenda={vi.fn()}
         referencia={DURANTE_KIT}
@@ -56,7 +53,6 @@ describe('tela Inicio', () => {
       <Inicio
         dados={dados}
         aoAbrirItem={vi.fn()}
-        aoIrPara={vi.fn()}
         favoritos={favoritosVazios()}
         aoAbrirAgenda={vi.fn()}
         referencia={new Date('2026-09-17T03:00:00-03:00')}
@@ -65,23 +61,6 @@ describe('tela Inicio', () => {
     expect(screen.getByText(/nada acontecendo neste momento/i)).toBeInTheDocument()
   })
 
-  it('leva para as outras abas pelos atalhos', async () => {
-    const irPara = vi.fn()
-    renderizar(
-      <Inicio
-        dados={dados}
-        aoAbrirItem={vi.fn()}
-        aoIrPara={irPara}
-        favoritos={favoritosVazios()}
-        aoAbrirAgenda={vi.fn()}
-        referencia={DURANTE_KIT}
-      />,
-    )
-    await userEvent.click(screen.getByRole('button', { name: /ver programação/i }))
-    expect(irPara).toHaveBeenCalledWith('programacao')
-    await userEvent.click(screen.getByRole('button', { name: /mapa da expo/i }))
-    expect(irPara).toHaveBeenCalledWith('mapa')
-  })
 
   it('abre o detalhe ao tocar em um item', async () => {
     const abrir = vi.fn()
@@ -89,7 +68,6 @@ describe('tela Inicio', () => {
       <Inicio
         dados={dados}
         aoAbrirItem={abrir}
-        aoIrPara={vi.fn()}
         favoritos={favoritosVazios()}
         aoAbrirAgenda={vi.fn()}
         referencia={DURANTE_KIT}
@@ -376,6 +354,15 @@ describe('tela Info', () => {
     expect(screen.getByRole('heading', { name: /^local$/i })).toBeInTheDocument()
   })
 
+  it('ordena os blocos: acompanhar, ajuda, contato e o evento por ultimo', () => {
+    const { container } = renderizar(<Info dados={dados} />)
+    const titulos = [...container.querySelectorAll('.grupo__titulo')].map((e) => e.textContent)
+    expect(titulos[0]).toBe('Acompanhar')
+    expect(titulos[1]).toBe('Ajuda')
+    expect(titulos[2]).toBe('Contato')
+    expect(titulos[titulos.length - 1]).toBe('Sobre o evento')
+  })
+
   it('mostra o resultado ao vivo e a FAQ', () => {
     renderizar(<Info dados={dados} />)
     expect(screen.getByRole('link', { name: /resultados ao vivo/i })).toHaveAttribute(
@@ -407,17 +394,5 @@ describe('tela Info', () => {
     renderizar(<Info dados={dadosDeTeste({ config: CONFIG_PADRAO })} />)
     expect(screen.queryByRole('link', { name: /whatsapp/i })).not.toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: /^local$/i })).not.toBeInTheDocument()
-  })
-})
-
-describe('regua de patrocinadores', () => {
-  it('mostra a imagem da Config', () => {
-    renderizar(<ReguaPatrocinadores url="https://exemplo.com/regua.png" />)
-    expect(screen.getByRole('img', { name: /patrocinadores/i })).toBeInTheDocument()
-  })
-
-  it('nao ocupa espaco quando a Config esta vazia', () => {
-    const { container } = renderizar(<ReguaPatrocinadores url="" />)
-    expect(container).toBeEmptyDOMElement()
   })
 })

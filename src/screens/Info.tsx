@@ -45,6 +45,30 @@ export function Info({ dados }: Props) {
     <div>
       <h1 className="visualmente-oculto">{t.info.titulo}</h1>
 
+      {(config.aoVivoUrl || config.faqUrl || config.siteOficial) && (
+        <Grupo titulo={t.secoes.acompanhar}>
+          {config.aoVivoUrl && (
+            <LinhaLink
+              icone={IconeAoVivo}
+              rotulo={t.rotulos.aoVivo}
+              sub={dominio(config.aoVivoUrl)}
+              href={config.aoVivoUrl}
+            />
+          )}
+          {config.faqUrl && (
+            <LinhaLink icone={IconeInfo} rotulo={t.rotulos.faq} href={config.faqUrl} />
+          )}
+          {config.siteOficial && (
+            <LinhaLink
+              icone={IconeLink}
+              rotulo={dominio(config.siteOficial)}
+              sub={t.secoes.site}
+              href={config.siteOficial}
+            />
+          )}
+        </Grupo>
+      )}
+
       <Grupo titulo={t.ajuda.titulo}>
         <LinhaExplicativa
           icone={IconeInfo}
@@ -80,46 +104,6 @@ export function Info({ dados }: Props) {
         />
       </Grupo>
 
-      <section className="grupo">
-        <h2 className="grupo__titulo">{t.secoes.sobre}</h2>
-        <p className="bloco-texto">{t.info.sobreTexto}</p>
-      </section>
-
-      {config.localMaps && (
-        <Grupo titulo={t.secoes.local}>
-          <LinhaLink
-            icone={IconePino}
-            rotulo="Paraty, RJ"
-            sub={t.rotulos.abrirMaps}
-            href={config.localMaps}
-          />
-        </Grupo>
-      )}
-
-      {(config.aoVivoUrl || config.faqUrl || config.siteOficial) && (
-        <Grupo titulo={t.secoes.acompanhar}>
-          {config.aoVivoUrl && (
-            <LinhaLink
-              icone={IconeAoVivo}
-              rotulo={t.rotulos.aoVivo}
-              sub={dominio(config.aoVivoUrl)}
-              href={config.aoVivoUrl}
-            />
-          )}
-          {config.faqUrl && (
-            <LinhaLink icone={IconeInfo} rotulo={t.rotulos.faq} href={config.faqUrl} />
-          )}
-          {config.siteOficial && (
-            <LinhaLink
-              icone={IconeLink}
-              rotulo={dominio(config.siteOficial)}
-              sub={t.secoes.site}
-              href={config.siteOficial}
-            />
-          )}
-        </Grupo>
-      )}
-
       {(config.contatoEmail || config.contatoWhatsapp) && (
         <Grupo titulo={t.secoes.contato}>
           {config.contatoEmail && (
@@ -140,6 +124,22 @@ export function Info({ dados }: Props) {
           )}
         </Grupo>
       )}
+      {config.localMaps && (
+        <Grupo titulo={t.secoes.local}>
+          <LinhaLink
+            icone={IconePino}
+            rotulo="Paraty, RJ"
+            sub={t.rotulos.abrirMaps}
+            href={config.localMaps}
+          />
+        </Grupo>
+      )}
+
+      <section className="grupo">
+        <h2 className="grupo__titulo">{t.secoes.sobre}</h2>
+        <p className="bloco-texto">{t.info.sobreTexto}</p>
+      </section>
+
     </div>
   )
 }

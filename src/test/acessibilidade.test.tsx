@@ -30,7 +30,6 @@ describe('acessibilidade das telas', () => {
       <Inicio
         dados={dados}
         aoAbrirItem={() => {}}
-        aoIrPara={() => {}}
         favoritos={favoritosVazios()}
         aoAbrirAgenda={() => {}}
         referencia={DURANTE_KIT}

@@ -1,15 +1,13 @@
 import { CartaoItem } from '../components/CartaoItem'
-import { IconeEstrela, IconeSeta } from '../components/Icones'
+import { IconeEstrela } from '../components/Icones'
 import type { DadosApp, ItemProgramacao } from '../data/types'
 import { useIdioma } from '../i18n'
 import { acontecendoAgora, agoraNoEvento, proximosItens } from '../utils/tempo'
 import type { EstadoFavoritos } from '../useFavoritos'
-import type { Aba } from '../abas'
 
 interface Props {
   dados: DadosApp
   aoAbrirItem: (item: ItemProgramacao) => void
-  aoIrPara: (aba: Aba) => void
   favoritos: EstadoFavoritos
   aoAbrirAgenda: () => void
   /** Injetavel para os testes fixarem o "agora". */
@@ -19,7 +17,6 @@ interface Props {
 export function Inicio({
   dados,
   aoAbrirItem,
-  aoIrPara,
   favoritos,
   aoAbrirAgenda,
   referencia,
@@ -113,36 +110,6 @@ export function Inicio({
         )}
       </section>
 
-      <div className="atalhos">
-        <button type="button" className="botao" onClick={() => aoIrPara('programacao')}>
-          {t.inicio.verProgramacao}
-          <IconeSeta />
-        </button>
-        <button
-          type="button"
-          className="botao botao--secundario"
-          onClick={() => aoIrPara('guia')}
-        >
-          {t.inicio.abrirGuia}
-          <IconeSeta />
-        </button>
-        <button
-          type="button"
-          className="botao botao--secundario"
-          onClick={() => aoIrPara('beneficios')}
-        >
-          {t.inicio.abrirBeneficios}
-          <IconeSeta />
-        </button>
-        <button
-          type="button"
-          className="botao botao--secundario"
-          onClick={() => aoIrPara('mapa')}
-        >
-          {t.inicio.abrirMapa}
-          <IconeSeta />
-        </button>
-      </div>
     </div>
   )
 }

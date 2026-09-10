@@ -3,7 +3,6 @@ export const pt = {
   trocarIdioma: 'Trocar idioma',
   tema: {
     rotulo: 'Tema',
-    sistema: 'Igual ao aparelho',
     claro: 'Tema claro',
     escuro: 'Tema escuro',
   },

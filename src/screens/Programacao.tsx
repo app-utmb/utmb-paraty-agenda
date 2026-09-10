@@ -97,10 +97,11 @@ export function Programacao({
       <IconeEstrela className="agenda-barra__icone" cheia={agendaAberta} />
       <span className="agenda-barra__texto">
         {favoritos.total > 0 ? t.agenda.titulo : t.agenda.chamada}
+        {favoritos.total === 0 && (
+          <span className="agenda-barra__dica">{t.agenda.explicacao}</span>
+        )}
       </span>
-      <span className="agenda-barra__conta">
-        {favoritos.total > 0 ? favoritos.total : t.agenda.explicacao}
-      </span>
+      {favoritos.total > 0 && <span className="agenda-barra__conta">{favoritos.total}</span>}
     </button>
   )
 
