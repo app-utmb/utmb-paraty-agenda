@@ -163,9 +163,9 @@ const ATIVACOES = [
   ...ativacao({
     slug: 'hoka-apitos', marca: 'HOKA', logoArquivo: 'hoka',
     tit: ['Apitos HOKA', 'Silbatos HOKA', 'HOKA whistles'],
-    desc: ['Passe no estande da HOKA na Expo e confira as regras para ganhar o seu.',
-           'Pasa por el stand de HOKA en la Expo y mira las reglas para ganar el tuyo.',
-           'Stop by the HOKA booth at the Expo and check the rules to get yours.'],
+    desc: ['Passe no estande da HOKA na Expo e confira as regras para ganhar o seu. Enquanto durar o estoque.',
+           'Pasa por el stand de HOKA en la Expo y mira las reglas para ganar el tuyo. Hasta agotar existencias.',
+           'Stop by the HOKA booth at the Expo and check the rules to get yours. While supplies last.'],
     dias: TODOS, local: estande('HOKA', 'B1'),
   }),
   ...ativacao({
@@ -422,9 +422,9 @@ const BENEFICIOS = [
   beneficio({
     id: 'ben-hoka', onde: 'expo', categoria: 'equipamentos', nome: 'HOKA',
     desconto: ['20% de desconto', '20% de descuento', '20% off'],
-    descricao: ['Desconto no estande inteiro. Ganhe um boné na compra de um tênis a partir de R$ 1.000.',
-                'Descuento en todo el stand. Gana una gorra al comprar un tenis desde R$ 1.000.',
-                'Discount across the whole booth. Get a cap when you buy shoes from R$ 1,000.'],
+    descricao: ['Desconto no estande inteiro. Ganhe um boné na compra de um tênis a partir de R$ 1.000, enquanto durar o estoque.',
+                'Descuento en todo el stand. Gana una gorra al comprar un tenis desde R$ 1.000, hasta agotar existencias.',
+                'Discount across the whole booth. Get a cap when you buy shoes from R$ 1,000, while supplies last.'],
     local: estande('HOKA', 'B1'), condicoes: PEITO, validade: DATAS_EXPO,
     logoArquivo: 'hoka', destaque: 'sim',
   }),
