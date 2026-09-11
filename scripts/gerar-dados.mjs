@@ -191,7 +191,7 @@ const ATIVACOES = [
     dias: TODOS, local: estande('MOMBORA', 'F8'),
   }),
   ...ativacao({
-    slug: 'strava-veja-brunch', marca: 'Strava; VEJA', logoArquivo: null,
+    slug: 'strava-veja-brunch', marca: 'Strava; VEJA', logoArquivo: 'strava',
     tit: ['Brunch e Shake Out Strava + VEJA', 'Brunch y Shake Out Strava + VEJA', 'Strava + VEJA brunch and shake out'],
     desc: ['Corrida leve seguida de brunch. Apenas para convidados, local revelado a quem recebeu o convite.',
            'Trote suave seguido de brunch. Solo para invitados, el lugar se revela a quien recibió la invitación.',
@@ -200,7 +200,7 @@ const ATIVACOES = [
     local: ['Local secreto', 'Lugar secreto', 'Secret location'], inscricao: 'invite',
   }),
   ...ativacao({
-    slug: 'garmin-gpx', marca: 'Garmin', logoArquivo: null,
+    slug: 'garmin-gpx', marca: 'Garmin', logoArquivo: 'garmin',
     tit: ['Baixe e configure seu GPX', 'Descarga y configura tu GPX', 'Download and set up your GPX'],
     desc: ['Leve o relógio ao estande da Garmin e saia com o percurso da sua prova configurado.',
            'Lleva tu reloj al stand de Garmin y sal con el recorrido de tu carrera configurado.',
@@ -210,7 +210,7 @@ const ATIVACOES = [
     local: estande('Garmin', 'C4'),
   }),
   ...ativacao({
-    slug: 'garmin-gpx-tarde', marca: 'Garmin', logoArquivo: null,
+    slug: 'garmin-gpx-tarde', marca: 'Garmin', logoArquivo: 'garmin',
     tit: ['Baixe e configure seu GPX', 'Descarga y configura tu GPX', 'Download and set up your GPX'],
     desc: ['Leve o relógio ao estande da Garmin e saia com o percurso da sua prova configurado.',
            'Lleva tu reloj al stand de Garmin y sal con el recorrido de tu carrera configurado.',
@@ -316,7 +316,7 @@ const PALCO_ITENS = [
     desc: ['Como os cliques criam conexão, memória e valor no trail running. Com Cris Savieto, diretora comercial, e Vandrei Stephani, gestor de eventos.',
            'Cómo los clics crean conexión, memoria y valor en el trail running. Con Cris Savieto, directora comercial, y Vandrei Stephani, gestor de eventos.',
            'How photos create connection, memory and value in trail running. With Cris Savieto, sales director, and Vandrei Stephani, events manager.'],
-    palestrante: 'Cris Savieto e Vandrei Stephani', marca: 'FOTOP',
+    palestrante: 'Cris Savieto e Vandrei Stephani', marca: 'FOTOP', logoArquivo: 'fotop',
   }),
   palco({
     id: 'talk-sustentabilidade', data: '2026-09-17', ini: '18:30', fim: '', pilar: 'talks',
@@ -391,6 +391,19 @@ const BENEFICIOS = [
     descricao: ['Desconto no estande inteiro.', 'Descuento en todo el stand.', 'Discount across the whole booth.'],
     local: estande('HOKA', 'B1'), condicoes: PEITO, validade: DATAS_EXPO,
     logoArquivo: 'hoka', destaque: 'sim',
+  }),
+  beneficio({
+    id: 'ben-nautika', onde: 'expo', categoria: 'equipamentos', nome: 'NTK Nautika',
+    desconto: ['Até 40% de desconto', 'Hasta 40% de descuento', 'Up to 40% off'],
+    descricao: ['Brindes nas compras acima de R$ 250.', 'Regalos en compras superiores a R$ 250.', 'Free gifts on purchases over R$ 250.'],
+    local: estande('NTK Nautika', 'F4'), condicoes: PEITO, validade: DATAS_EXPO,
+    logoArquivo: 'nautika',
+  }),
+  beneficio({
+    id: 'ben-deuter', onde: 'expo', categoria: 'equipamentos', nome: 'Deuter',
+    desconto: ['Até 40% de desconto', 'Hasta 40% de descuento', 'Up to 40% off'],
+    descricao: ['Brindes nas compras acima de R$ 250.', 'Regalos en compras superiores a R$ 250.', 'Free gifts on purchases over R$ 250.'],
+    local: estande('Deuter', 'E6'), condicoes: PEITO, validade: DATAS_EXPO,
   }),
 ]
 

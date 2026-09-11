@@ -174,7 +174,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'garmin', nome: 'Garmin', estande: 'C4', marcas: ['Garmin'],
-    segmentos: ['tecnologia'], logo: null, tipo: 'marca', px: [376, 508, 46, 64],
+    segmentos: ['tecnologia'], logo: 'garmin', tipo: 'marca', px: [376, 508, 46, 64],
   },
   {
     id: 'liquidz', nome: 'Liquidz', estande: 'C5', marcas: ['Liquidz'],
@@ -184,7 +184,7 @@ const BRUTOS: Bruto[] = [
   // ---------------------------------------------------------- setor F
   {
     id: 'veja', nome: 'Veja', estande: 'F1', marcas: ['Veja'],
-    segmentos: ['calcados'], logo: null, tipo: 'marca', px: [570, 510, 50, 62],
+    segmentos: ['calcados'], logo: 'veja', tipo: 'marca', px: [570, 510, 50, 62],
   },
   {
     id: 'yopp', nome: 'Yopp', estande: 'F2', marcas: ['Yopp'],
@@ -196,7 +196,7 @@ const BRUTOS: Bruto[] = [
     segmentos: ['acessorios'], logo: null, tipo: 'marca', px: [688, 510, 50, 62],
   },
   {
-    id: 'nautika', nome: 'NTK Nautika e Azteq', estande: 'F4 a F6', marcas: ['NTK', 'Nautika', 'Azteq'],
+    id: 'nautika', nome: 'NTK Nautika e Azteq', estande: 'F4 a F6', marcas: ['NTK', 'Nautika', 'NTK Nautika', 'Azteq'],
     segmentos: ['equipamentos'],
     logo: 'nautika', tipo: 'marca', px: [748, 510, 168, 62],
   },
@@ -236,7 +236,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'foto-oficial', nome: 'Foto oficial by FOTOP', estande: 'E10', marcas: ['FOTOP'],
-    segmentos: ['servicos'], logo: null, tipo: 'marca', px: [1138, 508, 86, 64],
+    segmentos: ['servicos'], logo: 'fotop', tipo: 'marca', px: [1138, 508, 86, 64],
   },
   {
     id: 'banheiros', nome: 'Banheiros', estande: '', marcas: [],
