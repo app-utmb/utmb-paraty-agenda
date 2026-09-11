@@ -136,7 +136,7 @@ export const es: Dicionario = {
     reset: 'Volver al tamaño original',
     interativo: 'Toca un stand para ver lo que pasa en el',
     semAtividades: 'Sin activaciones registradas en este stand',
-    ativacoesDaMarca: 'Lo que pasa aqui',
+    ativacoesDaMarca: 'Lo que pasa aquí',
     beneficioDaMarca: 'Beneficio',
     segmento: 'Segmento',
     estande: 'Stand',
