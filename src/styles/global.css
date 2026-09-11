@@ -409,6 +409,14 @@ img {
 
 /* ---------- Cartoes e listas ---------- */
 
+/* Aviso de que a programacao ainda recebe novidades ate o evento. */
+.nota-atualizacao {
+  margin: 10px 0 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--texto-fraco);
+}
+
 .secao-titulo {
   margin: 0 0 10px;
   font-size: 13px;

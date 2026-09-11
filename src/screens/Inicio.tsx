@@ -41,6 +41,7 @@ export function Inicio({
         {dados.config.eventoDatas && (
           <p className="abertura__datas">{dados.config.eventoDatas}</p>
         )}
+        <p className="nota-atualizacao">{t.programacao.aviso}</p>
       </header>
 
       <section aria-labelledby="titulo-agenda">

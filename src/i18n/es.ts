@@ -52,6 +52,7 @@ export const es: Dicionario = {
     todos: 'Todos',
     vazio: 'Ningún elemento para este filtro',
     vazioDica: 'Prueba otro día o el filtro Todos',
+    aviso: 'El programa se actualizará hasta el inicio del evento. Pueden sumarse nuevas actividades.',
     itensContagem: (n: number) => (n === 1 ? '1 elemento' : `${n} elementos`),
   },
   beneficios: {

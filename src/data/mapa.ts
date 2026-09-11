@@ -107,7 +107,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'compressport', nome: 'Compressport', estande: 'B2', marcas: ['Compressport'],
-    segmentos: ['vestuario'], logo: null, tipo: 'marca', px: [358, 364, 56, 76],
+    segmentos: ['vestuario'], logo: 'compressport', tipo: 'marca', px: [358, 364, 56, 76],
   },
   {
     id: 'shokz', nome: 'Shokz', estande: 'B3', marcas: ['Shokz'],
@@ -115,8 +115,8 @@ const BRUTOS: Bruto[] = [
   },
   // ---------------------------------------------------------- setor E
   {
-    id: 'brooklin', nome: 'Brooklin', estande: 'E1', marcas: ['Brooklin'],
-    segmentos: ['vestuario'], logo: null, tipo: 'marca', px: [744, 364, 52, 34],
+    id: 'brooklin', nome: 'Brooklyn', estande: 'E1', marcas: ['Brooklyn', 'Brooklin'],
+    segmentos: ['vestuario'], logo: 'brooklyn', tipo: 'marca', px: [744, 364, 52, 34],
   },
   {
     id: 'bananinha', nome: 'Bananinha Paraibuna', estande: 'E2', marcas: ['Bananinha Paraibuna'],
@@ -156,7 +156,7 @@ const BRUTOS: Bruto[] = [
   {
     id: 'desola', nome: 'Desola', estande: '', marcas: ['Desola'],
     segmentos: ['calcados'],
-    logo: null, tipo: 'marca', px: [920, 408, 52, 32],
+    logo: 'desola', tipo: 'marca', px: [920, 408, 52, 32],
   },
   {
     id: 'tricky', nome: 'Tricky', estande: 'E9', marcas: ['Tricky'],
@@ -202,7 +202,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'suunto', nome: 'Suunto', estande: '', marcas: ['Suunto'],
-    segmentos: ['tecnologia'], logo: null, tipo: 'marca', px: [924, 510, 50, 62],
+    segmentos: ['tecnologia'], logo: 'suunto', tipo: 'marca', px: [924, 510, 50, 62],
   },
   {
     id: 'mombora', nome: 'MOMBORA', estande: 'F8 e F9', marcas: ['MOMBORA'],

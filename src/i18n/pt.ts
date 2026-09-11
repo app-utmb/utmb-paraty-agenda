@@ -50,6 +50,7 @@ export const pt = {
     todos: 'Todos',
     vazio: 'Nenhum item para este filtro',
     vazioDica: 'Tente outro dia ou o filtro Todos',
+    aviso: 'A programação será atualizada até o início do evento. Novas atividades podem entrar.',
     itensContagem: (n: number) => (n === 1 ? '1 item' : `${n} itens`),
   },
   beneficios: {

@@ -150,6 +150,7 @@ export function Programacao({
     <div>
       <h1 className="visualmente-oculto">{t.programacao.titulo}</h1>
       {barraAgenda}
+      <p className="nota-atualizacao">{t.programacao.aviso}</p>
 
       <div className="chips" role="tablist" aria-label={t.programacao.seletorDia}>
         {dias.map((d) => (

@@ -208,6 +208,15 @@ const ATIVACOES = [
     dias: TODOS, local: estande('Yopp', 'F2'),
   }),
   ...ativacao({
+    slug: 'gu-shake-out', marca: 'GU',
+    tit: ['Shake Out GU', 'Shake Out GU', 'GU shake out'],
+    desc: ['Corrida leve de soltura com os géis GU. Apenas para convidados.',
+           'Trote suave de soltura con los geles GU. Solo para invitados.',
+           'Easy shake out run with GU gels. Invite only.'],
+    dias: ['2026-09-18'], horas: { '2026-09-18': ['08:00', ''] },
+    local: aConfirmar, inscricao: 'invite',
+  }),
+  ...ativacao({
     slug: 'garmin-gpx', marca: 'Garmin', logoArquivo: 'garmin',
     tit: ['Baixe e configure seu GPX', 'Descarga y configura tu GPX', 'Download and set up your GPX'],
     desc: ['Leve o relógio ao estande da Garmin e saia com o percurso da sua prova configurado.',
