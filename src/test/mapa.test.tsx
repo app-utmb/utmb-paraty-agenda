@@ -4,14 +4,18 @@ import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { describe, expect, it, vi } from 'vitest'
 import { DetalheMarca } from '../components/DetalheMarca'
-import { PONTOS_MAPA, REFERENCIA, type PontoMapa } from '../data/mapa'
+import { MARCAS_SEM_ESTANDE, PONTOS_MAPA, REFERENCIA, type PontoMapa } from '../data/mapa'
+import { normalizarProgramacao } from '../data/normalize'
 import { lerCsv } from '../data/sheets'
 import { MapaExpo } from '../screens/MapaExpo'
 import {
+  aconteceForaDoEstande,
   atividadesDaMarca,
   beneficiosDaMarca,
+  codigosDoEstande,
   listarDias,
   localPrincipal,
+  type AtividadeResumida,
 } from '../utils/marca'
 import { dadosDeTeste } from './fixtures'
 import { renderizar, screen, within } from './utilitarios'
@@ -66,15 +70,14 @@ describe('pontos do mapa', () => {
     lerCsv(readFileSync(resolve(process.cwd(), arquivo), 'utf8'))
       .map((l) => (l[nome] ?? '').trim())
 
-  /** A organizacao nao e expositora, entao nao tem estande no mapa. */
-  const MARCA_EVENTO = 'paraty brazil by utmb'
-
   it('toda marca expositora da programacao real tem um ponto no mapa', () => {
     const noMapa = new Set(PONTOS_MAPA.flatMap((p) => p.marcas.map((m) => m.toLowerCase())))
+    const semEstande = new Set(MARCAS_SEM_ESTANDE.map((m) => m.toLowerCase()))
     const semPonto = [...new Set(coluna('planilha/Programacao.csv', 'marca'))]
+      .flatMap((m) => m.split(';'))
+      .map((m) => m.trim().toLowerCase())
       .filter(Boolean)
-      .map((m) => m.toLowerCase())
-      .filter((m) => m !== MARCA_EVENTO)
+      .filter((m) => !semEstande.has(m))
       .filter((m) => !noMapa.has(m))
     expect(semPonto).toEqual([])
   })
@@ -119,10 +122,74 @@ describe('agrupamento por marca', () => {
     expect(localPrincipal(atividades)).toBe('Estande')
   })
 
-  it('sem ativacao, cai no local mais repetido', () => {
-    const so = [{ chave: 'x', titulo: 'x', descricao: '', dias: ['2026-09-17'], horario: null,
-      pilar: 'talks' as const, local: 'Palco Expo', inscricao: 'livre' as const, linkInscricao: null }]
-    expect(localPrincipal(so)).toBe('Palco Expo')
+  /** Atividade minima para testar as regras de local. */
+  const atv = (pilar: AtividadeResumida['pilar'], local: string): AtividadeResumida => ({
+    chave: local, titulo: local, descricao: '', dias: ['2026-09-17'], horario: null,
+    sessoes: null, pilar, local, inscricao: 'livre', linkInscricao: null,
+  })
+
+  it('sem ativacao nao ha estande deduzido', () => {
+    expect(localPrincipal([atv('talks', 'Palco Expo')])).toBeNull()
+  })
+
+  it('le os codigos de estande do ponto', () => {
+    expect(codigosDoEstande('F8 e F9')).toEqual(['F8', 'F9'])
+    expect(codigosDoEstande('C5')).toEqual(['C5'])
+    expect(codigosDoEstande('')).toEqual([])
+  })
+
+  it('palestra e filme sempre dizem onde acontecem', () => {
+    expect(aconteceForaDoEstande(atv('talks', 'Palco Expo'), ['C5'], null)).toBe(true)
+    expect(aconteceForaDoEstande(atv('filmes', 'Palco Expo'), [], null)).toBe(true)
+  })
+
+  it('ativacao no estande certo nao repete o local', () => {
+    expect(aconteceForaDoEstande(atv('ativacao', 'Estande Liquidz, C5'), ['C5'], null)).toBe(false)
+  })
+
+  it('ativacao fora do estande diz onde acontece, mesmo sendo a unica', () => {
+    // O Esquenta 5k da Shokz e a unica ativacao da marca e nao e no estande.
+    expect(aconteceForaDoEstande(atv('ativacao', 'A confirmar'), ['B3'], 'A confirmar')).toBe(true)
+  })
+
+  it('nao confunde E1 com E10', () => {
+    expect(aconteceForaDoEstande(atv('ativacao', 'Estande FOTOP, E10'), ['E1'], null)).toBe(true)
+  })
+
+  it('sem codigo no ponto, compara com o local das outras ativacoes', () => {
+    expect(aconteceForaDoEstande(atv('ativacao', 'Estande'), [], 'Estande')).toBe(false)
+    expect(aconteceForaDoEstande(atv('ativacao', 'Praia'), [], 'Estande')).toBe(true)
+  })
+
+  it('lista as sessoes quando o horario marcado muda de dia para dia', () => {
+    const csv = `id,data,hora_inicio,hora_fim,pilar,titulo_pt,marca
+g1,2026-09-17,15:00,,ativacao,GPX,Garmin
+g2,2026-09-18,11:00,,ativacao,GPX,Garmin
+g3,2026-09-18,16:00,,ativacao,GPX,Garmin
+g4,2026-09-19,11:00,,ativacao,GPX,Garmin`
+    const itens = normalizarProgramacao(lerCsv(csv)).dados
+    const [gpx] = atividadesDaMarca(ponto('garmin'), itens, 'pt')
+    expect(gpx?.horario).toBeNull()
+    expect(gpx?.sessoes).toEqual([
+      { data: '2026-09-17', horas: ['15:00'] },
+      { data: '2026-09-18', horas: ['11:00', '16:00'] },
+      { data: '2026-09-19', horas: ['11:00'] },
+    ])
+  })
+
+  it('nao lista sessoes para o que segue o horario da Expo', () => {
+    const csv = `id,data,hora_inicio,hora_fim,pilar,titulo_pt,marca
+d1,2026-09-17,10:00,20:00,ativacao,Degustacao,Tricky
+d2,2026-09-20,10:00,13:00,ativacao,Degustacao,Tricky`
+    const itens = normalizarProgramacao(lerCsv(csv)).dados
+    expect(atividadesDaMarca(ponto('tricky'), itens, 'pt')[0]?.sessoes).toBeNull()
+  })
+
+  it('acha as acoes de um item com duas marcas pelas duas', () => {
+    const csv = `id,data,hora_inicio,pilar,titulo_pt,marca
+m1,2026-09-17,18:30,talks,Mesa,Paraty Brazil by UTMB; FOTOP`
+    const itens = normalizarProgramacao(lerCsv(csv)).dados
+    expect(atividadesDaMarca(ponto('foto-oficial'), itens, 'pt')).toHaveLength(1)
   })
 
   it('devolve nulo quando nao ha atividade', () => {
@@ -207,9 +274,11 @@ describe('detalhe da marca', () => {
   })
 
   it('avisa onde acontece o que e fora do estande da marca', () => {
+    // Ponto sem codigo de estande, para exercitar a comparacao pelo local das
+    // outras ativacoes da marca.
     renderizar(
       <DetalheMarca
-        ponto={{ ...ponto('hoka'), marcas: ['The North Face'] }}
+        ponto={{ ...ponto('hoka'), marcas: ['The North Face'], estande: '' }}
         itens={dados.itens}
         beneficios={dados.beneficios}
         aoFechar={vi.fn()}

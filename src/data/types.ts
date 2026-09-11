@@ -35,7 +35,13 @@ export interface ItemProgramacao {
   descricao: TextoMultilingue
   local: TextoMultilingue
   palestrante: string | null
+  /** Texto de exibicao das marcas, ja juntas. */
   marca: string | null
+  /**
+   * Cada marca separada. Na planilha vao na mesma celula, separadas por
+   * ponto e virgula: "Paraty Brazil by UTMB; SOS Mata Atlantica".
+   */
+  marcas: string[]
   logoUrl: string | null
   inscricao: Inscricao
   linkInscricao: string | null

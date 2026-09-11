@@ -324,15 +324,8 @@ export function normalizarProgramacao(
         gravidade: 'corrigida',
       })
     }
-    if (inscricao === 'previa' && !linkInscricao) {
-      problemas.push({
-        linha,
-        campo: 'link_inscricao',
-        motivo: 'inscricao previa sem link, item mostrado como entrada livre',
-        gravidade: 'corrigida',
-      })
-      inscricao = 'livre'
-    }
+    // Inscricao previa sem link e valida: muitas marcas fazem a inscricao no
+    // proprio estande. O app mostra a etiqueta e so esconde o botao.
 
     const logoUrl = urlSegura(texto(l.logourl))
     if (texto(l.logourl) && !logoUrl) {
@@ -343,6 +336,11 @@ export function normalizarProgramacao(
         gravidade: 'corrigida',
       })
     }
+
+    const marcas = texto(l.marca)
+      .split(';')
+      .map((m) => m.trim())
+      .filter(Boolean)
 
     idsVistos.add(id)
     itens.push({
@@ -357,7 +355,8 @@ export function normalizarProgramacao(
       descricao: multilingue(l, 'descricao'),
       local: multilingue(l, 'local'),
       palestrante: texto(l.palestrante) || null,
-      marca: texto(l.marca) || null,
+      marca: marcas.length > 0 ? marcas.join(' · ') : null,
+      marcas,
       logoUrl,
       inscricao,
       linkInscricao,

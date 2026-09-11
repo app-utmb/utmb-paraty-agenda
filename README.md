@@ -57,7 +57,7 @@ Uma linha por item da agenda. As colunas de texto existem em três idiomas.
 | `marca` | opcional, não traduz | `The North Face` |
 | `logo_url` | opcional, link direto da imagem da logo | `https://...` |
 | `inscricao` | `livre`, `previa` ou `invite` | `previa` |
-| `link_inscricao` | obrigatório só quando `inscricao` é `previa` | `https://...` |
+| `link_inscricao` | opcional. Com `previa` e sem link, o app mostra a etiqueta de inscrição sem botão, para inscrição feita no estande | `https://...` |
 | `destaque` | escreva `sim` para fixar o item no topo do dia | `sim` |
 
 **Regra de idioma:** se você deixar `titulo_es` vazio, o app mostra o `titulo_pt` no lugar. Vale para todos os campos traduzíveis. Então dá para publicar só em português e ir traduzindo aos poucos.

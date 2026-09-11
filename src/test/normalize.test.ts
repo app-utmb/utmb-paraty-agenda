@@ -214,11 +214,30 @@ describe('normalizarProgramacao', () => {
     expect(problemas[0]?.campo).toBe('pilar')
   })
 
-  it('rebaixa inscricao previa sem link para entrada livre', () => {
+  it('mantem inscricao previa sem link, feita no estande', () => {
     const { dados, problemas } = importar({ inscricao: 'previa', link_inscricao: '' })
     const item = dados[0] as ItemProgramacao
-    expect(item.inscricao).toBe('livre')
-    expect(problemas.some((p) => p.campo === 'link_inscricao')).toBe(true)
+    expect(item.inscricao).toBe('previa')
+    expect(item.linkInscricao).toBeNull()
+    expect(problemas).toHaveLength(0)
+  })
+
+  it('separa as marcas escritas na mesma celula com ponto e virgula', () => {
+    const { dados } = importar({ marca: 'Paraty Brazil by UTMB; SOS Mata Atlântica' })
+    const item = dados[0] as ItemProgramacao
+    expect(item.marcas).toEqual(['Paraty Brazil by UTMB', 'SOS Mata Atlântica'])
+    expect(item.marca).toBe('Paraty Brazil by UTMB · SOS Mata Atlântica')
+  })
+
+  it('ignora marcas vazias entre separadores', () => {
+    const { dados } = importar({ marca: ' HOKA ;; ' })
+    expect((dados[0] as ItemProgramacao).marcas).toEqual(['HOKA'])
+  })
+
+  it('sem marca, a lista fica vazia', () => {
+    const { dados } = importar({ marca: '' })
+    expect((dados[0] as ItemProgramacao).marcas).toEqual([])
+    expect((dados[0] as ItemProgramacao).marca).toBeNull()
   })
 
   it('mantem inscricao previa quando o link e valido', () => {
@@ -238,7 +257,8 @@ describe('normalizarProgramacao', () => {
       link_inscricao: 'javascript:alert(1)',
     })
     expect((dados[0] as ItemProgramacao).linkInscricao).toBeNull()
-    expect((dados[0] as ItemProgramacao).inscricao).toBe('livre')
+    // A inscricao continua previa, so perde o botao de link.
+    expect((dados[0] as ItemProgramacao).inscricao).toBe('previa')
     expect(problemas.length).toBeGreaterThan(0)
   })
 

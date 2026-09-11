@@ -51,7 +51,7 @@ export function Programacao({
     const base = dados.itens.filter(
       (i) => i.data === diaAtivo && (pilar === 'todos' || i.pilar === pilar),
     )
-    return [...new Set(base.map((i) => i.marca).filter((m): m is string => Boolean(m)))].sort(
+    return [...new Set(base.flatMap((i) => i.marcas))].sort(
       (a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' }),
     )
   }, [dados.itens, diaAtivo, pilar])
@@ -64,7 +64,7 @@ export function Programacao({
         (i) =>
           i.data === diaAtivo &&
           (pilar === 'todos' || i.pilar === pilar) &&
-          (marcaAtiva === 'todas' || i.marca === marcaAtiva),
+          (marcaAtiva === 'todas' || i.marcas.includes(marcaAtiva)),
       ),
     [dados.itens, diaAtivo, pilar, marcaAtiva],
   )

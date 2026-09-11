@@ -4,7 +4,9 @@ import type { PontoMapa } from '../data/mapa'
 import type { Beneficio, ItemProgramacao } from '../data/types'
 import { useIdioma } from '../i18n'
 import {
+  aconteceForaDoEstande,
   atividadesDaMarca,
+  codigosDoEstande,
   beneficiosDaMarca,
   listarDias,
   localPrincipal,
@@ -67,6 +69,7 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
   const atividades = atividadesDaMarca(ponto, itens, idioma)
   // O que acontece fora do estande da marca precisa dizer onde acontece.
   const ondeQuaseTudo = localPrincipal(atividades)
+  const codigos = codigosDoEstande(ponto.estande)
   const vantagens = beneficiosDaMarca(ponto, beneficios)
   const segmento = ponto.segmentos.map((x) => t.segmentos[x]).join(' · ')
   const logoSrc = ponto.logo ? `${import.meta.env.BASE_URL}logos/${ponto.logo}.png` : null
@@ -146,11 +149,20 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
                 {atividades.map((a) => (
                   <li className="atividade" key={a.chave}>
                     <p className="atividade__titulo">{a.titulo}</p>
-                    <p className="atividade__quando">
-                      {listarDias(a.dias, t.mapa.conectorDias)} {t.mapa.setembro}
-                      {a.horario ? ` · ${a.horario}` : ''}
-                    </p>
-                    {a.local && a.local !== ondeQuaseTudo && (
+                    {a.sessoes ? (
+                      a.sessoes.map((sessao) => (
+                        <p className="atividade__quando" key={sessao.data}>
+                          {listarDias([sessao.data], t.mapa.conectorDias)} {t.mapa.setembro} ·{' '}
+                          {sessao.horas.join(` ${t.mapa.conectorDias} `)}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="atividade__quando">
+                        {listarDias(a.dias, t.mapa.conectorDias)} {t.mapa.setembro}
+                        {a.horario ? ` · ${a.horario}` : ''}
+                      </p>
+                    )}
+                    {aconteceForaDoEstande(a, codigos, ondeQuaseTudo) && (
                       <p className="atividade__fora">
                         <span className={`etiqueta etiqueta--${a.pilar}`}>{t.pilares[a.pilar]}</span>
                         <span>{a.local}</span>

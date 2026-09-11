@@ -235,14 +235,20 @@ const BRUTOS: Bruto[] = [
     segmentos: [], logo: null, tipo: 'servico', px: [1138, 308, 86, 188],
   },
   {
-    id: 'foto-oficial', nome: 'Foto oficial by Fotop', estande: '', marcas: [],
-    segmentos: ['servicos'], logo: null, tipo: 'servico', px: [1138, 508, 86, 64],
+    id: 'foto-oficial', nome: 'Foto oficial by FOTOP', estande: 'E10', marcas: ['FOTOP'],
+    segmentos: ['servicos'], logo: null, tipo: 'marca', px: [1138, 508, 86, 64],
   },
   {
     id: 'banheiros', nome: 'Banheiros', estande: '', marcas: [],
     segmentos: [], logo: null, tipo: 'servico', px: [218, 584, 252, 52],
   },
 ]
+
+/**
+ * Marcas que aparecem na programacao mas nao tem estande na Expo. Ficam fora
+ * da checagem de que toda marca da agenda tem ponto no mapa.
+ */
+export const MARCAS_SEM_ESTANDE = ['Paraty Brazil by UTMB', 'SOS Mata Atlântica'] as const
 
 export const PONTOS_MAPA: PontoMapa[] = BRUTOS.map(({ px, ...resto }) => ({
   ...resto,
