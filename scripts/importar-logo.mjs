@@ -11,6 +11,8 @@
 //              escuro sobre fundo transparente.
 // --recorte    fracoes de 0 a 1 da imagem, para tirar so o logo de uma arte
 //              maior.
+// --fundo #hex para logo branco que a marca usa sobre uma cor propria, como a
+//              MOMBORA no roxo: o logo vai para um quadrado dessa cor.
 import { execFile } from 'node:child_process'
 import { readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, extname, resolve } from 'node:path'
@@ -30,6 +32,8 @@ const LADO = 256
 const ESCURO = { r: 11, g: 27, b: 58 }
 const escurecer = opcoes.includes('--escurecer')
 const negativo = opcoes.includes('--negativo')
+const iFundo = opcoes.indexOf('--fundo')
+const fundo = iFundo >= 0 ? opcoes[iFundo + 1] : null
 const iRecorte = opcoes.indexOf('--recorte')
 const recorte = iRecorte >= 0 ? opcoes[iRecorte + 1].split(',').map(Number) : null
 
@@ -84,9 +88,23 @@ if (escurecer) {
   buf = await sharp(data, { raw: info }).png().toBuffer()
 }
 
-const png = await sharp(buf)
-  .resize(LADO, LADO, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-  .png({ compressionLevel: 9 })
-  .toBuffer()
+let png
+if (fundo) {
+  // Logo a 72% do lado, centralizado num quadrado da cor da marca.
+  const miolo = Math.round(LADO * 0.72)
+  const logo = await sharp(buf)
+    .resize(miolo, miolo, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toBuffer()
+  png = await sharp({ create: { width: LADO, height: LADO, channels: 4, background: fundo } })
+    .composite([{ input: logo, gravity: 'center' }])
+    .png({ compressionLevel: 9 })
+    .toBuffer()
+} else {
+  png = await sharp(buf)
+    .resize(LADO, LADO, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png({ compressionLevel: 9 })
+    .toBuffer()
+}
 await writeFile(resolve(raiz, 'public/logos', `${nome}.png`), png)
 console.log(`public/logos/${nome}.png, ${Math.round(png.length / 1024)} KB`)

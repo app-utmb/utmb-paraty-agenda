@@ -14,17 +14,17 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
+      includeAssets: ['favicon.png', 'og.png', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: 'Paraty Brazil by UTMB',
+        name: 'Agenda Digital Paraty by UTMB',
         short_name: 'Paraty UTMB',
-        description: 'Agenda do atleta do Paraty Brazil by UTMB',
+        description: 'Programação, ativações, benefícios e mapa da Expo do Paraty Brazil by UTMB',
         lang: 'pt-BR',
         start_url: base,
         scope: base,
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#070d1c',
+        background_color: '#000840',
         theme_color: '#070d1c',
         categories: ['sports', 'events'],
         icons: [

@@ -64,7 +64,7 @@ const BRUTOS: Bruto[] = [
   {
     id: 'columbia', nome: 'COLUMBIA', estande: 'D1', marcas: ['COLUMBIA'],
     segmentos: ['vestuario'],
-    logo: null, tipo: 'marca', px: [570, 230, 50, 64],
+    logo: 'columbia', tipo: 'marca', px: [570, 230, 50, 64],
   },
   {
     id: 'kailash', nome: 'Kailash', estande: 'D2 e D3', marcas: ['Kailash'],
@@ -90,7 +90,7 @@ const BRUTOS: Bruto[] = [
     logo: 'runlastic', tipo: 'marca', px: [920, 230, 52, 64],
   },
   {
-    id: 'vivas-move', nome: 'VIVAS MOVE', estande: 'D8', marcas: ['VIVAS MOVE'],
+    id: 'vivas-move', nome: 'VIVÁS MOVE', estande: 'D8', marcas: ['VIVÁS MOVE'],
     segmentos: ['vestuario'],
     logo: 'vivas-move', tipo: 'marca', px: [980, 230, 50, 64],
   },
@@ -111,7 +111,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'shokz', nome: 'Shokz', estande: 'B3', marcas: ['Shokz'],
-    segmentos: ['tecnologia'], logo: null, tipo: 'marca', px: [420, 364, 56, 76],
+    segmentos: ['tecnologia'], logo: 'shokz', tipo: 'marca', px: [420, 364, 56, 76],
   },
   // ---------------------------------------------------------- setor E
   {
@@ -142,7 +142,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'deuter', nome: 'Deuter', estande: 'E6', marcas: ['Deuter'],
-    segmentos: ['equipamentos'], logo: null, tipo: 'marca', px: [744, 408, 52, 32],
+    segmentos: ['equipamentos'], logo: 'deuter', tipo: 'marca', px: [744, 408, 52, 32],
   },
   {
     id: 'sumaca', nome: 'SUMACA', estande: 'E7', marcas: ['SUMACA'],
@@ -207,7 +207,7 @@ const BRUTOS: Bruto[] = [
   {
     id: 'mombora', nome: 'MOMBORA', estande: 'F8 e F9', marcas: ['MOMBORA'],
     segmentos: ['nutricao'],
-    logo: null, tipo: 'marca', px: [982, 510, 110, 62],
+    logo: 'mombora', tipo: 'marca', px: [982, 510, 110, 62],
   },
   {
     id: 'vibram', nome: 'Vibram', estande: '', marcas: ['Vibram'],
@@ -219,11 +219,11 @@ const BRUTOS: Bruto[] = [
     segmentos: [], logo: null, tipo: 'servico', px: [50, 244, 104, 244],
   },
   {
-    id: 'praca-alimentacao', nome: 'Praca de alimentacao', estande: '', marcas: [],
+    id: 'praca-alimentacao', nome: 'Praça de alimentação', estande: '', marcas: [],
     segmentos: [], logo: null, tipo: 'servico', px: [12, 282, 30, 106],
   },
   {
-    id: 'cafe', nome: 'Cafe UTMB', estande: '', marcas: [],
+    id: 'cafe', nome: 'Café UTMB', estande: '', marcas: [],
     segmentos: [], logo: null, tipo: 'servico', px: [490, 236, 64, 54],
   },
   {

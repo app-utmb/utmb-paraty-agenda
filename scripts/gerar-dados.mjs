@@ -53,43 +53,43 @@ function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '
 
 const EXPO_T = ['UTMB Expo', 'UTMB Expo', 'UTMB Expo']
 const KITS = ['Retirada de kits', 'Retiro de kits', 'Bib pickup']
-const DROP = ['Drop bag e guarda volume', 'Drop bag y guarda equipaje', 'Drop bag and bag storage']
-const DROP_RET = ['Drop bag e guarda volume, retirada', 'Drop bag y guarda equipaje, retiro', 'Drop bag and bag storage, collection']
+const DROP = ['Drop bag e guarda-volume', 'Drop bag y guardarropa', 'Drop bag and bag storage']
+const DROP_RET = ['Drop bag e guarda-volume, retirada', 'Drop bag y guardarropa, retiro', 'Drop bag and bag storage, collection']
 
 const OFICIAL = [
   oficial('of-17-01', '2026-09-17', '10:00', '20:00', EXPO_T, EXPO),
   oficial('of-17-02', '2026-09-17', '10:00', '20:00', KITS, EXPO, ['', '', ''], 'sim'),
   oficial('of-17-03', '2026-09-17', '12:00', '20:00', ['Drop bag', 'Drop bag', 'Drop bag'], EXPO),
   oficial('of-17-04', '2026-09-17', '16:00', '', ['Abertura oficial', 'Apertura oficial', 'Official opening'], EXPO, ['', '', ''], 'sim'),
-  oficial('of-17-05', '2026-09-17', '17:30', '', ['Briefing tecnico PTR 108', 'Briefing tecnico PTR 108', 'PTR 108 technical briefing'], EXPO),
+  oficial('of-17-05', '2026-09-17', '17:30', '', ['Briefing técnico PTR 108', 'Briefing técnico PTR 108', 'PTR 108 technical briefing'], EXPO),
 
   oficial('of-18-01', '2026-09-18', '10:00', '21:00', EXPO_T, EXPO),
   oficial('of-18-02', '2026-09-18', '10:00', '21:00', KITS, EXPO),
   oficial('of-18-03', '2026-09-18', '10:00', '17:00', DROP, EXPO, [
     'Limite para os atletas da PTR 108 deixarem as bags antes da largada das 19h.',
-    'Limite para que los atletas de la PTR 108 dejen las bags antes de la salida de las 19h.',
+    'Límite para que los atletas de la PTR 108 dejen las bags antes de la salida de las 19h.',
     'Deadline for PTR 108 athletes to leave their bags before the 19h start.']),
-  oficial('of-18-04', '2026-09-18', '12:00', '', ['Apresentacao de atletas de elite', 'Presentacion de atletas de elite', 'Elite athlete presentation'], EXPO),
-  oficial('of-18-05', '2026-09-18', '13:00', '', ['Briefing tecnico PTR 58', 'Briefing tecnico PTR 58', 'PTR 58 technical briefing'], EXPO),
-  oficial('of-18-06', '2026-09-18', '13:30', '', ['Briefing tecnico PTR 34', 'Briefing tecnico PTR 34', 'PTR 34 technical briefing'], EXPO),
-  oficial('of-18-07', '2026-09-18', '14:00', '', ['Briefing tecnico PTR 25', 'Briefing tecnico PTR 25', 'PTR 25 technical briefing'], EXPO),
-  oficial('of-18-08', '2026-09-18', '14:30', '', ['Briefing tecnico PTR 17', 'Briefing tecnico PTR 17', 'PTR 17 technical briefing'], EXPO),
+  oficial('of-18-04', '2026-09-18', '12:00', '', ['Apresentação de atletas de elite', 'Presentación de atletas de élite', 'Elite athlete presentation'], EXPO),
+  oficial('of-18-05', '2026-09-18', '13:00', '', ['Briefing técnico PTR 58', 'Briefing técnico PTR 58', 'PTR 58 technical briefing'], EXPO),
+  oficial('of-18-06', '2026-09-18', '13:30', '', ['Briefing técnico PTR 34', 'Briefing técnico PTR 34', 'PTR 34 technical briefing'], EXPO),
+  oficial('of-18-07', '2026-09-18', '14:00', '', ['Briefing técnico PTR 25', 'Briefing técnico PTR 25', 'PTR 25 technical briefing'], EXPO),
+  oficial('of-18-08', '2026-09-18', '14:30', '', ['Briefing técnico PTR 17', 'Briefing técnico PTR 17', 'PTR 17 technical briefing'], EXPO),
   oficial('of-18-09', '2026-09-18', '19:00', '', ['Largada PTR 108', 'Salida PTR 108', 'PTR 108 start'], ARENA, ['', '', ''], 'sim'),
 
-  oficial('of-19-01', '2026-09-19', '04:00', '08:00', ['Guarda volume, deposito para as largadas matinais', 'Guarda equipaje, deposito para las salidas matinales', 'Bag storage, drop off for the morning starts'], AMBOS),
+  oficial('of-19-01', '2026-09-19', '04:00', '08:00', ['Guarda-volume, depósito para as largadas matinais', 'Guardarropa, depósito para las salidas matinales', 'Bag storage, drop off for the morning starts'], AMBOS),
   oficial('of-19-02', '2026-09-19', '05:00', '', ['Largada PTR 58', 'Salida PTR 58', 'PTR 58 start'], ARENA, ['', '', ''], 'sim'),
   oficial('of-19-03', '2026-09-19', '06:00', '', ['Largada PTR 34', 'Salida PTR 34', 'PTR 34 start'], ARENA, ['', '', ''], 'sim'),
   oficial('of-19-04', '2026-09-19', '08:00', '', ['Largada PTR 25', 'Salida PTR 25', 'PTR 25 start'], ARENA, ['', '', ''], 'sim'),
-  oficial('of-19-05', '2026-09-19', '08:00', '16:00', ['Retirada de kits, ultimo dia', 'Retiro de kits, ultimo dia', 'Bib pickup, last day'], EXPO, ['', '', ''], 'sim'),
+  oficial('of-19-05', '2026-09-19', '08:00', '16:00', ['Retirada de kits, último dia', 'Retiro de kits, último día', 'Bib pickup, last day'], EXPO, ['', '', ''], 'sim'),
   oficial('of-19-06', '2026-09-19', '10:00', '18:00', EXPO_T, EXPO),
   oficial('of-19-07', '2026-09-19', '10:00', '19:00', DROP_RET, EXPO, [
-    'Chegada prevista das bags a arena as 16h.',
+    'Chegada prevista das bags à arena às 16h.',
     'Llegada prevista de las bags a la arena a las 16h.',
     'Bags are expected to arrive at the arena at 16h.']),
   oficial('of-19-08', '2026-09-19', '14:00', '', ['Largada PTR 17', 'Salida PTR 17', 'PTR 17 start'], FAZENDA, ['', '', ''], 'sim'),
-  oficial('of-19-09', '2026-09-19', '15:00', '', ['Guarda volume PTR 17', 'Guarda equipaje PTR 17', 'PTR 17 bag storage'], AMBOS, [
-    'Os itens retornam da Fazenda Bananal e ficam disponiveis para retirada em Paraty.',
-    'Los items vuelven de la Fazenda Bananal y quedan disponibles para retiro en Paraty.',
+  oficial('of-19-09', '2026-09-19', '15:00', '', ['Guarda-volume PTR 17', 'Guardarropa PTR 17', 'PTR 17 bag storage'], AMBOS, [
+    'Os itens retornam da Fazenda Bananal e ficam disponíveis para retirada em Paraty.',
+    'Los artículos vuelven de la Fazenda Bananal y quedan disponibles para retirar en Paraty.',
     'Items return from Fazenda Bananal and can be collected in Paraty.']),
   oficial('of-19-10', '2026-09-19', '15:00', '', ['Limite PTR 25', 'Limite PTR 25', 'PTR 25 cut-off'], ARENA),
   oficial('of-19-11', '2026-09-19', '16:00', '', ['Limite PTR 34', 'Limite PTR 34', 'PTR 34 cut-off'], ARENA),
@@ -101,7 +101,7 @@ const OFICIAL = [
   oficial('of-20-03', '2026-09-20', '09:00', '', ['Kids', 'Kids', 'Kids'], ARENA, ['', '', ''], 'sim'),
   oficial('of-20-04', '2026-09-20', '10:00', '13:00', EXPO_T, EXPO),
   oficial('of-20-05', '2026-09-20', '10:00', '12:00', DROP_RET, EXPO),
-  oficial('of-20-06', '2026-09-20', '10:30', '', ['Premiacao', 'Premiacion', 'Awards ceremony'], EXPO, ['', '', ''], 'sim'),
+  oficial('of-20-06', '2026-09-20', '10:30', '', ['Premiação', 'Premiación', 'Awards ceremony'], EXPO, ['', '', ''], 'sim'),
   oficial('of-20-07', '2026-09-20', '12:00', '', ['Encerramento do evento', 'Cierre del evento', 'Event closing'], EXPO, ['', '', ''], 'sim'),
 ]
 
@@ -128,9 +128,9 @@ function ativacao({ slug, marca, tit, desc, dias, horas = null, local, inscricao
 
 const ATIVACOES = [
   ...ativacao({
-    slug: 'mombora-treinao', marca: 'MOMBORA', logoArquivo: null,
-    tit: ['Treinao MOMBORA', 'Entrenamiento MOMBORA', 'MOMBORA group run'],
-    desc: ['Treinao em conjunto com a COLUMBIA. Ponto de encontro a confirmar.',
+    slug: 'mombora-treinao', marca: 'MOMBORA', logoArquivo: 'mombora',
+    tit: ['Treinão MOMBORA', 'Entrenamiento MOMBORA', 'MOMBORA group run'],
+    desc: ['Treinão em conjunto com a COLUMBIA. Ponto de encontro a confirmar.',
            'Entrenamiento en conjunto con COLUMBIA. Punto de encuentro por confirmar.',
            'Group run together with COLUMBIA. Meeting point to be confirmed.'],
     dias: ['2026-09-18'], horas: { '2026-09-18': ['08:30', '10:00'] },
@@ -138,7 +138,7 @@ const ATIVACOES = [
   }),
   ...ativacao({
     slug: 'hoka-medalha', marca: 'HOKA', logoArquivo: 'hoka',
-    tit: ['Gravacao de medalhas', 'Grabado de medallas', 'Medal engraving'],
+    tit: ['Gravação de medalhas', 'Grabado de medallas', 'Medal engraving'],
     desc: ['Personalize a sua medalha no estande da HOKA.', 'Personaliza tu medalla en el stand de HOKA.', 'Personalise your medal at the HOKA booth.'],
     dias: ['2026-09-19', '2026-09-20'],
     horas: { '2026-09-19': ['14:00', '20:00'], '2026-09-20': ['10:00', '14:00'] },
@@ -146,7 +146,7 @@ const ATIVACOES = [
   }),
   ...ativacao({
     slug: 'nnormal-tenis', marca: 'NNormal', logoArquivo: 'nnormal',
-    tit: ['Experimentacao de tenis', 'Prueba de zapatillas', 'Shoe try-on'],
+    tit: ['Experimentação de tênis', 'Prueba de zapatillas', 'Shoe try-on'],
     desc: ['Experimente os modelos NNormal no estande. Inscrição pelo formulário da marca.',
            'Prueba los modelos NNormal en el stand. Inscripción por el formulario de la marca.',
            'Try the NNormal models at the booth. Sign up through the brand form.'],
@@ -155,27 +155,27 @@ const ATIVACOES = [
   }),
   ...ativacao({
     slug: 'coros-cacada', marca: 'COROS', logoArquivo: 'coros',
-    tit: ['Caca ao tesouro COROS', 'Busqueda del tesoro COROS', 'COROS treasure hunt'],
-    desc: ['Vagas limitadas, inscricao no estande.', 'Cupos limitados, inscripcion en el stand.', 'Limited places, sign up at the booth.'],
+    tit: ['Caça ao tesouro COROS', 'Búsqueda del tesoro COROS', 'COROS treasure hunt'],
+    desc: ['Vagas limitadas, inscrição no estande.', 'Cupos limitados, inscripción en el stand.', 'Limited places, sign up at the booth.'],
     dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('COROS', 'D9'),
     inscricao: 'previa',
   }),
   ...ativacao({
-    slug: 'vivas-roleta', marca: 'VIVAS MOVE', logoArquivo: 'vivas-move',
+    slug: 'vivas-roleta', marca: 'VIVÁS MOVE', logoArquivo: 'vivas-move',
     tit: ['Roleta de descontos', 'Ruleta de descuentos', 'Discount wheel'],
-    desc: ['Gire a roleta e leve o desconto que sair.', 'Gira la ruleta y llevate el descuento.', 'Spin the wheel and take the discount.'],
+    desc: ['Gire a roleta e leve o desconto que sair.', 'Gira la ruleta y llévate el descuento.', 'Spin the wheel and take the discount.'],
     dias: ['2026-09-17', '2026-09-18'],
     horas: { '2026-09-17': ['14:00', '18:00'], '2026-09-18': ['14:00', '18:00'] },
-    local: estande('VIVAS MOVE', 'D8'),
+    local: estande('VIVÁS MOVE', 'D8'),
   }),
   ...ativacao({
     slug: 'drpeanut-degustacao', marca: 'DR PEANUT', logoArquivo: 'dr-peanut',
-    tit: ['Degustacao DR PEANUT', 'Degustacion DR PEANUT', 'DR PEANUT tasting'],
-    desc: ['Proteina, pasta de amendoim e barra proteica na airfryer.', 'Proteina, pasta de mani y barra proteica en la airfryer.', 'Protein, peanut butter and protein bar from the airfryer.'],
+    tit: ['Degustação DR PEANUT', 'Degustación DR PEANUT', 'DR PEANUT tasting'],
+    desc: ['Proteína, pasta de amendoim e barra proteica na airfryer.', 'Proteína, pasta de maní y barra proteica en la airfryer.', 'Protein, peanut butter and protein bar from the airfryer.'],
     dias: TODOS, local: estande('DR PEANUT', 'D4'),
   }),
   ...ativacao({
-    slug: 'mombora-degustacao', marca: 'MOMBORA', logoArquivo: null,
+    slug: 'mombora-degustacao', marca: 'MOMBORA', logoArquivo: 'mombora',
     tit: ['Degustação da linha completa', 'Degustación de la línea completa', 'Full range tasting'],
     desc: ['Prove a linha completa, com canapé de Ultrabutter e pipoca com caramelo salgado.',
            'Prueba la línea completa, con canapé de Ultrabutter y palomitas con caramelo salado.',
@@ -183,7 +183,7 @@ const ATIVACOES = [
     dias: TODOS, local: estande('MOMBORA', 'F8'),
   }),
   ...ativacao({
-    slug: 'mombora-compre-ganhe', marca: 'MOMBORA', logoArquivo: null,
+    slug: 'mombora-compre-ganhe', marca: 'MOMBORA', logoArquivo: 'mombora',
     tit: ['Compre e ganhe', 'Compra y gana', 'Buy and get'],
     desc: ['Na compra, ganhe flasks, bonés e mochila. Desconto progressivo no estande.',
            'Con tu compra, gana flasks, gorras y mochila. Descuento progresivo en el stand.',
@@ -219,7 +219,7 @@ const ATIVACOES = [
     local: estande('Garmin', 'C4'),
   }),
   ...ativacao({
-    slug: 'shokz-esquenta', marca: 'Shokz', logoArquivo: null,
+    slug: 'shokz-esquenta', marca: 'Shokz', logoArquivo: 'shokz',
     tit: ['Esquenta 5k Shokz', 'Calentamiento 5k Shokz', 'Shokz 5k warm-up'],
     desc: ['Vagas limitadas. As primeiras inscrições correm testando o produto, até acabar o estoque. Inscrições no estande da Shokz, B3.',
            'Cupos limitados. Las primeras inscripciones corren probando el producto, hasta agotar stock. Inscripciones en el stand de Shokz, B3.',
@@ -243,17 +243,17 @@ const ATIVACOES = [
   }),
   ...ativacao({
     slug: 'liquidz-sabor', marca: 'Liquidz', logoArquivo: 'liquidz',
-    tit: ['Degustacao do novo sabor', 'Degustacion del nuevo sabor', 'New flavour tasting'],
-    desc: ['O sabor so e lancado em 22 de setembro. Aqui da para provar e comprar antes de todo mundo.',
-           'El sabor se lanza el 22 de septiembre. Aqui puedes probarlo y comprarlo antes que todos.',
+    tit: ['Degustação do novo sabor', 'Degustación del nuevo sabor', 'New flavour tasting'],
+    desc: ['O sabor só é lançado em 22 de setembro. Aqui dá para provar e comprar antes de todo mundo.',
+           'El sabor se lanza el 22 de septiembre. Aquí puedes probarlo y comprarlo antes que todos.',
            'The flavour launches on 22 September. Here you can taste and buy it before anyone else.'],
     dias: TODOS, local: estande('Liquidz', 'C5'), destaque: 'sim',
   }),
   ...ativacao({
     slug: 'liquidz-hidratacao', marca: 'Liquidz', logoArquivo: 'liquidz',
-    tit: ['Teste de hidratacao', 'Test de hidratacion', 'Hydration test'],
-    desc: ['Nutricionista no estande testando a hidratacao dos atletas e falando sobre eletrolitos no endurance.',
-           'Nutricionista en el stand midiendo la hidratacion y hablando de electrolitos en el endurance.',
+    tit: ['Teste de hidratação', 'Test de hidratación', 'Hydration test'],
+    desc: ['Nutricionista no estande testando a hidratação dos atletas e falando sobre eletrólitos no endurance.',
+           'Nutricionista en el stand midiendo la hidratación y hablando de electrolitos en el endurance.',
            'A nutritionist at the booth testing hydration and explaining electrolytes in endurance.'],
     dias: ['2026-09-17'], horas: { '2026-09-17': ['14:00', '18:00'] },
     local: estande('Liquidz', 'C5'), destaque: 'sim',
@@ -262,24 +262,24 @@ const ATIVACOES = [
     slug: 'liquidz-samples', marca: 'Liquidz', logoArquivo: 'liquidz',
     tit: ['Cadastro e samples', 'Registro y muestras', 'Sign up and samples'],
     desc: ['Cadastre-se no estande e leve amostras da marca, incluindo o sabor novo.',
-           'Registrate en el stand y llevate muestras, incluido el sabor nuevo.',
+           'Regístrate en el stand y llévate muestras, incluido el sabor nuevo.',
            'Sign up at the booth and take samples, including the new flavour.'],
     dias: TODOS, local: estande('Liquidz', 'C5'),
   }),
   ...ativacao({
     slug: 'aimo-qrcode', marca: 'AIMO', logoArquivo: 'aimo',
-    tit: ['QR code de 10% e sorteio de bones', 'QR de 10% y sorteo de gorras', '10% QR code and cap giveaway'],
-    desc: ['Leia o QR code no estande para 10% de desconto. Dois bones sao sorteados entre os cadastrados.',
+    tit: ['QR code de 10% e sorteio de bonés', 'QR de 10% y sorteo de gorras', '10% QR code and cap giveaway'],
+    desc: ['Leia o QR code no estande para 10% de desconto. Dois bonés são sorteados entre os cadastrados.',
            'Escanea el QR en el stand para 10% de descuento. Se sortean dos gorras entre los registrados.',
            'Scan the QR code at the booth for 10% off. Two caps are raffled among those who sign up.'],
     dias: TODOS, local: estande('AIMO', 'E3'), destaque: 'sim',
   }),
   ...ativacao({
     slug: 'aimo-camiseta', marca: 'AIMO', logoArquivo: 'aimo',
-    tit: ['Camiseta de edicao limitada', 'Camiseta de edicion limitada', 'Limited edition tee'],
-    desc: ['Souvenir Aimo do Paraty Brazil by UTMB, com customizacao feita na hora no estande.',
-           'Souvenir Aimo del Paraty Brazil by UTMB, personalizada en el momento.',
-           'Aimo souvenir of Paraty Brazil by UTMB, customised on the spot.'],
+    tit: ['Camiseta de edição limitada', 'Camiseta de edición limitada', 'Limited edition tee'],
+    desc: ['Souvenir AIMO do Paraty Brazil by UTMB, com customização feita na hora no estande.',
+           'Souvenir AIMO del Paraty Brazil by UTMB, personalizada en el momento.',
+           'AIMO souvenir of Paraty Brazil by UTMB, customised on the spot.'],
     dias: TODOS, local: estande('AIMO', 'E3'),
   }),
   ...ativacao({
@@ -290,7 +290,7 @@ const ATIVACOES = [
   }),
   ...ativacao({
     slug: 'tricky-barrinhas', marca: 'Tricky', logoArquivo: 'tricky',
-    tit: ['Degustacao de barrinhas de carbo', 'Degustacion de barras de carbo', 'Carb bar tasting'],
+    tit: ['Degustação de barrinhas de carbo', 'Degustación de barras de carbo', 'Carb bar tasting'],
     desc: ['Prove as barrinhas no estande da Tricky.', 'Prueba las barras en el stand de Tricky.', 'Try the bars at the Tricky booth.'],
     dias: TODOS, local: estande('Tricky', 'E9'),
   }),
@@ -328,40 +328,22 @@ const PALCO_ITENS = [
   }),
   palco({
     id: 'talk-liquidz-hidratacao', data: '2026-09-18', ini: '14:00', fim: '14:15', pilar: 'talks',
-    tit: ['Hidratacao funcional', 'Hidratacion funcional', 'Functional hydration'],
-    desc: ['Estrategias praticas de hidratacao para o Paraty Brazil by UTMB.',
-           'Estrategias practicas de hidratacion para el Paraty Brazil by UTMB.',
+    tit: ['Hidratação funcional', 'Hidratación funcional', 'Functional hydration'],
+    desc: ['Estratégias práticas de hidratação para o Paraty Brazil by UTMB.',
+           'Estrategias prácticas de hidratación para el Paraty Brazil by UTMB.',
            'Practical hydration strategies for Paraty Brazil by UTMB.'],
     palestrante: 'Talita Cristina', marca: 'Liquidz', logoArquivo: 'liquidz',
   }),
   palco({
     id: 'filme-tala', data: '2026-09-18', ini: '13:00', fim: '13:15', pilar: 'filmes',
     tit: ['Tala', 'Tala', 'Tala'],
-    desc: ['Exibicao do filme com Fernanda Maciel.',
-           'Proyeccion de la pelicula con Fernanda Maciel.',
+    desc: ['Exibição do filme com Fernanda Maciel.',
+           'Proyección de la película con Fernanda Maciel.',
            'Screening of the film with Fernanda Maciel.'],
     palestrante: 'Fernanda Maciel',
   }),
 ]
 
-/**
- * Item de teste pedido pelo evento, para ver como um item em andamento
- * aparece em "acontecendo agora". Atravessa a meia-noite de proposito.
- * Apague daqui quando nao precisar mais.
- */
-const TESTE = [
-  {
-    id: 'teste-agora', data: '2026-09-10', dia_semana: 'quinta-feira',
-    hora_inicio: '17:00', hora_fim: '17:00', data_fim: '2026-09-11', pilar: 'oficial',
-    titulo_pt: 'Evento teste', titulo_es: 'Evento de prueba', titulo_en: 'Test event',
-    descricao_pt: 'Item de teste para conferir como aparece o que esta acontecendo agora.',
-    descricao_es: 'Item de prueba para ver como aparece lo que esta pasando ahora.',
-    descricao_en: 'Test item to check how something happening now looks.',
-    local_pt: 'Expo', local_es: 'Expo', local_en: 'Expo',
-    palestrante: '', marca: MARCA_EVENTO, logo_url: '',
-    inscricao: 'livre', link_inscricao: '', destaque: '',
-  },
-]
 
 // ------------------------------------------------------------- beneficios
 function beneficio({ id, onde, categoria, nome, desconto, descricao, local, condicoes, validade, logoArquivo = null, link = '', mapa = '', destaque = '' }) {
@@ -375,15 +357,16 @@ function beneficio({ id, onde, categoria, nome, desconto, descricao, local, cond
   }
 }
 
-const PEITO = ['Mediante apresentacao do numero de peito.', 'Presentando el dorsal.', 'Show your race bib.']
+const PEITO = ['Mediante apresentação do número de peito.', 'Presentando el dorsal.', 'Show your race bib.']
 const DATAS_EXPO = '17 a 20 de setembro'
 
 const BENEFICIOS = [
   beneficio({
     id: 'ben-columbia', onde: 'expo', categoria: 'equipamentos', nome: 'COLUMBIA',
     desconto: ['20% a 40% de desconto', '20% a 40% de descuento', '20% to 40% off'],
-    descricao: ['Desconto valido nos produtos do estande.', 'Descuento valido en los productos del stand.', 'Discount valid on products at the booth.'],
+    descricao: ['Desconto válido nos produtos do estande.', 'Descuento válido en los productos del stand.', 'Discount valid on products at the booth.'],
     local: estande('COLUMBIA', 'D1'), condicoes: PEITO, validade: DATAS_EXPO, destaque: 'sim',
+    logoArquivo: 'columbia',
   }),
   beneficio({
     id: 'ben-hoka', onde: 'expo', categoria: 'equipamentos', nome: 'HOKA',
@@ -404,6 +387,7 @@ const BENEFICIOS = [
     desconto: ['Até 40% de desconto', 'Hasta 40% de descuento', 'Up to 40% off'],
     descricao: ['Brindes nas compras acima de R$ 250.', 'Regalos en compras superiores a R$ 250.', 'Free gifts on purchases over R$ 250.'],
     local: estande('Deuter', 'E6'), condicoes: PEITO, validade: DATAS_EXPO,
+    logoArquivo: 'deuter',
   }),
 ]
 
@@ -414,7 +398,7 @@ const paraCsv = (cols, linhas) =>
 const paraTsv = (cols, linhas) =>
   [cols.join('\t'), ...linhas.map((l) => cols.map((c) => (l[c] ?? '').replace(/[\t\n]/g, ' ')).join('\t'))].join('\n')
 
-const programacao = [...OFICIAL, ...ATIVACOES, ...PALCO_ITENS, ...TESTE]
+const programacao = [...OFICIAL, ...ATIVACOES, ...PALCO_ITENS]
 
 await mkdir(resolve(raiz, 'public/dados'), { recursive: true })
 await writeFile(resolve(raiz, 'planilha/Programacao.csv'), paraCsv(COL_PROG, programacao))
@@ -427,6 +411,6 @@ if (new Set(ids).size !== ids.length) throw new Error('id repetido na programaca
 
 console.log(
   `programacao: ${programacao.length} linhas (${OFICIAL.length} oficiais, ` +
-    `${ATIVACOES.length} ativacoes, ${PALCO_ITENS.length} de palco, ${TESTE.length} de teste)`,
+    `${ATIVACOES.length} ativacoes, ${PALCO_ITENS.length} de palco)`,
 )
 console.log(`beneficios:  ${BENEFICIOS.length} linhas`)
