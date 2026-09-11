@@ -200,6 +200,14 @@ const ATIVACOES = [
     local: ['Local secreto', 'Lugar secreto', 'Secret location'], inscricao: 'invite',
   }),
   ...ativacao({
+    slug: 'yopp-oculos', marca: 'Yopp', logoArquivo: 'yopp',
+    tit: ['Óculos oficiais Yopp & UTMB', 'Gafas oficiales Yopp & UTMB', 'Official Yopp & UTMB eyewear'],
+    desc: ['Venda dos modelos licenciados oficiais exclusivos Yopp & UTMB: um modelo hexagonal e outro Performance fotocromático.',
+           'Venta de los modelos licenciados oficiales exclusivos Yopp & UTMB: uno hexagonal y otro Performance fotocromático.',
+           'Sale of the exclusive official licensed Yopp & UTMB models: a hexagonal frame and a photochromic Performance model.'],
+    dias: TODOS, local: estande('Yopp', 'F2'),
+  }),
+  ...ativacao({
     slug: 'garmin-gpx', marca: 'Garmin', logoArquivo: 'garmin',
     tit: ['Baixe e configure seu GPX', 'Descarga y configura tu GPX', 'Download and set up your GPX'],
     desc: ['Leve o relógio ao estande da Garmin e saia com o percurso da sua prova configurado.',
