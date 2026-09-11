@@ -237,6 +237,14 @@ const ATIVACOES = [
     dias: TODOS, local: estande('Yopp', 'F2'),
   }),
   ...ativacao({
+    slug: 'espaco-mulher', marca: 'Mulher by Nubank',
+    tit: ['Espaço Mulher', 'Espacio Mujer', "Women's Space"],
+    desc: ['Espaço dedicado ao público feminino, com trancistas, massagem esportiva e estúdio de fotos da FOTOP. Para entrar, responda a uma pesquisa rápida sobre a sua experiência no trail.',
+           'Espacio dedicado al público femenino, con trenzas, masaje deportivo y estudio de fotos de FOTOP. Para entrar, responde una encuesta rápida sobre tu experiencia en el trail.',
+           'Space for women, with braiding, sports massage and a FOTOP photo studio. To enter, answer a quick survey about your trail running experience.'],
+    dias: TODOS, local: estande('Mulher by Nubank', 'C1 e C2'),
+  }),
+  ...ativacao({
     slug: 'gu-shake-out', marca: 'GU',
     tit: ['Shake Out GU', 'Shake Out GU', 'GU shake out'],
     desc: ['Corrida leve de soltura com os géis GU. Apenas para convidados.',

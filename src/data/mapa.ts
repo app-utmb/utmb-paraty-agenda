@@ -165,7 +165,7 @@ const BRUTOS: Bruto[] = [
   },
   // ---------------------------------------------------------- setor C
   {
-    id: 'nubank', nome: 'Mulher by Nubank', estande: 'C1 e C2', marcas: ['Nubank'],
+    id: 'nubank', nome: 'Mulher by Nubank', estande: 'C1 e C2', marcas: ['Mulher by Nubank', 'Nubank'],
     segmentos: ['servicos'], logo: null, tipo: 'marca', px: [218, 508, 98, 64],
   },
   {
