@@ -154,7 +154,7 @@ const BRUTOS: Bruto[] = [
     segmentos: ['servicos'], logo: null, tipo: 'marca', px: [862, 408, 50, 32],
   },
   {
-    id: 'desola', nome: 'Desola', estande: '', marcas: ['Desola'],
+    id: 'desola', nome: 'Desola', estande: 'R3', marcas: ['Desola'],
     segmentos: ['calcados'],
     logo: 'desola', tipo: 'marca', px: [920, 408, 52, 32],
   },
@@ -201,7 +201,7 @@ const BRUTOS: Bruto[] = [
     logo: 'nautika', tipo: 'marca', px: [748, 510, 168, 62],
   },
   {
-    id: 'suunto', nome: 'Suunto', estande: '', marcas: ['Suunto'],
+    id: 'suunto', nome: 'Suunto', estande: 'R4', marcas: ['Suunto'],
     segmentos: ['tecnologia'], logo: 'suunto', tipo: 'marca', px: [924, 510, 50, 62],
   },
   {
