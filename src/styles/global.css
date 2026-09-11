@@ -409,6 +409,49 @@ img {
 
 /* ---------- Cartoes e listas ---------- */
 
+/* Quadro com o horario da Expo em cada dia. */
+.horarios-expo {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  background: var(--cartao);
+}
+
+.horarios-expo__titulo {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+}
+
+.horarios-expo__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+
+.horarios-expo__linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.horarios-expo__dia {
+  color: var(--texto);
+}
+
+.horarios-expo__hora {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--destaque);
+}
+
 /* Aviso de que a programacao ainda recebe novidades ate o evento. */
 .nota-atualizacao {
   margin: 10px 0 12px;

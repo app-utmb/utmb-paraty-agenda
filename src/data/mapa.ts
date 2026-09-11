@@ -55,7 +55,7 @@ const BRUTOS: Bruto[] = [
   // ---------------------------------------------------------- setor D
   {
     id: 'prefeitura', nome: 'Prefeitura de Paraty', estande: 'A1 e A2', marcas: [],
-    segmentos: ['institucional'], logo: null, tipo: 'marca', px: [218, 230, 98, 64],
+    segmentos: ['institucional'], logo: 'prefeitura', tipo: 'marca', px: [218, 230, 98, 64],
   },
   {
     id: 'provas-brasil', nome: 'Provas do Brasil by Fotop', estande: 'A3 a A5', marcas: [],
@@ -68,7 +68,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'kailash', nome: 'Kailash', estande: 'D2 e D3', marcas: ['Kailash'],
-    segmentos: ['equipamentos'], logo: null, tipo: 'marca', px: [628, 230, 110, 64],
+    segmentos: ['equipamentos'], logo: 'kailash', tipo: 'marca', px: [628, 230, 110, 64],
   },
   {
     id: 'dr-peanut', nome: 'DR PEANUT', estande: 'D4', marcas: ['DR PEANUT'],
@@ -82,7 +82,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'bioup', nome: 'BioUp', estande: 'D6', marcas: ['BioUp'],
-    segmentos: ['nutricao'], logo: null, tipo: 'marca', px: [862, 230, 50, 64],
+    segmentos: ['nutricao'], logo: 'bioup', tipo: 'marca', px: [862, 230, 50, 64],
   },
   {
     id: 'runlastic', nome: 'Runlastic', estande: 'D7', marcas: ['Runlastic'],
@@ -130,11 +130,11 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'kipway', nome: 'Kipway', estande: 'E4', marcas: ['Kipway'],
-    segmentos: ['acessorios'], logo: null, tipo: 'marca', px: [920, 364, 52, 32],
+    segmentos: ['acessorios'], logo: 'kipway', tipo: 'marca', px: [920, 364, 52, 32],
   },
   {
     id: 'gu', nome: 'GU', estande: 'E5', marcas: ['GU'],
-    segmentos: ['nutricao'], logo: null, tipo: 'marca', px: [980, 364, 50, 32],
+    segmentos: ['nutricao'], logo: 'gu', tipo: 'marca', px: [980, 364, 50, 32],
   },
   {
     id: 'equip', nome: 'Equip', estande: '', marcas: ['Equip'],
@@ -170,7 +170,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'paraty-tours', nome: 'Paraty Tours', estande: 'C3', marcas: ['Paraty Tours'],
-    segmentos: ['servicos'], logo: null, tipo: 'marca', px: [324, 508, 46, 64],
+    segmentos: ['servicos'], logo: 'paraty-tours', tipo: 'marca', px: [324, 508, 46, 64],
   },
   {
     id: 'garmin', nome: 'Garmin', estande: 'C4', marcas: ['Garmin'],
@@ -193,7 +193,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'pink-cheeks', nome: 'Pink Cheeks', estande: 'F3', marcas: ['Pink Cheeks'],
-    segmentos: ['acessorios'], logo: null, tipo: 'marca', px: [688, 510, 50, 62],
+    segmentos: ['acessorios'], logo: 'pink-cheeks', tipo: 'marca', px: [688, 510, 50, 62],
   },
   {
     id: 'nautika', nome: 'NTK Nautika e Azteq', estande: 'F4 a F6', marcas: ['NTK', 'Nautika', 'NTK Nautika', 'Azteq'],

@@ -29,5 +29,16 @@ export const TIMEOUT_REDE_MS = 12_000
 /** Datas oficiais do evento, usadas como ordem dos dias na Programacao. */
 export const DIAS_EVENTO = ['2026-09-17', '2026-09-18', '2026-09-19', '2026-09-20'] as const
 
+/**
+ * Horario da Expo em cada dia. Fica aqui, e nao na planilha, porque deixou de
+ * ser um item da programacao e virou um quadro fixo na Programacao e no Mapa.
+ */
+export const HORARIOS_EXPO: Record<string, [string, string]> = {
+  '2026-09-17': ['10:00', '20:00'],
+  '2026-09-18': ['10:00', '21:00'],
+  '2026-09-19': ['10:00', '18:00'],
+  '2026-09-20': ['10:00', '13:00'],
+}
+
 /** Fuso do evento. Fixo para que "acontecendo agora" nao dependa do relogio do aparelho. */
 export const FUSO_EVENTO = 'America/Sao_Paulo'

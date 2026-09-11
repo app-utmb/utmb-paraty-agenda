@@ -51,6 +51,7 @@ export const pt = {
     vazio: 'Nenhum item para este filtro',
     vazioDica: 'Tente outro dia ou o filtro Todos',
     aviso: 'A programação será atualizada até o início do evento. Novas atividades podem entrar.',
+    horariosExpo: 'Horários da Expo',
     itensContagem: (n: number) => (n === 1 ? '1 item' : `${n} itens`),
   },
   beneficios: {

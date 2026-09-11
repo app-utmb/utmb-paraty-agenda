@@ -1,10 +1,8 @@
 id,data,dia_semana,hora_inicio,hora_fim,data_fim,pilar,titulo_pt,titulo_es,titulo_en,descricao_pt,descricao_es,descricao_en,local_pt,local_es,local_en,palestrante,marca,logo_url,inscricao,link_inscricao,destaque
-of-17-01,2026-09-17,quinta-feira,10:00,20:00,,oficial,UTMB Expo,UTMB Expo,UTMB Expo,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-17-02,2026-09-17,quinta-feira,10:00,20:00,,oficial,Retirada de kits,Retiro de kits,Bib pickup,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,sim
 of-17-03,2026-09-17,quinta-feira,12:00,20:00,,oficial,Drop bag,Drop bag,Drop bag,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-17-04,2026-09-17,quinta-feira,16:00,,,oficial,Abertura oficial,Apertura oficial,Official opening,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,sim
 of-17-05,2026-09-17,quinta-feira,17:30,,,oficial,Briefing técnico PTR 108,Briefing técnico PTR 108,PTR 108 technical briefing,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
-of-18-01,2026-09-18,sexta-feira,10:00,21:00,,oficial,UTMB Expo,UTMB Expo,UTMB Expo,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-18-02,2026-09-18,sexta-feira,10:00,21:00,,oficial,Retirada de kits,Retiro de kits,Bib pickup,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-18-03,2026-09-18,sexta-feira,10:00,17:00,,oficial,Drop bag e guarda-volume,Drop bag y guardarropa,Drop bag and bag storage,Limite para os atletas da PTR 108 deixarem as bags antes da largada das 19h.,Límite para que los atletas de la PTR 108 dejen las bags antes de la salida de las 19h.,Deadline for PTR 108 athletes to leave their bags before the 19h start.,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-18-04,2026-09-18,sexta-feira,12:00,,,oficial,Apresentação de atletas de elite,Presentación de atletas de élite,Elite athlete presentation,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
@@ -18,7 +16,6 @@ of-19-02,2026-09-19,sabado,05:00,,,oficial,Largada PTR 58,Salida PTR 58,PTR 58 s
 of-19-03,2026-09-19,sabado,06:00,,,oficial,Largada PTR 34,Salida PTR 34,PTR 34 start,,,,Arena de largada e chegada,Arena de salida y llegada,Start and finish arena,,Paraty Brazil by UTMB,,livre,,sim
 of-19-04,2026-09-19,sabado,08:00,,,oficial,Largada PTR 25,Salida PTR 25,PTR 25 start,,,,Arena de largada e chegada,Arena de salida y llegada,Start and finish arena,,Paraty Brazil by UTMB,,livre,,sim
 of-19-05,2026-09-19,sabado,08:00,16:00,,oficial,"Retirada de kits, último dia","Retiro de kits, último día","Bib pickup, last day",,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,sim
-of-19-06,2026-09-19,sabado,10:00,18:00,,oficial,UTMB Expo,UTMB Expo,UTMB Expo,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-19-07,2026-09-19,sabado,10:00,19:00,,oficial,"Drop bag e guarda-volume, retirada","Drop bag y guardarropa, retiro","Drop bag and bag storage, collection",Chegada prevista das bags à arena às 16h.,Llegada prevista de las bags a la arena a las 16h.,Bags are expected to arrive at the arena at 16h.,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-19-08,2026-09-19,sabado,14:00,,,oficial,Largada PTR 17,Salida PTR 17,PTR 17 start,,,,Fazenda Bananal,Fazenda Bananal,Fazenda Bananal,,Paraty Brazil by UTMB,,livre,,sim
 of-19-09,2026-09-19,sabado,15:00,,,oficial,Guarda-volume PTR 17,Guardarropa PTR 17,PTR 17 bag storage,Os itens retornam da Fazenda Bananal e ficam disponíveis para retirada em Paraty.,Los artículos vuelven de la Fazenda Bananal y quedan disponibles para retirar en Paraty.,Items return from Fazenda Bananal and can be collected in Paraty.,Arena e Expo,Arena y Expo,Arena and Expo,,Paraty Brazil by UTMB,,livre,,
@@ -29,7 +26,6 @@ of-19-13,2026-09-19,sabado,21:00,,,oficial,Limite PTR 58,Limite PTR 58,PTR 58 cu
 of-20-01,2026-09-20,domingo,01:00,,,oficial,Limite PTR 108,Limite PTR 108,PTR 108 cut-off,,,,Arena de largada e chegada,Arena de salida y llegada,Start and finish arena,,Paraty Brazil by UTMB,,livre,,
 of-20-02,2026-09-20,domingo,07:00,,,oficial,Largada RUN 7,Salida RUN 7,RUN 7 start,,,,Arena de largada e chegada,Arena de salida y llegada,Start and finish arena,,Paraty Brazil by UTMB,,livre,,sim
 of-20-03,2026-09-20,domingo,09:00,,,oficial,Kids,Kids,Kids,,,,Arena de largada e chegada,Arena de salida y llegada,Start and finish arena,,Paraty Brazil by UTMB,,livre,,sim
-of-20-04,2026-09-20,domingo,10:00,13:00,,oficial,UTMB Expo,UTMB Expo,UTMB Expo,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-20-05,2026-09-20,domingo,10:00,12:00,,oficial,"Drop bag e guarda-volume, retirada","Drop bag y guardarropa, retiro","Drop bag and bag storage, collection",,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,
 of-20-06,2026-09-20,domingo,10:30,,,oficial,Premiação,Premiación,Awards ceremony,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,sim
 of-20-07,2026-09-20,domingo,12:00,,,oficial,Encerramento do evento,Cierre del evento,Event closing,,,,Expo,Expo,Expo,,Paraty Brazil by UTMB,,livre,,sim

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { CartaoItem } from '../components/CartaoItem'
+import { HorariosExpo } from '../components/HorariosExpo'
 import { IconeEstrela } from '../components/Icones'
 import { SeletorMarca } from '../components/SeletorMarca'
 import { DIAS_EVENTO } from '../config'
@@ -149,6 +150,7 @@ export function Programacao({
   return (
     <div>
       <h1 className="visualmente-oculto">{t.programacao.titulo}</h1>
+      <HorariosExpo />
       {barraAgenda}
       <p className="nota-atualizacao">{t.programacao.aviso}</p>
 

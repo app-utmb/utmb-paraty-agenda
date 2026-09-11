@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
+import { HorariosExpo } from '../components/HorariosExpo'
 import { IconeMais, IconeMenos } from '../components/Icones'
 import { PONTOS_MAPA, type PontoMapa } from '../data/mapa'
 import type { ConfigEvento } from '../data/types'
@@ -98,6 +99,8 @@ export function MapaExpo({ config, aoAbrirPonto }: Props) {
       <p className="vazio__dica" style={{ marginBottom: 10 }}>
         {t.mapa.interativo}
       </p>
+
+      <HorariosExpo />
 
       <div
         className="mapa-caixa"

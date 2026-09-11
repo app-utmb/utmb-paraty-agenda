@@ -53,6 +53,7 @@ export const en: Dicionario = {
     vazio: 'No items for this filter',
     vazioDica: 'Try another day or the All filter',
     aviso: 'The schedule will be updated until the event starts. New activities may be added.',
+    horariosExpo: 'Expo hours',
     itensContagem: (n: number) => (n === 1 ? '1 item' : `${n} items`),
   },
   beneficios: {

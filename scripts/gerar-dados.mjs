@@ -51,19 +51,16 @@ function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '
   }
 }
 
-const EXPO_T = ['UTMB Expo', 'UTMB Expo', 'UTMB Expo']
 const KITS = ['Retirada de kits', 'Retiro de kits', 'Bib pickup']
 const DROP = ['Drop bag e guarda-volume', 'Drop bag y guardarropa', 'Drop bag and bag storage']
 const DROP_RET = ['Drop bag e guarda-volume, retirada', 'Drop bag y guardarropa, retiro', 'Drop bag and bag storage, collection']
 
 const OFICIAL = [
-  oficial('of-17-01', '2026-09-17', '10:00', '20:00', EXPO_T, EXPO),
   oficial('of-17-02', '2026-09-17', '10:00', '20:00', KITS, EXPO, ['', '', ''], 'sim'),
   oficial('of-17-03', '2026-09-17', '12:00', '20:00', ['Drop bag', 'Drop bag', 'Drop bag'], EXPO),
   oficial('of-17-04', '2026-09-17', '16:00', '', ['Abertura oficial', 'Apertura oficial', 'Official opening'], EXPO, ['', '', ''], 'sim'),
   oficial('of-17-05', '2026-09-17', '17:30', '', ['Briefing técnico PTR 108', 'Briefing técnico PTR 108', 'PTR 108 technical briefing'], EXPO),
 
-  oficial('of-18-01', '2026-09-18', '10:00', '21:00', EXPO_T, EXPO),
   oficial('of-18-02', '2026-09-18', '10:00', '21:00', KITS, EXPO),
   oficial('of-18-03', '2026-09-18', '10:00', '17:00', DROP, EXPO, [
     'Limite para os atletas da PTR 108 deixarem as bags antes da largada das 19h.',
@@ -81,7 +78,6 @@ const OFICIAL = [
   oficial('of-19-03', '2026-09-19', '06:00', '', ['Largada PTR 34', 'Salida PTR 34', 'PTR 34 start'], ARENA, ['', '', ''], 'sim'),
   oficial('of-19-04', '2026-09-19', '08:00', '', ['Largada PTR 25', 'Salida PTR 25', 'PTR 25 start'], ARENA, ['', '', ''], 'sim'),
   oficial('of-19-05', '2026-09-19', '08:00', '16:00', ['Retirada de kits, último dia', 'Retiro de kits, último día', 'Bib pickup, last day'], EXPO, ['', '', ''], 'sim'),
-  oficial('of-19-06', '2026-09-19', '10:00', '18:00', EXPO_T, EXPO),
   oficial('of-19-07', '2026-09-19', '10:00', '19:00', DROP_RET, EXPO, [
     'Chegada prevista das bags à arena às 16h.',
     'Llegada prevista de las bags a la arena a las 16h.',
@@ -99,7 +95,6 @@ const OFICIAL = [
   oficial('of-20-01', '2026-09-20', '01:00', '', ['Limite PTR 108', 'Limite PTR 108', 'PTR 108 cut-off'], ARENA),
   oficial('of-20-02', '2026-09-20', '07:00', '', ['Largada RUN 7', 'Salida RUN 7', 'RUN 7 start'], ARENA, ['', '', ''], 'sim'),
   oficial('of-20-03', '2026-09-20', '09:00', '', ['Kids', 'Kids', 'Kids'], ARENA, ['', '', ''], 'sim'),
-  oficial('of-20-04', '2026-09-20', '10:00', '13:00', EXPO_T, EXPO),
   oficial('of-20-05', '2026-09-20', '10:00', '12:00', DROP_RET, EXPO),
   oficial('of-20-06', '2026-09-20', '10:30', '', ['Premiação', 'Premiación', 'Awards ceremony'], EXPO, ['', '', ''], 'sim'),
   oficial('of-20-07', '2026-09-20', '12:00', '', ['Encerramento do evento', 'Cierre del evento', 'Event closing'], EXPO, ['', '', ''], 'sim'),
