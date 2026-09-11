@@ -248,7 +248,7 @@ const BRUTOS: Bruto[] = [
  * Marcas que aparecem na programacao mas nao tem estande na Expo. Ficam fora
  * da checagem de que toda marca da agenda tem ponto no mapa.
  */
-export const MARCAS_SEM_ESTANDE = ['Paraty Brazil by UTMB', 'SOS Mata Atlântica'] as const
+export const MARCAS_SEM_ESTANDE = ['Paraty Brazil by UTMB', 'SOS Mata Atlântica', 'Strava'] as const
 
 export const PONTOS_MAPA: PontoMapa[] = BRUTOS.map(({ px, ...resto }) => ({
   ...resto,

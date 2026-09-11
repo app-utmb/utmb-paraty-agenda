@@ -191,6 +191,15 @@ const ATIVACOES = [
     dias: TODOS, local: estande('MOMBORA', 'F8'),
   }),
   ...ativacao({
+    slug: 'strava-veja-brunch', marca: 'Strava; VEJA', logoArquivo: null,
+    tit: ['Brunch e Shake Out Strava + VEJA', 'Brunch y Shake Out Strava + VEJA', 'Strava + VEJA brunch and shake out'],
+    desc: ['Corrida leve seguida de brunch. Apenas para convidados, local revelado a quem recebeu o convite.',
+           'Trote suave seguido de brunch. Solo para invitados, el lugar se revela a quien recibió la invitación.',
+           'Easy shake out run followed by brunch. Invite only, the venue is shared with guests.'],
+    dias: ['2026-09-18'], horas: { '2026-09-18': ['07:30', ''] },
+    local: ['Local secreto', 'Lugar secreto', 'Secret location'], inscricao: 'invite',
+  }),
+  ...ativacao({
     slug: 'garmin-gpx', marca: 'Garmin', logoArquivo: null,
     tit: ['Baixe e configure seu GPX', 'Descarga y configura tu GPX', 'Download and set up your GPX'],
     desc: ['Leve o relógio ao estande da Garmin e saia com o percurso da sua prova configurado.',
