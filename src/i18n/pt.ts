@@ -117,6 +117,8 @@ export const pt = {
     aviso: 'Vagas limitadas',
   },
   detalhe: {
+    aoVivo: 'Acompanhar atletas ao vivo',
+    abrirLink: 'Abrir link',
     fechar: 'Fechar',
     local: 'Local',
     palestrante: 'Com',
@@ -154,6 +156,8 @@ export const pt = {
     aviso: 'Abre um PDF em outra janela. Baixe agora para consultar sem internet.',
   },
   info: {
+    retiradaKits: 'Retirada de kits',
+    kitsNota: 'Na Expo, com o mesmo horário para todas as distâncias.',
     titulo: 'Informações',
     sobreEvento: 'Sobre o evento',
     sobreTexto:

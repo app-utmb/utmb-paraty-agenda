@@ -119,6 +119,8 @@ export const en: Dicionario = {
     aviso: 'Limited places',
   },
   detalhe: {
+    aoVivo: 'Follow runners live',
+    abrirLink: 'Open link',
     fechar: 'Close',
     local: 'Venue',
     palestrante: 'With',
@@ -156,6 +158,8 @@ export const en: Dicionario = {
     aviso: 'Opens a PDF in another window. Download it now to read it offline.',
   },
   info: {
+    retiradaKits: 'Bib pickup',
+    kitsNota: 'At the Expo, same hours for all distances.',
     titulo: 'Information',
     sobreEvento: 'About the event',
     sobreTexto:

@@ -40,5 +40,12 @@ export const HORARIOS_EXPO: Record<string, [string, string]> = {
   '2026-09-20': ['10:00', '13:00'],
 }
 
+/** Retirada de kits por dia, igual para todas as distancias na agenda oficial. */
+export const HORARIOS_KITS: Record<string, [string, string]> = {
+  '2026-09-17': ['10:00', '20:00'],
+  '2026-09-18': ['10:00', '21:00'],
+  '2026-09-19': ['08:00', '16:00'],
+}
+
 /** Fuso do evento. Fixo para que "acontecendo agora" nao dependa do relogio do aparelho. */
 export const FUSO_EVENTO = 'America/Sao_Paulo'

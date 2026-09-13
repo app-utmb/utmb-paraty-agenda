@@ -119,6 +119,8 @@ export const es: Dicionario = {
     aviso: 'Cupos limitados',
   },
   detalhe: {
+    aoVivo: 'Seguir a los atletas en vivo',
+    abrirLink: 'Abrir enlace',
     fechar: 'Cerrar',
     local: 'Lugar',
     palestrante: 'Con',
@@ -156,6 +158,8 @@ export const es: Dicionario = {
     aviso: 'Abre un PDF en otra ventana. Descárgalo ahora para consultarlo sin internet.',
   },
   info: {
+    retiradaKits: 'Retiro de kits',
+    kitsNota: 'En la Expo, con el mismo horario para todas las distancias.',
     titulo: 'Información',
     sobreEvento: 'Sobre el evento',
     sobreTexto:

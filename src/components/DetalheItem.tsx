@@ -11,6 +11,15 @@ interface Props {
   aoFechar: () => void
 }
 
+/** Link do live.utmb.world vira o botao de acompanhar os atletas ao vivo. */
+function ehAoVivo(url: string): boolean {
+  try {
+    return new URL(url).hostname.startsWith('live.')
+  } catch {
+    return false
+  }
+}
+
 /** Detalhe do item em folha inferior, com foco preso e fechamento por Escape. */
 export function DetalheItem({ item, aoFechar }: Props) {
   const { idioma, t } = useIdioma()
@@ -142,6 +151,20 @@ export function DetalheItem({ item, aoFechar }: Props) {
               rel="noopener noreferrer"
             >
               {t.inscricao.botaoInscrever}
+              <IconeSeta />
+            </a>
+          </div>
+        )}
+
+        {item.inscricao !== 'previa' && item.linkInscricao && (
+          <div style={{ marginTop: 18 }}>
+            <a
+              className="botao"
+              href={item.linkInscricao}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {ehAoVivo(item.linkInscricao) ? t.detalhe.aoVivo : t.detalhe.abrirLink}
               <IconeSeta />
             </a>
           </div>

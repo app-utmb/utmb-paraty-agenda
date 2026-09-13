@@ -7,6 +7,7 @@ import { DIAS_EVENTO } from '../config'
 import type { DadosApp, ItemProgramacao, Pilar } from '../data/types'
 import { PILARES } from '../data/types'
 import { LOCALES, useIdioma } from '../i18n'
+import { ordenarPorPrioridade } from '../utils/prioridade'
 import { diaDoMes, diaPadrao, mesCurto, nomeDiaSemana } from '../utils/tempo'
 import type { EstadoFavoritos } from '../useFavoritos'
 
@@ -61,11 +62,13 @@ export function Programacao({
 
   const itens = useMemo(
     () =>
-      dados.itens.filter(
-        (i) =>
-          i.data === diaAtivo &&
-          (pilar === 'todos' || i.pilar === pilar) &&
-          (marcaAtiva === 'todas' || i.marcas.includes(marcaAtiva)),
+      ordenarPorPrioridade(
+        dados.itens.filter(
+          (i) =>
+            i.data === diaAtivo &&
+            (pilar === 'todos' || i.pilar === pilar) &&
+            (marcaAtiva === 'todas' || i.marcas.includes(marcaAtiva)),
+        ),
       ),
     [dados.itens, diaAtivo, pilar, marcaAtiva],
   )

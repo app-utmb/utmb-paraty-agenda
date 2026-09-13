@@ -1,3 +1,4 @@
+import { HorariosExpo, QuadroHorarios } from '../components/HorariosExpo'
 import { Grupo, LinhaExplicativa, LinhaLink } from '../components/LinhaInfo'
 import {
   IconeAoVivo,
@@ -14,6 +15,7 @@ import {
   IconePino,
   IconeWhatsapp,
 } from '../components/Icones'
+import { HORARIOS_KITS } from '../config'
 import type { DadosApp } from '../data/types'
 import { useIdioma } from '../i18n'
 
@@ -44,6 +46,13 @@ export function Info({ dados }: Props) {
   return (
     <div>
       <h1 className="visualmente-oculto">{t.info.titulo}</h1>
+
+      <HorariosExpo />
+      <QuadroHorarios
+        titulo={t.info.retiradaKits}
+        horarios={HORARIOS_KITS}
+        nota={t.info.kitsNota}
+      />
 
       {(config.aoVivoUrl || config.faqUrl || config.siteOficial) && (
         <Grupo titulo={t.secoes.acompanhar}>

@@ -37,9 +37,12 @@ const estande = (marca, codigo = '') => {
 }
 const aConfirmar = ['A confirmar', 'Por confirmar', 'To be confirmed']
 const PALCO = ['Palco Expo', 'Escenario Expo', 'Expo Stage']
+/** Mesmo link de resultados ao vivo da aba Info, usado nas largadas. */
+const AO_VIVO = 'https://live.utmb.world/pt/paraty/2026'
+const AO_VIVO_DESC = ['Acompanhe os atletas ao vivo pelo link abaixo.', 'Sigue a los atletas en vivo con el enlace de abajo.', 'Follow the runners live with the link below.']
 
 // ---------------------------------------------------------------- oficial
-function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '') {
+function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '', link = '') {
   return {
     id, data, dia_semana: DIAS[data].semana, hora_inicio: ini, hora_fim: fim, data_fim: '',
     pilar: 'oficial',
@@ -47,7 +50,7 @@ function oficial(id, data, ini, fim, tit, loc, desc = ['', '', ''], destaque = '
     descricao_pt: desc[0], descricao_es: desc[1], descricao_en: desc[2],
     local_pt: loc[0], local_es: loc[1], local_en: loc[2],
     palestrante: '', marca: MARCA_EVENTO, logo_url: '',
-    inscricao: 'livre', link_inscricao: '', destaque,
+    inscricao: 'livre', link_inscricao: link, destaque,
   }
 }
 
@@ -58,31 +61,31 @@ const DROP_RET = ['Drop bag e guarda-volume, retirada', 'Drop bag y guardarropa,
 const OFICIAL = [
   oficial('of-17-02', '2026-09-17', '10:00', '20:00', KITS, EXPO, ['', '', ''], 'sim'),
   oficial('of-17-03', '2026-09-17', '12:00', '20:00', ['Drop bag', 'Drop bag', 'Drop bag'], EXPO),
-  oficial('of-17-04', '2026-09-17', '16:00', '', ['Abertura oficial', 'Apertura oficial', 'Official opening'], EXPO, ['', '', ''], 'sim'),
-  oficial('of-17-05', '2026-09-17', '17:30', '', ['Briefing técnico PTR 108', 'Briefing técnico PTR 108', 'PTR 108 technical briefing'], EXPO),
+  oficial('of-17-04', '2026-09-17', '16:00', '', ['Abertura oficial', 'Apertura oficial', 'Official opening'], PALCO, ['', '', ''], 'sim'),
+  oficial('of-17-05', '2026-09-17', '17:30', '', ['Briefing técnico PTR 108', 'Briefing técnico PTR 108', 'PTR 108 technical briefing'], PALCO),
 
   oficial('of-18-02', '2026-09-18', '10:00', '21:00', KITS, EXPO),
   oficial('of-18-03', '2026-09-18', '10:00', '17:00', DROP, EXPO, [
     'Limite para os atletas da PTR 108 deixarem as bags antes da largada das 19h.',
     'Límite para que los atletas de la PTR 108 dejen las bags antes de la salida de las 19h.',
     'Deadline for PTR 108 athletes to leave their bags before the 19h start.']),
-  oficial('of-18-04', '2026-09-18', '12:00', '', ['Apresentação de atletas de elite', 'Presentación de atletas de élite', 'Elite athlete presentation'], EXPO),
-  oficial('of-18-05', '2026-09-18', '13:00', '', ['Briefing técnico PTR 58', 'Briefing técnico PTR 58', 'PTR 58 technical briefing'], EXPO),
-  oficial('of-18-06', '2026-09-18', '13:30', '', ['Briefing técnico PTR 34', 'Briefing técnico PTR 34', 'PTR 34 technical briefing'], EXPO),
-  oficial('of-18-07', '2026-09-18', '14:00', '', ['Briefing técnico PTR 25', 'Briefing técnico PTR 25', 'PTR 25 technical briefing'], EXPO),
-  oficial('of-18-08', '2026-09-18', '14:30', '', ['Briefing técnico PTR 17', 'Briefing técnico PTR 17', 'PTR 17 technical briefing'], EXPO),
-  oficial('of-18-09', '2026-09-18', '19:00', '', ['Largada PTR 108', 'Salida PTR 108', 'PTR 108 start'], ARENA, ['', '', ''], 'sim'),
+  oficial('of-18-04', '2026-09-18', '12:00', '', ['Apresentação de atletas de elite', 'Presentación de atletas de élite', 'Elite athlete presentation'], PALCO),
+  oficial('of-18-05', '2026-09-18', '13:00', '', ['Briefing técnico PTR 58', 'Briefing técnico PTR 58', 'PTR 58 technical briefing'], PALCO),
+  oficial('of-18-06', '2026-09-18', '13:30', '', ['Briefing técnico PTR 34', 'Briefing técnico PTR 34', 'PTR 34 technical briefing'], PALCO),
+  oficial('of-18-07', '2026-09-18', '14:00', '', ['Briefing técnico PTR 25', 'Briefing técnico PTR 25', 'PTR 25 technical briefing'], PALCO),
+  oficial('of-18-08', '2026-09-18', '14:30', '', ['Briefing técnico PTR 17', 'Briefing técnico PTR 17', 'PTR 17 technical briefing'], PALCO),
+  oficial('of-18-09', '2026-09-18', '19:00', '', ['Largada PTR 108', 'Salida PTR 108', 'PTR 108 start'], ARENA, AO_VIVO_DESC, 'sim', AO_VIVO),
 
   oficial('of-19-01', '2026-09-19', '04:00', '08:00', ['Guarda-volume, depósito para as largadas matinais', 'Guardarropa, depósito para las salidas matinales', 'Bag storage, drop off for the morning starts'], AMBOS),
-  oficial('of-19-02', '2026-09-19', '05:00', '', ['Largada PTR 58', 'Salida PTR 58', 'PTR 58 start'], ARENA, ['', '', ''], 'sim'),
-  oficial('of-19-03', '2026-09-19', '06:00', '', ['Largada PTR 34', 'Salida PTR 34', 'PTR 34 start'], ARENA, ['', '', ''], 'sim'),
-  oficial('of-19-04', '2026-09-19', '08:00', '', ['Largada PTR 25', 'Salida PTR 25', 'PTR 25 start'], ARENA, ['', '', ''], 'sim'),
+  oficial('of-19-02', '2026-09-19', '05:00', '', ['Largada PTR 58', 'Salida PTR 58', 'PTR 58 start'], ARENA, AO_VIVO_DESC, 'sim', AO_VIVO),
+  oficial('of-19-03', '2026-09-19', '06:00', '', ['Largada PTR 34', 'Salida PTR 34', 'PTR 34 start'], ARENA, AO_VIVO_DESC, 'sim', AO_VIVO),
+  oficial('of-19-04', '2026-09-19', '08:00', '', ['Largada PTR 25', 'Salida PTR 25', 'PTR 25 start'], ARENA, AO_VIVO_DESC, 'sim', AO_VIVO),
   oficial('of-19-05', '2026-09-19', '08:00', '16:00', ['Retirada de kits, último dia', 'Retiro de kits, último día', 'Bib pickup, last day'], EXPO, ['', '', ''], 'sim'),
   oficial('of-19-07', '2026-09-19', '10:00', '19:00', DROP_RET, EXPO, [
     'Chegada prevista das bags à arena às 16h.',
     'Llegada prevista de las bags a la arena a las 16h.',
     'Bags are expected to arrive at the arena at 16h.']),
-  oficial('of-19-08', '2026-09-19', '14:00', '', ['Largada PTR 17', 'Salida PTR 17', 'PTR 17 start'], FAZENDA, ['', '', ''], 'sim'),
+  oficial('of-19-08', '2026-09-19', '14:00', '', ['Largada PTR 17', 'Salida PTR 17', 'PTR 17 start'], FAZENDA, AO_VIVO_DESC, 'sim', AO_VIVO),
   oficial('of-19-09', '2026-09-19', '15:00', '', ['Guarda-volume PTR 17', 'Guardarropa PTR 17', 'PTR 17 bag storage'], AMBOS, [
     'Os itens retornam da Fazenda Bananal e ficam disponíveis para retirada em Paraty.',
     'Los artículos vuelven de la Fazenda Bananal y quedan disponibles para retirar en Paraty.',
@@ -96,7 +99,7 @@ const OFICIAL = [
   oficial('of-20-02', '2026-09-20', '07:00', '', ['Largada RUN 7', 'Salida RUN 7', 'RUN 7 start'], ARENA, ['', '', ''], 'sim'),
   oficial('of-20-03', '2026-09-20', '09:00', '', ['Kids', 'Kids', 'Kids'], ARENA, ['', '', ''], 'sim'),
   oficial('of-20-05', '2026-09-20', '10:00', '12:00', DROP_RET, EXPO),
-  oficial('of-20-06', '2026-09-20', '10:30', '', ['Premiação', 'Premiación', 'Awards ceremony'], EXPO, ['', '', ''], 'sim'),
+  oficial('of-20-06', '2026-09-20', '10:30', '', ['Premiação', 'Premiación', 'Awards ceremony'], PALCO, ['', '', ''], 'sim'),
   oficial('of-20-07', '2026-09-20', '12:00', '', ['Encerramento do evento', 'Cierre del evento', 'Event closing'], EXPO, ['', '', ''], 'sim'),
 ]
 
