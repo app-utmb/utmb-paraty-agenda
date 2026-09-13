@@ -23,7 +23,13 @@ export function Inicio({
 }: Props) {
   const { t } = useIdioma()
   const agora = acontecendoAgora(dados.itens, referencia ?? new Date())
-  const proximos = proximosItens(dados.itens, referencia ?? new Date(), 3)
+  // "A seguir" mostra so a programacao oficial e as talks. Ativacoes duram
+  // o dia inteiro e empurrariam para fora o que tem hora marcada.
+  const proximos = proximosItens(
+    dados.itens.filter((i) => i.pilar === 'oficial' || i.pilar === 'talks'),
+    referencia ?? new Date(),
+    3,
+  )
 
   // Na abertura o atleta quer o proximo compromisso da agenda dele, nao a
   // lista inteira, entao aqui entram so os que ainda vao acontecer.

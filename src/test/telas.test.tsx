@@ -44,7 +44,26 @@ describe('tela Inicio', () => {
       .filter((b) => b.className.includes('cartao__area'))
       .map((b) => b.textContent ?? '')
     expect(titulos[0]).toContain('Nutricao no ultra')
-    expect(titulos[1]).toContain('Teste de calcados')
+    expect(titulos[1]).toContain('Largada')
+  })
+
+  it('mostra em a seguir so programacao oficial e talks', () => {
+    renderizar(
+      <Inicio
+        dados={dados}
+        aoAbrirItem={vi.fn()}
+        favoritos={favoritosVazios()}
+        aoAbrirAgenda={vi.fn()}
+        referencia={DURANTE_KIT}
+      />,
+    )
+    const secao = screen.getByRole('region', { name: /a seguir/i })
+    expect(within(secao).queryByText(/Teste de calcados/)).not.toBeInTheDocument()
+    const pilares = within(secao)
+      .getAllByRole('button')
+      .filter((b) => b.className.includes('cartao__area'))
+      .map((b) => b.textContent ?? '')
+    expect(pilares.every((t) => /Oficial|Talks/.test(t))).toBe(true)
   })
 
   it('avisa quando nao ha nada acontecendo', () => {
