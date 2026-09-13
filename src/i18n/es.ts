@@ -11,8 +11,7 @@ export const es: Dicionario = {
   abas: {
     inicio: 'Inicio',
     programacao: 'Programa',
-    beneficios: 'Beneficios',
-    mapa: 'Mapa',
+    ativacoes: 'Activaciones',
     guia: 'Guía',
     info: 'Info',
   },
@@ -55,6 +54,18 @@ export const es: Dicionario = {
     aviso: 'El programa se actualizará hasta el inicio del evento. Pueden sumarse nuevas actividades.',
     horariosExpo: 'Horarios de la Expo',
     itensContagem: (n: number) => (n === 1 ? '1 elemento' : `${n} elementos`),
+  },
+  ativacoes: {
+    titulo: 'Activaciones',
+    dica: 'Toca una marca para ver lo que pasa en el stand.',
+    visao: 'Ver por',
+    marcas: 'Marcas',
+    mapa: 'Mapa',
+    busca: 'Buscar marca',
+    buscaVazia: 'Ninguna marca con ese nombre',
+    beneficio: 'Beneficio',
+    outrosBeneficios: 'Otros beneficios',
+    contagem: (n: number) => (n === 1 ? '1 marca' : `${n} marcas`),
   },
   beneficios: {
     titulo: 'Beneficios',
@@ -192,10 +203,8 @@ export const es: Dicionario = {
       'Muestra lo que está pasando ahora y lo que viene después, con accesos a las otras secciones.',
     programacaoTexto:
       'Elige el día arriba y filtra por pilar o por marca. Toca un elemento para ver lugar, horario, descripción e inscripción.',
-    beneficiosTexto:
-      'Descuentos en la Expo y en la ciudad. Busca por nombre del lugar o filtra por dónde está y por tipo.',
-    mapaTexto:
-      'Plano de la Expo. Usa dos dedos para hacer zoom y toca un stand para ver la marca y lo que pasa allí.',
+    ativacoesTexto:
+      'Todas las marcas de la Expo. Toca un logo para ver el stand, el beneficio y lo que pasa allí, o cambia al mapa de la Expo.',
     guiaTexto: 'Abre el PDF de la Guía del Atleta en el idioma elegido.',
     offline: 'Usar sin internet',
     offlineTexto:

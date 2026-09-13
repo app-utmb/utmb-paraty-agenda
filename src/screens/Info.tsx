@@ -10,7 +10,6 @@ import {
   IconeInicio,
   IconeLink,
   IconeLivro,
-  IconeMapa,
   IconeNuvemCortada,
   IconePino,
   IconeWhatsapp,
@@ -96,10 +95,9 @@ export function Info({ dados }: Props) {
         />
         <LinhaExplicativa
           icone={IconeEtiqueta}
-          rotulo={t.abas.beneficios}
-          texto={t.ajuda.beneficiosTexto}
+          rotulo={t.abas.ativacoes}
+          texto={t.ajuda.ativacoesTexto}
         />
-        <LinhaExplicativa icone={IconeMapa} rotulo={t.abas.mapa} texto={t.ajuda.mapaTexto} />
         <LinhaExplicativa icone={IconeLivro} rotulo={t.guia.titulo} texto={t.ajuda.guiaTexto} />
         <LinhaExplicativa
           icone={IconeNuvemCortada}

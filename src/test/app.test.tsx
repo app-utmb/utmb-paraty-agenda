@@ -25,7 +25,7 @@ describe('App', () => {
     )
   })
 
-  it('mostra as seis abas na barra de baixo', async () => {
+  it('mostra as cinco abas na barra de baixo', async () => {
     await abrirApp()
     const rotulos = within(nav())
       .getAllByRole('button')
@@ -33,8 +33,7 @@ describe('App', () => {
     expect(rotulos).toEqual([
       'Início',
       'Programação',
-      'Benefícios',
-      'Mapa',
+      'Ativações',
       'Guia',
       'Info',
     ])
@@ -109,7 +108,7 @@ describe('App', () => {
     // A Config de exemplo nao tem regua, entao a faixa some sem quebrar o layout.
     const rodape = document.querySelector('.rodape-fixo')
     expect(rodape).toBeTruthy()
-    await userEvent.click(within(nav()).getByRole('button', { name: 'Mapa' }))
+    await userEvent.click(within(nav()).getByRole('button', { name: 'Ativações' }))
     expect(document.querySelector('.rodape-fixo')).toBeTruthy()
   })
 

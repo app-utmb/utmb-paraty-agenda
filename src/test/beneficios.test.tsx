@@ -11,7 +11,6 @@ import {
 } from '../data/normalize'
 import { lerCsv } from '../data/sheets'
 import type { Beneficio } from '../data/types'
-import { Beneficios } from '../screens/Beneficios'
 import { dadosDeTeste } from './fixtures'
 import { renderizar, screen, within } from './utilitarios'
 
@@ -147,99 +146,6 @@ describe('leitura dos beneficios', () => {
   })
 })
 
-describe('tela de Beneficios', () => {
-  const abrir = (aoAbrir = vi.fn()) =>
-    renderizar(<Beneficios beneficios={dados.beneficios} aoAbrir={aoAbrir} />)
-
-  it('lista todos os beneficios ao abrir', () => {
-    abrir()
-    expect(screen.getByText('The North Face')).toBeInTheDocument()
-    expect(screen.getByText('Banana da Terra')).toBeInTheDocument()
-    expect(screen.getByText('4 lugares')).toBeInTheDocument()
-  })
-
-  it('mostra o desconto em destaque no cartao', () => {
-    abrir()
-    expect(screen.getByText('20% de desconto')).toBeInTheDocument()
-  })
-
-  it('filtra por lugar', async () => {
-    abrir()
-    await userEvent.click(screen.getByRole('button', { name: 'Na Expo' }))
-    expect(screen.getByText('The North Face')).toBeInTheDocument()
-    expect(screen.queryByText('Banana da Terra')).not.toBeInTheDocument()
-    expect(screen.getByText('2 lugares')).toBeInTheDocument()
-  })
-
-  it('filtra por categoria dentro do lugar', async () => {
-    abrir()
-    await userEvent.click(screen.getByRole('button', { name: 'Na cidade' }))
-    await userEvent.click(screen.getByRole('button', { name: 'Alimentação' }))
-    expect(screen.getByText('Banana da Terra')).toBeInTheDocument()
-    expect(screen.queryByText('Pousada do Ouro')).not.toBeInTheDocument()
-  })
-
-  it('so oferece categorias que existem no recorte atual', async () => {
-    abrir()
-    await userEvent.click(screen.getByRole('button', { name: 'Na Expo' }))
-    expect(screen.queryByRole('button', { name: 'Hospedagem' })).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Equipamentos' })).toBeInTheDocument()
-  })
-
-  it('volta a categoria para Todos ao trocar de lugar', async () => {
-    abrir()
-    await userEvent.click(screen.getByRole('button', { name: 'Na cidade' }))
-    await userEvent.click(screen.getByRole('button', { name: 'Hospedagem' }))
-    expect(screen.getByText('1 lugar')).toBeInTheDocument()
-    await userEvent.click(screen.getByRole('button', { name: 'Na Expo' }))
-    expect(screen.getByText('2 lugares')).toBeInTheDocument()
-  })
-
-  it('busca por nome ignorando acento e caixa', async () => {
-    abrir()
-    await userEvent.type(screen.getByRole('searchbox'), 'CAFE')
-    expect(await screen.findByText('Cafe da Trilha')).toBeInTheDocument()
-    expect(screen.queryByText('The North Face')).not.toBeInTheDocument()
-  })
-
-  it('busca tambem pelo texto do desconto', async () => {
-    abrir()
-    await userEvent.type(screen.getByRole('searchbox'), '15%')
-    expect(await screen.findByText('Banana da Terra')).toBeInTheDocument()
-  })
-
-  it('avisa quando a busca nao acha nada', async () => {
-    abrir()
-    await userEvent.type(screen.getByRole('searchbox'), 'zzzz')
-    expect(await screen.findByText(/nenhum estabelecimento com esse nome/i)).toBeInTheDocument()
-  })
-
-  it('limpa os filtros pelo botao da mensagem de vazio', async () => {
-    abrir()
-    await userEvent.type(screen.getByRole('searchbox'), 'zzzz')
-    await userEvent.click(await screen.findByRole('button', { name: /limpar filtros/i }))
-    expect(screen.getByText('4 lugares')).toBeInTheDocument()
-  })
-
-  it('abre o detalhe ao tocar num beneficio', async () => {
-    const aoAbrir = vi.fn()
-    abrir(aoAbrir)
-    await userEvent.click(screen.getByText('The North Face'))
-    expect(aoAbrir).toHaveBeenCalledWith(expect.objectContaining({ id: 't1' }))
-  })
-
-  it('avisa quando ainda nao ha beneficios publicados', () => {
-    renderizar(<Beneficios beneficios={[]} aoAbrir={vi.fn()} />)
-    expect(screen.getByText(/benefícios ainda não foram publicados/i)).toBeInTheDocument()
-  })
-
-  it('traduz a tela inteira', () => {
-    renderizar(<Beneficios beneficios={dados.beneficios} aoAbrir={vi.fn()} />, { idioma: 'en' })
-    expect(screen.getByRole('button', { name: 'At the Expo' })).toBeInTheDocument()
-    expect(screen.getByText('4 places')).toBeInTheDocument()
-  })
-})
-
 describe('detalhe do beneficio', () => {
   it('mostra desconto, local, como usar e validade', () => {
     renderizar(<DetalheBeneficio beneficio={ben('t1')} aoFechar={vi.fn()} />)
@@ -279,21 +185,5 @@ describe('detalhe do beneficio', () => {
     expect(
       await axe(container, { rules: { 'color-contrast': { enabled: false } } }),
     ).toHaveNoViolations()
-  })
-})
-
-describe('acessibilidade da tela de Beneficios', () => {
-  it('nao tem violacoes', async () => {
-    const { container } = renderizar(
-      <Beneficios beneficios={dados.beneficios} aoAbrir={vi.fn()} />,
-    )
-    expect(
-      await axe(container, { rules: { 'color-contrast': { enabled: false } } }),
-    ).toHaveNoViolations()
-  })
-
-  it('o campo de busca tem rotulo acessivel', () => {
-    renderizar(<Beneficios beneficios={dados.beneficios} aoAbrir={vi.fn()} />)
-    expect(screen.getByRole('searchbox', { name: /buscar por nome/i })).toBeInTheDocument()
   })
 })

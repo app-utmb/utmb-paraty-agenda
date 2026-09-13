@@ -9,8 +9,7 @@ export const pt = {
   abas: {
     inicio: 'Início',
     programacao: 'Programação',
-    beneficios: 'Benefícios',
-    mapa: 'Mapa',
+    ativacoes: 'Ativações',
     guia: 'Guia',
     info: 'Info',
   },
@@ -53,6 +52,18 @@ export const pt = {
     aviso: 'A programação será atualizada até o início do evento. Novas atividades podem entrar.',
     horariosExpo: 'Horários da Expo',
     itensContagem: (n: number) => (n === 1 ? '1 item' : `${n} itens`),
+  },
+  ativacoes: {
+    titulo: 'Ativações',
+    dica: 'Toque numa marca para ver o que acontece no estande.',
+    visao: 'Ver por',
+    marcas: 'Marcas',
+    mapa: 'Mapa',
+    busca: 'Buscar marca',
+    buscaVazia: 'Nenhuma marca com esse nome',
+    beneficio: 'Benefício',
+    outrosBeneficios: 'Outros benefícios',
+    contagem: (n: number) => (n === 1 ? '1 marca' : `${n} marcas`),
   },
   beneficios: {
     titulo: 'Benefícios',
@@ -190,10 +201,8 @@ export const pt = {
       'Mostra o que está acontecendo agora e o que vem em seguida, com atalhos para as outras seções.',
     programacaoTexto:
       'Escolha o dia no topo e filtre por pilar ou por marca. Toque num item para ver local, horário, descrição e inscrição.',
-    beneficiosTexto:
-      'Descontos na Expo e na cidade. Busque pelo nome do lugar ou filtre por onde fica e por tipo.',
-    mapaTexto:
-      'Planta da Expo. Use dois dedos para dar zoom e toque num estande para ver a marca e o que acontece nele.',
+    ativacoesTexto:
+      'Todas as marcas da Expo. Toque num logo para ver o estande, o benefício e o que acontece ali, ou troque para o mapa da Expo.',
     guiaTexto: 'Abre o PDF do Guia do Atleta no idioma escolhido.',
     offline: 'Usar sem internet',
     offlineTexto:

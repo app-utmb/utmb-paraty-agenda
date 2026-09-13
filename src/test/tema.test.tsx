@@ -121,6 +121,6 @@ describe('botao de tema no app', () => {
   it('a barra de navegacao continua completa depois de trocar o tema', async () => {
     await abrir()
     await userEvent.click(screen.getByRole('button', { name: /tema claro/i }))
-    expect(within(screen.getByRole('navigation')).getAllByRole('button')).toHaveLength(6)
+    expect(within(screen.getByRole('navigation')).getAllByRole('button')).toHaveLength(5)
   })
 })

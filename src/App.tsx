@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { CHAVE_ABA, ehAba, type Aba } from './abas'
+import { CHAVE_ABA, abaSalva, type Aba } from './abas'
 import { DetalheBeneficio } from './components/DetalheBeneficio'
 import { DetalheItem } from './components/DetalheItem'
 import { DetalheMarca } from './components/DetalheMarca'
@@ -13,11 +13,10 @@ import type { PontoMapa } from './data/mapa'
 import type { Beneficio, ItemProgramacao } from './data/types'
 import type { Idioma } from './data/types'
 import { DICIONARIOS, IdiomaContext, LOCALES, idiomaInicial, salvarIdioma } from './i18n'
-import { Beneficios } from './screens/Beneficios'
+import { Ativacoes } from './screens/Ativacoes'
 import { GuiaAtleta } from './screens/GuiaAtleta'
 import { Inicio } from './screens/Inicio'
 import { Info } from './screens/Info'
-import { MapaExpo } from './screens/MapaExpo'
 import { Programacao } from './screens/Programacao'
 import { aplicarTema, proximoTema, salvarTema, temaInicial, type Tema } from './tema'
 import { useDados } from './useDados'
@@ -32,8 +31,8 @@ export function App({ referencia }: Props = {}) {
   const [idioma, setIdiomaEstado] = useState<Idioma>(() => idiomaInicial())
   const [aba, setAba] = useState<Aba>(() => {
     try {
-      const salva = localStorage.getItem(CHAVE_ABA)
-      if (ehAba(salva)) return salva
+      const salva = abaSalva(localStorage.getItem(CHAVE_ABA))
+      if (salva) return salva
     } catch {
       // Sem armazenamento: abre no Inicio.
     }
@@ -164,11 +163,12 @@ export function App({ referencia }: Props = {}) {
                     referencia={referencia}
                   />
                 )}
-                {aba === 'beneficios' && (
-                  <Beneficios beneficios={dados.beneficios} aoAbrir={setBeneficioAberto} />
-                )}
-                {aba === 'mapa' && (
-                  <MapaExpo config={dados.config} aoAbrirPonto={setPontoAberto} />
+                {aba === 'ativacoes' && (
+                  <Ativacoes
+                    dados={dados}
+                    aoAbrirPonto={setPontoAberto}
+                    aoAbrirBeneficio={setBeneficioAberto}
+                  />
                 )}
                 {aba === 'guia' && <GuiaAtleta config={dados.config} />}
                 {aba === 'info' && <Info dados={dados} />}

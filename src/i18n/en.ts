@@ -11,8 +11,7 @@ export const en: Dicionario = {
   abas: {
     inicio: 'Home',
     programacao: 'Schedule',
-    beneficios: 'Perks',
-    mapa: 'Map',
+    ativacoes: 'Activations',
     guia: 'Guide',
     info: 'Info',
   },
@@ -55,6 +54,18 @@ export const en: Dicionario = {
     aviso: 'The schedule will be updated until the event starts. New activities may be added.',
     horariosExpo: 'Expo hours',
     itensContagem: (n: number) => (n === 1 ? '1 item' : `${n} items`),
+  },
+  ativacoes: {
+    titulo: 'Activations',
+    dica: 'Tap a brand to see what is happening at its booth.',
+    visao: 'View by',
+    marcas: 'Brands',
+    mapa: 'Map',
+    busca: 'Search brand',
+    buscaVazia: 'No brand with that name',
+    beneficio: 'Perk',
+    outrosBeneficios: 'Other perks',
+    contagem: (n: number) => (n === 1 ? '1 brand' : `${n} brands`),
   },
   beneficios: {
     titulo: 'Perks',
@@ -192,10 +203,8 @@ export const en: Dicionario = {
       'Shows what is happening now and what comes next, with shortcuts to the other sections.',
     programacaoTexto:
       'Pick the day at the top and filter by pillar or brand. Tap an item for venue, time, description and sign up.',
-    beneficiosTexto:
-      'Discounts at the Expo and in town. Search by name or filter by where it is and by type.',
-    mapaTexto:
-      'Expo floor plan. Pinch to zoom and tap a booth to see the brand and what happens there.',
+    ativacoesTexto:
+      'Every brand at the Expo. Tap a logo to see the booth, the perk and what is happening there, or switch to the Expo map.',
     guiaTexto: 'Opens the Athlete Guide PDF in the language you picked.',
     offline: 'Use without internet',
     offlineTexto:

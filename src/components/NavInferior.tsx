@@ -7,14 +7,12 @@ import {
   IconeInfo,
   IconeInicio,
   IconeLivro,
-  IconeMapa,
 } from './Icones'
 
 const ICONES = {
   inicio: IconeInicio,
   programacao: IconeCalendario,
-  beneficios: IconeEtiqueta,
-  mapa: IconeMapa,
+  ativacoes: IconeEtiqueta,
   guia: IconeLivro,
   info: IconeInfo,
 } as const

@@ -84,7 +84,7 @@ export function MapaExpo({ config, aoAbrirPonto }: Props) {
   if (!config.mapaExpoUrl || falhou) {
     return (
       <div>
-        <h1 className="secao-titulo">{t.mapa.titulo}</h1>
+        <h2 className="secao-titulo">{t.mapa.titulo}</h2>
         <div className="vazio">
           <p className="vazio__titulo">{t.mapa.semImagem}</p>
           <p className="vazio__dica">{t.mapa.semImagemDica}</p>
@@ -95,7 +95,7 @@ export function MapaExpo({ config, aoAbrirPonto }: Props) {
 
   return (
     <div>
-      <h1 className="secao-titulo">{t.mapa.titulo}</h1>
+      <h2 className="secao-titulo">{t.mapa.titulo}</h2>
       <p className="vazio__dica" style={{ marginBottom: 10 }}>
         {t.mapa.interativo}
       </p>
