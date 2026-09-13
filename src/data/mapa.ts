@@ -213,6 +213,11 @@ const BRUTOS: Bruto[] = [
     id: 'vibram', nome: 'Vibram', estande: '', marcas: ['Vibram'],
     segmentos: ['calcados'], logo: null, tipo: 'marca', px: [126, 510, 56, 62],
   },
+  {
+    // Sem estande na planta: entra para aparecer na grade de Ativacoes.
+    id: 'strava', nome: 'Strava', estande: '', marcas: ['Strava'],
+    segmentos: ['tecnologia'], logo: 'strava', tipo: 'marca', px: [0, 0, 1, 1],
+  },
   // -------------------------------------------------------- servicos
   {
     id: 'palco', nome: 'Palco UTMB', estande: '', marcas: [],
@@ -248,7 +253,7 @@ const BRUTOS: Bruto[] = [
  * Marcas que aparecem na programacao mas nao tem estande na Expo. Ficam fora
  * da checagem de que toda marca da agenda tem ponto no mapa.
  */
-export const MARCAS_SEM_ESTANDE = ['Paraty Brazil by UTMB', 'SOS Mata Atlântica', 'Strava'] as const
+export const MARCAS_SEM_ESTANDE = ['Paraty Brazil by UTMB', 'SOS Mata Atlântica', 'Toth'] as const
 
 export const PONTOS_MAPA: PontoMapa[] = BRUTOS.map(({ px, ...resto }) => ({
   ...resto,

@@ -7,7 +7,6 @@ import { DetalheItem } from '../components/DetalheItem'
 import { GuiaAtleta } from '../screens/GuiaAtleta'
 import { Inicio } from '../screens/Inicio'
 import { Info } from '../screens/Info'
-import { MapaExpo } from '../screens/MapaExpo'
 import { Programacao } from '../screens/Programacao'
 import { CHAVE_IDIOMA } from '../i18n'
 import type { ItemProgramacao } from '../data/types'
@@ -52,11 +51,6 @@ describe('acessibilidade das telas', () => {
     expect(await axe(container, opcoesAxe)).toHaveNoViolations()
   })
 
-  it('Mapa nao tem violacoes', async () => {
-    const { container } = renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
-    expect(await axe(container, opcoesAxe)).toHaveNoViolations()
-  })
-
   it('Guia nao tem violacoes', async () => {
     const { container } = renderizar(<GuiaAtleta config={dados.config} />)
     expect(await axe(container, opcoesAxe)).toHaveNoViolations()
@@ -91,11 +85,6 @@ describe('acessibilidade das telas', () => {
 })
 
 describe('imagens e textos alternativos', () => {
-  it('a imagem do mapa tem alt descritivo', () => {
-    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
-    expect(screen.getByRole('img', { name: /planta da área da expo/i })).toBeInTheDocument()
-  })
-
   it('as logos de marca sao decorativas e nao poluem o leitor de tela', () => {
     const { container } = renderizar(<DetalheItem item={item('a3')} aoFechar={() => {}} />)
     const logos = container.querySelectorAll('img[src*="logo"]')

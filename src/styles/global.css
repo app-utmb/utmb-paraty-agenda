@@ -365,7 +365,8 @@ img {
 
 .nav {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
 }
 
 @media (max-width: 359px) {
@@ -1498,42 +1499,6 @@ img {
 }
 
 /* ------------------------------------------------------------ Ativacoes */
-.alternador {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  margin: 0 0 14px;
-  padding: 4px;
-  border: 1px solid var(--borda);
-  border-radius: 999px;
-  background: var(--cartao);
-}
-
-.alternador__botao {
-  min-height: 40px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--texto);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.alternador__botao[aria-pressed='true'] {
-  background: var(--acento);
-  color: var(--acento-texto);
-  font-weight: 800;
-}
-
-.alternador__botao:focus-visible,
-.marca-tile:focus-visible,
-.outros-beneficios__item:focus-visible {
-  outline: 2px solid var(--destaque);
-  outline-offset: 2px;
-}
-
 /* Tres logos por linha no celular, quatro quando cabe. */
 .marcas-grade {
   display: grid;

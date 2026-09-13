@@ -4,10 +4,9 @@ import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { describe, expect, it, vi } from 'vitest'
 import { DetalheMarca } from '../components/DetalheMarca'
-import { MARCAS_SEM_ESTANDE, PONTOS_MAPA, REFERENCIA, type PontoMapa } from '../data/mapa'
+import { MARCAS_SEM_ESTANDE, PONTOS_MAPA, type PontoMapa } from '../data/mapa'
 import { normalizarProgramacao } from '../data/normalize'
 import { lerCsv } from '../data/sheets'
-import { MapaExpo } from '../screens/MapaExpo'
 import {
   aconteceForaDoEstande,
   atividadesDaMarca,
@@ -27,37 +26,6 @@ describe('pontos do mapa', () => {
   it('tem id unico em cada ponto', () => {
     const ids = PONTOS_MAPA.map((p) => p.id)
     expect(new Set(ids).size).toBe(ids.length)
-  })
-
-  it('mantem todo retangulo dentro da imagem', () => {
-    for (const p of PONTOS_MAPA) {
-      expect(p.x, p.id).toBeGreaterThanOrEqual(0)
-      expect(p.y, p.id).toBeGreaterThanOrEqual(0)
-      expect(p.x + p.w, p.id).toBeLessThanOrEqual(1)
-      expect(p.y + p.h, p.id).toBeLessThanOrEqual(1)
-      expect(p.w, p.id).toBeGreaterThan(0)
-      expect(p.h, p.id).toBeGreaterThan(0)
-    }
-  })
-
-  it('nao sobrepoe dois estandes', () => {
-    const cruza = (a: PontoMapa, b: PontoMapa) =>
-      a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h
-    const pares: string[] = []
-    for (let i = 0; i < PONTOS_MAPA.length; i += 1) {
-      for (let j = i + 1; j < PONTOS_MAPA.length; j += 1) {
-        const a = PONTOS_MAPA[i] as PontoMapa
-        const b = PONTOS_MAPA[j] as PontoMapa
-        if (cruza(a, b)) pares.push(`${a.id} x ${b.id}`)
-      }
-    }
-    expect(pares).toEqual([])
-  })
-
-  it('converte os pixels de referencia em fracao', () => {
-    const hoka = ponto('hoka')
-    expect(hoka.x).toBeCloseTo(218 / REFERENCIA.largura, 5)
-    expect(hoka.y).toBeCloseTo(364 / REFERENCIA.altura, 5)
   })
 
   it('nao inclui o CAEX nem o estacionamento, que saem do mapa interativo', () => {
@@ -201,50 +169,6 @@ m1,2026-09-17,18:30,talks,Mesa,Paraty Brazil by UTMB; FOTOP`
     expect(listarDias(['2026-09-17', '2026-09-18'], 'e')).toBe('17 e 18')
     expect(listarDias(['2026-09-17', '2026-09-18', '2026-09-20'], 'e')).toBe('17, 18 e 20')
     expect(listarDias([], 'e')).toBe('')
-  })
-})
-
-describe('tela do mapa', () => {
-  it('desenha um ponto tocavel por estande', () => {
-    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
-    const pontos = screen.getAllByRole('button').filter((b) => b.className.includes('mapa-ponto'))
-    expect(pontos).toHaveLength(PONTOS_MAPA.length)
-  })
-
-  it('cada ponto tem nome acessivel com a marca e o estande', () => {
-    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
-    expect(screen.getByRole('button', { name: /HOKA, Estande B1/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /Liquidz, Estande C5/i })).toBeInTheDocument()
-  })
-
-  it('abre o detalhe ao tocar num estande', async () => {
-    const abrir = vi.fn()
-    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={abrir} />)
-    await userEvent.click(screen.getByRole('button', { name: /AIMO, Estande E3/i }))
-    expect(abrir).toHaveBeenCalledWith(expect.objectContaining({ id: 'aimo' }))
-  })
-
-  it('posiciona o ponto em porcentagem sobre a imagem', () => {
-    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
-    const alvo = screen.getByRole('button', { name: /HOKA, Estande B1/i })
-    expect(alvo.style.left).toMatch(/^15\.1/)
-    expect(alvo.style.top).toMatch(/^44\.9/)
-  })
-
-  it('nao mostra pontos quando o mapa ainda nao foi publicado', () => {
-    renderizar(
-      <MapaExpo config={{ ...dados.config, mapaExpoUrl: '' }} aoAbrirPonto={vi.fn()} />,
-    )
-    expect(screen.queryByRole('button', { name: /HOKA/i })).not.toBeInTheDocument()
-  })
-
-  it('nao tem violacoes de acessibilidade', async () => {
-    const { container } = renderizar(
-      <MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />,
-    )
-    expect(
-      await axe(container, { rules: { 'color-contrast': { enabled: false } } }),
-    ).toHaveNoViolations()
   })
 })
 

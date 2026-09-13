@@ -56,9 +56,6 @@ export const pt = {
   ativacoes: {
     titulo: 'Ativações',
     dica: 'Toque numa marca para ver o que acontece no estande.',
-    visao: 'Ver por',
-    marcas: 'Marcas',
-    mapa: 'Mapa',
     busca: 'Buscar marca',
     buscaVazia: 'Nenhuma marca com esse nome',
     beneficio: 'Benefício',
@@ -202,7 +199,7 @@ export const pt = {
     programacaoTexto:
       'Escolha o dia no topo e filtre por pilar ou por marca. Toque num item para ver local, horário, descrição e inscrição.',
     ativacoesTexto:
-      'Todas as marcas da Expo. Toque num logo para ver o estande, o benefício e o que acontece ali, ou troque para o mapa da Expo.',
+      'Todas as marcas da Expo. Toque num logo para ver o estande, o benefício e o que acontece ali.',
     guiaTexto: 'Abre o PDF do Guia do Atleta no idioma escolhido.',
     offline: 'Usar sem internet',
     offlineTexto:

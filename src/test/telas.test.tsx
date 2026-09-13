@@ -3,7 +3,6 @@ import { describe, expect, it, vi } from 'vitest'
 import { GuiaAtleta } from '../screens/GuiaAtleta'
 import { Inicio } from '../screens/Inicio'
 import { Info } from '../screens/Info'
-import { MapaExpo } from '../screens/MapaExpo'
 import { Programacao } from '../screens/Programacao'
 import { DetalheItem } from '../components/DetalheItem'
 import { CONFIG_PADRAO } from '../data/normalize'
@@ -306,30 +305,6 @@ describe('tela Guia do Atleta', () => {
     renderizar(<GuiaAtleta config={CONFIG_PADRAO} />)
     expect(screen.getByText(/guia ainda não foi publicado/i)).toBeInTheDocument()
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
-  })
-})
-
-describe('tela Mapa da Expo', () => {
-  it('mostra a imagem com texto alternativo', () => {
-    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
-    expect(screen.getByRole('img', { name: /planta da área da expo/i })).toHaveAttribute(
-      'src',
-      'https://exemplo.com/mapa.png',
-    )
-  })
-
-  it('oferece controles de zoom para quem nao usa pinca', async () => {
-    renderizar(<MapaExpo config={dados.config} aoAbrirPonto={vi.fn()} />)
-    const ampliar = screen.getByRole('button', { name: /ampliar/i })
-    const reduzir = screen.getByRole('button', { name: /reduzir/i })
-    expect(reduzir).toBeDisabled()
-    await userEvent.click(ampliar)
-    expect(reduzir).toBeEnabled()
-  })
-
-  it('avisa quando o mapa ainda nao foi publicado', () => {
-    renderizar(<MapaExpo config={CONFIG_PADRAO} aoAbrirPonto={vi.fn()} />)
-    expect(screen.getByText(/mapa ainda não foi publicado/i)).toBeInTheDocument()
   })
 })
 

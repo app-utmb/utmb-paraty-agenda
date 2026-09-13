@@ -58,9 +58,6 @@ export const en: Dicionario = {
   ativacoes: {
     titulo: 'Activations',
     dica: 'Tap a brand to see what is happening at its booth.',
-    visao: 'View by',
-    marcas: 'Brands',
-    mapa: 'Map',
     busca: 'Search brand',
     buscaVazia: 'No brand with that name',
     beneficio: 'Perk',
@@ -204,7 +201,7 @@ export const en: Dicionario = {
     programacaoTexto:
       'Pick the day at the top and filter by pillar or brand. Tap an item for venue, time, description and sign up.',
     ativacoesTexto:
-      'Every brand at the Expo. Tap a logo to see the booth, the perk and what is happening there, or switch to the Expo map.',
+      'Every brand at the Expo. Tap a logo to see the booth, the perk and what is happening there.',
     guiaTexto: 'Opens the Athlete Guide PDF in the language you picked.',
     offline: 'Use without internet',
     offlineTexto:

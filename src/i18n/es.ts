@@ -58,9 +58,6 @@ export const es: Dicionario = {
   ativacoes: {
     titulo: 'Activaciones',
     dica: 'Toca una marca para ver lo que pasa en el stand.',
-    visao: 'Ver por',
-    marcas: 'Marcas',
-    mapa: 'Mapa',
     busca: 'Buscar marca',
     buscaVazia: 'Ninguna marca con ese nombre',
     beneficio: 'Beneficio',
@@ -204,7 +201,7 @@ export const es: Dicionario = {
     programacaoTexto:
       'Elige el día arriba y filtra por pilar o por marca. Toca un elemento para ver lugar, horario, descripción e inscripción.',
     ativacoesTexto:
-      'Todas las marcas de la Expo. Toca un logo para ver el stand, el beneficio y lo que pasa allí, o cambia al mapa de la Expo.',
+      'Todas las marcas de la Expo. Toca un logo para ver el stand, el beneficio y lo que pasa allí.',
     guiaTexto: 'Abre el PDF de la Guía del Atleta en el idioma elegido.',
     offline: 'Usar sin internet',
     offlineTexto:
