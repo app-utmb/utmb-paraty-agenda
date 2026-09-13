@@ -10,7 +10,7 @@ import { toHaveNoViolations } from 'jest-axe'
  */
 vi.mock('../config', async () => {
   const real = await vi.importActual<typeof import('../config')>('../config')
-  return { ...real, URL_CSV_PROGRAMACAO: '', URL_CSV_CONFIG: '' }
+  return { ...real, URL_CSV_PROGRAMACAO: '', URL_CSV_CONFIG: '', URL_CSV_PALCO: '' }
 })
 
 expect.extend(toHaveNoViolations)

@@ -33,6 +33,16 @@ O conteúdo está em duas planilhas do Google, as duas no seu Drive e já public
 
 São três arquivos separados em vez de abas de um só. Para o app dá no mesmo, e para você fica mais difícil mexer sem querer na Config enquanto edita a agenda.
 
+### Agenda do Palco Expo
+
+Os itens do Palco Expo não ficam na Programação v2. O app lê direto a aba **base** da [planilha de agenda do palco](https://docs.google.com/spreadsheets/d/1K0qEdbSEFSmuVAuUz0oPtqKqV8GfLUqyVPAHkzS25S8/edit), a cada 5 minutos com o app aberto ou ao puxar a tela para baixo.
+
+- Entra só a linha com **Status** `confirmado`, **Dia alocado** (`Quinta`, `Sexta`, `18/09`) e **Horário alocado** (`15h45 - 16h00 (15 min)`).
+- **Tema do talk** vira o título. Colunas opcionais **Tema ES** e **Tema EN** traduzem; vazias, aparece o português.
+- **Quem apresenta** vira o palestrante, **Cargo / função** a descrição e **O que** define Talk ou Filme.
+- Nomes que não batem com o estande (Liquidiz, Probiotica, Nautika, ESG) estão mapeados em `src/data/palco.ts`.
+- A planilha precisa continuar compartilhada como "qualquer pessoa com o link" e sem renomear essas colunas. Se ela falhar ou mudar de formato, o app mantém o último palco carregado.
+
 Existe no Drive uma planilha chamada **ZZ Paraty Agenda 2026 Programacao (antiga)**. Ela não alimenta mais o app e pode ser apagada.
 
 Se um dia precisar recriar do zero, a pasta `planilha/` deste repositório tem o modelo **Paraty-Agenda.xlsx** com os cabeçalhos certos e exemplos preenchidos.

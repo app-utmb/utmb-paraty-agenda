@@ -4,6 +4,7 @@ import {
   TIMEOUT_REDE_MS,
   URL_CSV_BENEFICIOS,
   URL_CSV_CONFIG,
+  URL_CSV_PALCO,
   URL_CSV_PROGRAMACAO,
 } from '../config'
 import {
@@ -11,7 +12,8 @@ import {
   CSV_CONFIG_EXEMPLO,
   CSV_PROGRAMACAO_EXEMPLO,
 } from './exemplo'
-import { normalizarBeneficios, normalizarConfig, normalizarProgramacao } from './normalize'
+import { normalizarBeneficios, normalizarConfig, normalizarProgramacao, ordenarItens } from './normalize'
+import { ehAbaDoPalco, linhasDoPalco } from './palco'
 import type { DadosApp, ProblemaImportacao } from './types'
 
 export const CHAVE_CACHE = 'paraty.dados.v1'
@@ -56,8 +58,12 @@ function montar(
   csvBeneficios: string,
   origem: DadosApp['origem'],
   atualizadoEm: string,
+  csvPalco = '',
 ): { dados: DadosApp; problemas: ProblemaImportacao[] } {
-  const prog = normalizarProgramacao(lerCsv(csvProgramacao))
+  const prog = normalizarProgramacao([
+    ...lerCsv(csvProgramacao),
+    ...linhasDoPalco(lerCsv(csvPalco)),
+  ])
   const conf = normalizarConfig(lerCsv(csvConfig))
   const ben = normalizarBeneficios(lerCsv(csvBeneficios))
   return {
@@ -116,19 +122,33 @@ export async function carregarDados(sinal?: AbortSignal): Promise<ResultadoCarga
     // A planilha de beneficios so e opcional quando nem foi configurada. Com
     // a URL preenchida, uma falha dela conta como falha da carga inteira, para
     // o app cair no cache em vez de mostrar a lista de descontos vazia.
-    const [csvProgramacao, csvConfig, csvBeneficios] = await Promise.all([
+    // A agenda do palco vem de outra planilha, da organizacao do palco. Se
+    // ela falhar, o resto da agenda segue atualizado e o palco fica com a
+    // ultima versao salva no aparelho.
+    const [csvProgramacao, csvConfig, csvBeneficios, csvPalco] = await Promise.all([
       baixarTexto(URL_CSV_PROGRAMACAO, sinal),
       baixarTexto(URL_CSV_CONFIG, sinal),
       URL_CSV_BENEFICIOS ? baixarTexto(URL_CSV_BENEFICIOS, sinal) : Promise.resolve(''),
+      URL_CSV_PALCO ? baixarTexto(URL_CSV_PALCO, sinal).catch(() => null) : Promise.resolve(''),
     ])
+    const palcoValido = csvPalco !== null && (!URL_CSV_PALCO || ehAbaDoPalco(lerCsv(csvPalco)))
     const { dados, problemas } = montar(
       csvProgramacao,
       csvConfig,
       csvBeneficios,
       'rede',
       new Date().toISOString(),
+      palcoValido ? (csvPalco ?? '') : '',
     )
-    if (dados.itens.length === 0) throw new Error('planilha sem itens validos')
+    // O palco sozinho nao prova que a Programacao chegou inteira.
+    if (dados.itens.every((i) => i.id.startsWith('palco-'))) {
+      throw new Error('planilha sem itens validos')
+    }
+    if (!palcoValido) {
+      const doCache = lerCache()?.itens.filter((i) => i.id.startsWith('palco-')) ?? []
+      const ids = new Set(dados.itens.map((i) => i.id))
+      dados.itens = ordenarItens([...dados.itens, ...doCache.filter((i) => !ids.has(i.id))])
+    }
     if (URL_CSV_BENEFICIOS && dados.beneficios.length === 0) {
       // Melhor manter a lista anterior do que publicar "sem beneficios" por
       // causa de uma resposta truncada do Google.

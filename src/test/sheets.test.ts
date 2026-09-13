@@ -11,8 +11,19 @@ const CSV_BEN =
   'id,onde,categoria,nome,desconto_pt\nb1,expo,equipamentos,Marca Teste,10% de desconto\n'
 
 /** Devolve o CSV certo para cada uma das tres planilhas. */
+const CSV_PALCO = `Categoria,Marca,O que,Min,Tema do talk,Quem apresenta,Cargo / função,Status,Dia alocado,Horário alocado
+Patrocinador,Liquidiz,Talk,15,Hidratação no palco,Talita,Nutricionista,confirmado,Sexta,15h45 - 16h00 (15 min)
+`
+let csvPalco = CSV_PALCO
+
 const porUrl = (url: string) =>
-  url.includes('prog') ? CSV_PROG : url.includes('ben') ? CSV_BEN : CSV_CONF
+  url.includes('palco')
+    ? csvPalco
+    : url.includes('prog')
+      ? CSV_PROG
+      : url.includes('ben')
+        ? CSV_BEN
+        : CSV_CONF
 
 /** Recarrega o modulo com URLs de planilha definidas, para testar a rede. */
 async function comPlanilhaConectada() {
@@ -24,6 +35,7 @@ async function comPlanilhaConectada() {
       URL_CSV_PROGRAMACAO: 'https://docs.google.com/prog.csv',
       URL_CSV_CONFIG: 'https://docs.google.com/conf.csv',
       URL_CSV_BENEFICIOS: 'https://docs.google.com/ben.csv',
+      URL_CSV_PALCO: 'https://docs.google.com/palco.csv',
     }
   })
   return import('../data/sheets')
@@ -33,6 +45,7 @@ const respostaOk = (texto: string) =>
   ({ ok: true, status: 200, text: async () => texto }) as Response
 
 beforeEach(() => {
+  csvPalco = CSV_PALCO
   vi.unstubAllGlobals()
   vi.resetModules()
 })
@@ -214,5 +227,39 @@ describe('carregarDados com planilha conectada', () => {
     const r = await carregarDados()
     expect(r.erroRede).toContain('sem itens validos')
     expect(r.dados.itens.length).toBeGreaterThan(0)
+  })
+
+  it('junta os itens da planilha do palco na agenda', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => respostaOk(porUrl(url))))
+    const { carregarDados } = await comPlanilhaConectada()
+    const r = await carregarDados()
+    const talk = r.dados.itens.find((i) => i.titulo.pt === 'Hidratação no palco')
+    expect(talk).toMatchObject({ data: '2026-09-18', horaInicio: '15:45', pilar: 'talks', marca: 'Liquidz' })
+  })
+
+  it('mantem o palco salvo quando a planilha do palco falha, sem derrubar o resto', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => respostaOk(porUrl(url))))
+    await (await comPlanilhaConectada()).carregarDados()
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) => {
+        if (url.includes('palco')) throw new Error('palco fora do ar')
+        return respostaOk(porUrl(url))
+      }),
+    )
+    const r = await (await comPlanilhaConectada()).carregarDados()
+    expect(r.erroRede).toBeNull()
+    expect(r.dados.itens.some((i) => i.titulo.pt === 'Hidratação no palco')).toBe(true)
+    expect(r.dados.itens.some((i) => i.titulo.pt === 'Da rede')).toBe(true)
+  })
+
+  it('mantem o palco salvo quando a aba do palco muda de formato', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => respostaOk(porUrl(url))))
+    await (await comPlanilhaConectada()).carregarDados()
+
+    csvPalco = 'outra,coisa\n1,2\n'
+    const r = await (await comPlanilhaConectada()).carregarDados()
+    expect(r.dados.itens.some((i) => i.titulo.pt === 'Hidratação no palco')).toBe(true)
   })
 })

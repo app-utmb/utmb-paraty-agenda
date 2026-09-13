@@ -20,6 +20,14 @@ export const URL_CSV_BENEFICIOS =
 export const URL_CSV_CONFIG =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vRI7HwGSv0aSRzSE30iD_jfBZXV_-tAwU6GFbX2Ol7LKnvhxih7QbKm_SjggdNvkflpbzZMS_9lP1l5/pub?output=csv'
 
+/**
+ * Aba "base" da planilha de agenda do palco, lida direto enquanto ela estiver
+ * compartilhada por link. Cada linha confirmada, com dia e horario, vira um
+ * item do Palco Expo. Ver src/data/palco.ts.
+ */
+export const URL_CSV_PALCO =
+  'https://docs.google.com/spreadsheets/d/1K0qEdbSEFSmuVAuUz0oPtqKqV8GfLUqyVPAHkzS25S8/gviz/tq?tqx=out:csv&sheet=base'
+
 /** Intervalo de revalidacao automatica enquanto o app esta aberto. */
 export const INTERVALO_REVALIDACAO_MS = 5 * 60 * 1000
 
