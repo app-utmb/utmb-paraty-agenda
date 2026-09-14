@@ -118,6 +118,12 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
           </div>
         </div>
 
+        {ponto.descricao && (
+          <p className="folha__descricao" style={{ marginTop: 12 }}>
+            {escolherIdioma(ponto.descricao, idioma)}
+          </p>
+        )}
+
         {segmento && (
           <div className="folha__linha">
             <span className="folha__rotulo">{t.mapa.segmento}</span>

@@ -124,6 +124,18 @@ function ativacao({ slug, marca, tit, desc, dias, horas = null, local, inscricao
   })
 }
 
+/**
+ * Acao em horarios marcados, como "12h, 14h e 16h": uma linha por sessao na
+ * programacao, que o detalhe da marca junta de volta num resumo por dia.
+ */
+function emSessoes({ slug, horarios, ...resto }) {
+  return Object.entries(horarios).flatMap(([data, horas]) =>
+    horas.map((hora) =>
+      ativacao({ ...resto, slug: `${slug}-${data.slice(8)}-${hora.replace(':', '')}`, dias: [data], horas: { [data]: [hora, ''] } })[0],
+    ),
+  )
+}
+
 const ATIVACOES = [
   ...ativacao({
     slug: 'mombora-treinao', marca: 'MOMBORA', logoArquivo: 'mombora',
@@ -134,15 +146,18 @@ const ATIVACOES = [
     dias: ['2026-09-18'], horas: { '2026-09-18': ['08:30', '10:00'] },
     local: aConfirmar, inscricao: 'invite', destaque: 'sim',
   }),
-  ...ativacao({
-    slug: 'hoka-medalha', marca: 'HOKA', logoArquivo: 'hoka',
-    tit: ['Gravação de medalhas', 'Grabado de medallas', 'Medal engraving'],
-    desc: ['Personalize a sua medalha no estande da HOKA. Cadastro obrigatório, feito no estande pelo QR code.',
-           'Personaliza tu medalla en el stand de HOKA. Registro obligatorio, hecho en el stand por el código QR.',
-           'Personalise your medal at the HOKA booth. Registration required, done at the booth via QR code.'],
-    dias: ['2026-09-19', '2026-09-20'],
-    horas: { '2026-09-19': ['14:00', '20:00'], '2026-09-20': ['10:00', '14:00'] },
-    local: estande('HOKA', 'B1'), inscricao: 'previa', destaque: 'sim',
+  ...emSessoes({
+    slug: 'hoka-apitos', marca: 'HOKA', logoArquivo: 'hoka',
+    tit: ['Apitos HOKA', 'Silbatos HOKA', 'HOKA whistles'],
+    desc: ['Passe no estande da HOKA nos horários de distribuição e confira as regras para ganhar o seu. Enquanto durar o estoque.',
+           'Pasa por el stand de HOKA en los horarios de entrega y mira las reglas para ganar el tuyo. Hasta agotar existencias.',
+           'Stop by the HOKA booth at the giveaway times and check the rules to get yours. While supplies last.'],
+    horarios: {
+      '2026-09-17': ['12:00', '14:00', '16:00', '18:00'],
+      '2026-09-18': ['12:00', '14:00', '16:00', '18:00', '20:00'],
+      '2026-09-19': ['12:00', '14:00'],
+    },
+    local: estande('HOKA', 'B1'),
   }),
   ...ativacao({
     slug: 'hoka-test-run', marca: 'HOKA', logoArquivo: 'hoka',
@@ -154,16 +169,16 @@ const ATIVACOES = [
     horas: {
       '2026-09-17': ['10:00', '18:00'],
       '2026-09-18': ['10:00', '18:00'],
-      '2026-09-19': ['10:00', '18:00'],
+      '2026-09-19': ['10:00', '16:00'],
     },
     local: estande('HOKA', 'B1'), inscricao: 'previa', destaque: 'sim',
   }),
   ...ativacao({
-    slug: 'hoka-apitos', marca: 'HOKA', logoArquivo: 'hoka',
-    tit: ['Apitos HOKA', 'Silbatos HOKA', 'HOKA whistles'],
-    desc: ['Passe no estande da HOKA na Expo e confira as regras para ganhar o seu. Enquanto durar o estoque.',
-           'Pasa por el stand de HOKA en la Expo y mira las reglas para ganar el tuyo. Hasta agotar existencias.',
-           'Stop by the HOKA booth at the Expo and check the rules to get yours. While supplies last.'],
+    slug: 'hoka-bone', marca: 'HOKA', logoArquivo: 'hoka',
+    tit: ['Compre e ganhe 1 boné HOKA', 'Compra y gana 1 gorra HOKA', 'Buy and get a HOKA cap'],
+    desc: ['Em compras a partir de R$ 1.000, ganhe 1 boné HOKA. Produtos selecionados com 20% de desconto. Enquanto durar o estoque.',
+           'En compras desde R$ 1.000, gana 1 gorra HOKA. Productos seleccionados con 20% de descuento. Hasta agotar existencias.',
+           'Spend R$ 1,000 or more and get a HOKA cap. Selected products at 20% off. While supplies last.'],
     dias: TODOS, local: estande('HOKA', 'B1'),
   }),
   ...ativacao({
@@ -172,25 +187,50 @@ const ATIVACOES = [
     desc: ['Procure a equipe da HOKA nas chegadas para fazer barulho e deixar a sua mensagem.',
            'Busca al equipo de HOKA en las llegadas para hacer ruido y dejar tu mensaje.',
            'Find the HOKA team at the finish to cheer and leave your message.'],
-    dias: ['2026-09-19', '2026-09-20'],
-    horas: { '2026-09-19': ['10:00', '21:00'], '2026-09-20': ['10:00', '13:00'] },
+    dias: ['2026-09-18', '2026-09-19'],
+    horas: { '2026-09-18': ['18:00', '20:00'], '2026-09-19': ['08:00', '18:00'] },
     local: ARENA,
   }),
   ...ativacao({
+    slug: 'hoka-medalha', marca: 'HOKA', logoArquivo: 'hoka',
+    tit: ['Gravação de medalhas', 'Grabado de medallas', 'Medal engraving'],
+    desc: ['Personalize a sua medalha no estande da HOKA. Cadastro obrigatório, feito no estande pelo QR code.',
+           'Personaliza tu medalla en el stand de HOKA. Registro obligatorio, hecho en el stand por el código QR.',
+           'Personalise your medal at the HOKA booth. Registration required, done at the booth via QR code.'],
+    dias: ['2026-09-19', '2026-09-20'],
+    horas: { '2026-09-19': ['14:00', '18:00'], '2026-09-20': ['10:00', '13:00'] },
+    local: estande('HOKA', 'B1'), inscricao: 'previa', destaque: 'sim',
+  }),
+  ...ativacao({
+    slug: 'hoka-trilhas-limpas', marca: 'HOKA', logoArquivo: 'hoka',
+    tit: ['Ação Trilhas Limpas', 'Acción Trilhas Limpas', 'Trilhas Limpas action'],
+    desc: ['Participe da ação Trilhas Limpas pelo QR code no estande da HOKA.',
+           'Participa de la acción Trilhas Limpas con el código QR en el stand de HOKA.',
+           'Join the Trilhas Limpas clean trails action via the QR code at the HOKA booth.'],
+    dias: ['2026-09-20'], local: estande('HOKA', 'B1'),
+  }),
+  ...emSessoes({
     slug: 'nnormal-tenis', marca: 'NNormal', logoArquivo: 'nnormal',
-    tit: ['Experimentação de tênis', 'Prueba de zapatillas', 'Shoe try-on'],
-    desc: ['Experimente os modelos NNormal no estande. Inscrição pelo formulário da marca.',
-           'Prueba los modelos NNormal en el stand. Inscripción por el formulario de la marca.',
-           'Try the NNormal models at the booth. Sign up through the brand form.'],
-    dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('NNormal', 'D9'),
-    inscricao: 'previa', link: 'https://forms.gle/LbXWJoMqmAEo1RqeA',
+    tit: ['Experimentação de tênis NNormal', 'Prueba de zapatillas NNormal', 'NNormal shoe try-on'],
+    desc: ['Experimente os tênis da NNormal durante o Paraty Brazil by UTMB 2026, nos horários disponíveis. Inscrição prévia pelo formulário.',
+           'Prueba las zapatillas NNormal durante Paraty Brazil by UTMB 2026, en los horarios disponibles. Inscripción previa por el formulario.',
+           'Try NNormal shoes during Paraty Brazil by UTMB 2026 at the available times. Sign up in advance through the form.'],
+    horarios: {
+      '2026-09-17': ['14:00', '15:30'],
+      '2026-09-18': ['10:00', '11:00', '14:00', '15:30'],
+      '2026-09-19': ['10:00', '11:00'],
+    },
+    local: estande('NNormal', 'D9'), inscricao: 'previa',
+    link: 'https://docs.google.com/forms/d/e/1FAIpQLSdszm1td7Ho4dEQMmyz-ioMdKBreLnac-avKIeeV8wsSKyVBw/viewform',
   }),
   ...ativacao({
     slug: 'coros-cacada', marca: 'COROS', logoArquivo: 'coros',
-    tit: ['Caça ao tesouro COROS', 'Búsqueda del tesoro COROS', 'COROS treasure hunt'],
-    desc: ['Vagas limitadas, inscrição no estande.', 'Cupos limitados, inscripción en el stand.', 'Limited places, sign up at the booth.'],
-    dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('COROS', 'D9'),
-    inscricao: 'previa',
+    tit: ['Caça ao Tesouro COROS', 'Búsqueda del tesoro COROS', 'COROS treasure hunt'],
+    desc: ['Uma caça ao tesouro pela rota liberada no Strava da COROS Brasil. Encontre a caixa do COROS NOMAD escondida pelo percurso e leve até o estande da COROS para receber o prêmio.',
+           'Una búsqueda del tesoro por la ruta publicada en el Strava de COROS Brasil. Encuentra la caja del COROS NOMAD escondida en el recorrido y llévala al stand de COROS para recibir el premio.',
+           'A treasure hunt along the route shared on the COROS Brasil Strava. Find the COROS NOMAD box hidden on the course and bring it to the COROS booth to claim the prize.'],
+    dias: ['2026-09-18'], horas: { '2026-09-18': ['12:00', ''] },
+    local: estande('COROS', 'D9'),
   }),
   ...ativacao({
     slug: 'vivas-roleta', marca: 'VIVÁS MOVE', logoArquivo: 'vivas-move',
@@ -384,10 +424,10 @@ const BENEFICIOS = [
   }),
   beneficio({
     id: 'ben-hoka', onde: 'expo', categoria: 'equipamentos', nome: 'HOKA',
-    desconto: ['20% de desconto', '20% de descuento', '20% off'],
-    descricao: ['Desconto no estande inteiro. Ganhe um boné na compra de um tênis a partir de R$ 1.000, enquanto durar o estoque.',
-                'Descuento en todo el stand. Gana una gorra al comprar un tenis desde R$ 1.000, hasta agotar existencias.',
-                'Discount across the whole booth. Get a cap when you buy shoes from R$ 1,000, while supplies last.'],
+    desconto: ['20% em produtos selecionados', '20% en productos seleccionados', '20% off selected products'],
+    descricao: ['Em compras a partir de R$ 1.000, ganhe 1 boné HOKA, enquanto durar o estoque.',
+                'En compras desde R$ 1.000, gana 1 gorra HOKA, hasta agotar existencias.',
+                'Spend R$ 1,000 or more and get a HOKA cap, while supplies last.'],
     local: estande('HOKA', 'B1'), condicoes: PEITO, validade: DATAS_EXPO,
     logoArquivo: 'hoka', destaque: 'sim',
   }),

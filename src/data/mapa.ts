@@ -1,3 +1,5 @@
+import type { TextoMultilingue } from './types'
+
 /**
  * Segmentos da Expo, na categorizacao definida pelo evento. O rotulo de cada
  * um mora nos dicionarios de idioma, entao a lista aqui e so o codigo.
@@ -37,6 +39,8 @@ export interface PontoMapa {
   marcas: string[]
   /** Um estande compartilhado pode ter mais de um segmento. */
   segmentos: Segmento[]
+  /** Frase curta sobre o estande, mostrada no detalhe. Opcional. */
+  descricao?: TextoMultilingue
   /** Arquivo em public/logos, sem extensao. */
   logo: string | null
   tipo: TipoPonto
@@ -95,9 +99,14 @@ const BRUTOS: Bruto[] = [
     logo: 'vivas-move', tipo: 'marca', px: [980, 230, 50, 64],
   },
   {
-    id: 'nnormal-coros', nome: 'NNormal e COROS', estande: 'D9', marcas: ['NNormal', 'COROS'],
-    segmentos: ['calcados', 'tecnologia'],
-    logo: 'nnormal', tipo: 'marca', px: [1038, 230, 50, 64],
+    id: 'nnormal', nome: 'NNormal', estande: 'D9', marcas: ['NNormal'],
+    segmentos: ['calcados'],
+    logo: 'nnormal', tipo: 'marca', px: [1038, 230, 25, 64],
+  },
+  {
+    id: 'coros', nome: 'COROS', estande: 'D9', marcas: ['COROS'],
+    segmentos: ['tecnologia'],
+    logo: 'coros', tipo: 'marca', px: [1063, 230, 25, 64],
   },
   // ---------------------------------------------------------- setor B
   {
@@ -228,8 +237,13 @@ const BRUTOS: Bruto[] = [
     segmentos: [], logo: null, tipo: 'servico', px: [490, 236, 64, 54],
   },
   {
-    id: 'loja-oficial', nome: 'Loja oficial', estande: '', marcas: [],
-    segmentos: ['vestuario'], logo: null, tipo: 'servico', px: [570, 364, 166, 76],
+    id: 'loja-oficial', nome: 'Loja Oficial', estande: '', marcas: ['Loja Oficial'],
+    descricao: {
+      pt: 'Merchandising e vestuário oficial Paraty Brazil by UTMB.',
+      es: 'Merchandising y ropa oficial de Paraty Brazil by UTMB.',
+      en: 'Official Paraty Brazil by UTMB merchandise and apparel.',
+    },
+    segmentos: ['vestuario'], logo: 'utmb', tipo: 'marca', px: [570, 364, 166, 76],
   },
   {
     id: 'retirada-kit', nome: 'Retirada de kit', estande: '', marcas: [],

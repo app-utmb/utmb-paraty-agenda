@@ -183,10 +183,13 @@ describe('detalhe da marca', () => {
       />,
     )
 
-  it('junta os segmentos de um estande compartilhado', () => {
-    abrir('nnormal-coros')
+  it('mostra a descricao do estande quando ela existe', () => {
+    abrir('loja-oficial')
     const dialogo = screen.getByRole('dialog')
-    expect(within(dialogo).getByText(/Calçados · Tecnologia/i)).toBeInTheDocument()
+    expect(within(dialogo).getByRole('heading', { name: 'Loja Oficial' })).toBeInTheDocument()
+    expect(
+      within(dialogo).getByText('Merchandising e vestuário oficial Paraty Brazil by UTMB.'),
+    ).toBeInTheDocument()
   })
 
   it('mostra o nome, o estande e o segmento', () => {
