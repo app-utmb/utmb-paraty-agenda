@@ -59,7 +59,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'provas-brasil', nome: 'Provas do Brasil by Fotop', estande: 'A3 a A5', marcas: [],
-    segmentos: ['institucional'], logo: null, tipo: 'marca', px: [324, 230, 152, 64],
+    segmentos: ['institucional'], logo: 'provas-brasil', tipo: 'marca', px: [324, 230, 152, 64],
   },
   {
     id: 'columbia', nome: 'COLUMBIA', estande: 'D1', marcas: ['COLUMBIA'],
@@ -147,7 +147,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'litoral', nome: 'Drogaria Litoral', estande: 'E8', marcas: ['Drogaria Litoral'],
-    segmentos: ['servicos'], logo: null, tipo: 'marca', px: [862, 408, 50, 32],
+    segmentos: ['servicos'], logo: 'drogaria-litoral', tipo: 'marca', px: [862, 408, 50, 32],
   },
   {
     id: 'desola', nome: 'Desola', estande: 'R3', marcas: ['Desola'],
@@ -162,7 +162,7 @@ const BRUTOS: Bruto[] = [
   // ---------------------------------------------------------- setor C
   {
     id: 'nubank', nome: 'Mulher by Nubank', estande: 'C1 e C2', marcas: ['Mulher by Nubank', 'Nubank'],
-    segmentos: ['servicos'], logo: null, tipo: 'marca', px: [218, 508, 98, 64],
+    segmentos: ['servicos'], logo: 'nubank', tipo: 'marca', px: [218, 508, 98, 64],
   },
   {
     id: 'paraty-tours', nome: 'Paraty Tours', estande: 'C3', marcas: ['Paraty Tours'],
