@@ -8,6 +8,7 @@ import {
   atividadesDaMarca,
   codigosDoEstande,
   beneficiosDaMarca,
+  listar,
   listarDias,
   localPrincipal,
 } from '../utils/marca'
@@ -145,7 +146,7 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
           </div>
         ))}
 
-        {ponto.tipo === 'marca' && (
+        {ponto.tipo === 'marca' && !(ponto.descricao && atividades.length === 0) && (
           <>
             <h3 className="secao-titulo" style={{ marginTop: 20 }}>
               {t.mapa.ativacoesDaMarca}
@@ -159,13 +160,13 @@ export function DetalheMarca({ ponto, itens, beneficios, aoFechar }: Props) {
                       a.sessoes.map((sessao) => (
                         <p className="atividade__quando" key={sessao.data}>
                           {listarDias([sessao.data], t.mapa.conectorDias)} {t.mapa.setembro} ·{' '}
-                          {sessao.horas.join(` ${t.mapa.conectorDias} `)}
+                          {listar(sessao.horas, t.mapa.conectorDias)}
                         </p>
                       ))
                     ) : (
                       <p className="atividade__quando">
                         {listarDias(a.dias, t.mapa.conectorDias)} {t.mapa.setembro}
-                        {a.horario ? ` · ${a.horario}` : ''}
+                        {a.horario ? ` · ${a.horario}` : a.segueExpo ? ` · ${t.mapa.horarioExpo}` : ''}
                       </p>
                     )}
                     {aconteceForaDoEstande(a, codigos, ondeQuaseTudo) && (

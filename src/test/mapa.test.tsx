@@ -12,6 +12,7 @@ import {
   atividadesDaMarca,
   beneficiosDaMarca,
   codigosDoEstande,
+  listar,
   listarDias,
   localPrincipal,
   type AtividadeResumida,
@@ -93,7 +94,7 @@ describe('agrupamento por marca', () => {
   /** Atividade minima para testar as regras de local. */
   const atv = (pilar: AtividadeResumida['pilar'], local: string): AtividadeResumida => ({
     chave: local, titulo: local, descricao: '', dias: ['2026-09-17'], horario: null,
-    sessoes: null, pilar, local, inscricao: 'livre', linkInscricao: null,
+    sessoes: null, segueExpo: false, pilar, local, inscricao: 'livre', linkInscricao: null,
   })
 
   it('sem ativacao nao ha estande deduzido', () => {
@@ -150,7 +151,27 @@ g4,2026-09-19,11:00,,ativacao,GPX,Garmin`
 d1,2026-09-17,10:00,20:00,ativacao,Degustacao,Tricky
 d2,2026-09-20,10:00,13:00,ativacao,Degustacao,Tricky`
     const itens = normalizarProgramacao(lerCsv(csv)).dados
-    expect(atividadesDaMarca(ponto('tricky'), itens, 'pt')[0]?.sessoes).toBeNull()
+    const [degustacao] = atividadesDaMarca(ponto('tricky'), itens, 'pt')
+    expect(degustacao?.sessoes).toBeNull()
+    expect(degustacao?.segueExpo).toBe(true)
+  })
+
+  it('lista o horario de cada dia quando a faixa muda de um dia para o outro', () => {
+    const csv = `id,data,hora_inicio,hora_fim,pilar,titulo_pt,marca
+t1,2026-09-17,10:00,18:00,ativacao,Test Run,HOKA
+t2,2026-09-19,10:00,16:00,ativacao,Test Run,HOKA`
+    const itens = normalizarProgramacao(lerCsv(csv)).dados
+    const [run] = atividadesDaMarca(ponto('hoka'), itens, 'pt')
+    expect(run?.segueExpo).toBe(false)
+    expect(run?.sessoes).toEqual([
+      { data: '2026-09-17', horas: ['10:00 - 18:00'] },
+      { data: '2026-09-19', horas: ['10:00 - 16:00'] },
+    ])
+  })
+
+  it('escreve listas com virgula e o conector no fim', () => {
+    expect(listar(['12:00', '14:00', '16:00'], 'e')).toBe('12:00, 14:00 e 16:00')
+    expect(listar(['12:00'], 'e')).toBe('12:00')
   })
 
   it('acha as acoes de um item com duas marcas pelas duas', () => {

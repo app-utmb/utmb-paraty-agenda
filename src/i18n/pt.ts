@@ -152,6 +152,7 @@ export const pt = {
     estande: 'Estande',
     setembro: 'de setembro',
     conectorDias: 'e',
+    horarioExpo: 'no horário da Expo',
     verNaProgramacao: 'Ver na programação',
     alt: 'Planta da área da Expo',
   },

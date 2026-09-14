@@ -154,6 +154,7 @@ export const es: Dicionario = {
     estande: 'Stand',
     setembro: 'de septiembre',
     conectorDias: 'y',
+    horarioExpo: 'en el horario de la Expo',
     verNaProgramacao: 'Ver en el programa',
     alt: 'Plano del área de la Expo',
   },

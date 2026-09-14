@@ -1,3 +1,4 @@
+import { HORARIOS_EXPO } from '../config'
 import { escolherIdioma, paraBusca } from '../data/normalize'
 import type { PontoMapa } from '../data/mapa'
 import type { Beneficio, Idioma, ItemProgramacao, Pilar } from '../data/types'
@@ -15,11 +16,13 @@ export interface AtividadeResumida {
   /** Onde acontece. Nem toda acao da marca e no estande dela. */
   local: string
   /**
-   * Horarios por dia, preenchido so quando a acao tem sessoes em horarios
-   * marcados que variam de um dia para o outro, como "17 as 15:00". Para
-   * quem segue o horario da Expo o resumo por dias ja basta.
+   * Horarios por dia, preenchido quando o horario muda de um dia para o
+   * outro, seja em sessoes marcadas ("12:00, 14:00") ou em faixas diferentes
+   * ("10:00 - 18:00" num dia, "10:00 - 16:00" no outro).
    */
   sessoes: { data: string; horas: string[] }[] | null
+  /** Acontece em cada dia exatamente no horario da Expo. */
+  segueExpo: boolean
   inscricao: ItemProgramacao['inscricao']
   linkInscricao: string | null
 }
@@ -66,21 +69,26 @@ export function atividadesDaMarca(
     const mesmoHorario = ordenada.every(
       (i) => i.horaInicio === primeiro.horaInicio && i.horaFim === primeiro.horaFim,
     )
-    // Sessao pontual e a que tem so hora de inicio, como um horario marcado
-    // no estande. Quando essas sessoes variam de dia para dia, o horario e a
-    // informacao principal e nao pode sumir do resumo.
-    const pontuais = ordenada.every((i) => !i.horaFim)
+    // Quem segue o horario da Expo em todos os dias dispensa a lista: o
+    // resumo diz "no horario da Expo". Qualquer outro horario que muda de um
+    // dia para o outro e informacao principal e nao pode sumir do resumo.
+    const segueExpo = ordenada.every((i) => {
+      const expo = HORARIOS_EXPO[i.data]
+      return Boolean(expo) && i.horaInicio === expo?.[0] && i.horaFim === expo?.[1]
+    })
+    const faixa = (i: ItemProgramacao) => (i.horaFim ? `${i.horaInicio} - ${i.horaFim}` : i.horaInicio)
     const sessoes =
-      !mesmoHorario && pontuais
+      !mesmoHorario && !segueExpo
         ? [...new Set(ordenada.map((i) => i.data))].map((d) => ({
             data: d,
-            horas: ordenada.filter((i) => i.data === d).map((i) => i.horaInicio),
+            horas: ordenada.filter((i) => i.data === d).map(faixa),
           }))
         : null
 
     return {
       chave,
       sessoes,
+      segueExpo,
       titulo: escolherIdioma(primeiro.titulo, idioma),
       descricao: escolherIdioma(primeiro.descricao, idioma),
       dias: [...new Set(ordenada.map((i) => i.data))],
@@ -97,11 +105,18 @@ export function atividadesDaMarca(
   })
 }
 
+/** "a, b e c": junta uma lista com virgulas e o conector antes do ultimo. */
+export function listar(itens: readonly string[], conector: string): string {
+  if (itens.length <= 1) return itens[0] ?? ''
+  return `${itens.slice(0, -1).join(', ')} ${conector} ${itens[itens.length - 1]}`
+}
+
 /** "17, 18 e 19" a partir das datas ISO, no formato curto do dia do mes. */
 export function listarDias(dias: readonly string[], conector: string): string {
-  const numeros = dias.map((d) => String(Number(d.slice(8, 10))))
-  if (numeros.length <= 1) return numeros[0] ?? ''
-  return `${numeros.slice(0, -1).join(', ')} ${conector} ${numeros[numeros.length - 1]}`
+  return listar(
+    dias.map((d) => String(Number(d.slice(8, 10)))),
+    conector,
+  )
 }
 
 /**

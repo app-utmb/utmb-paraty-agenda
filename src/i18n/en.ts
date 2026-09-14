@@ -154,6 +154,7 @@ export const en: Dicionario = {
     estande: 'Booth',
     setembro: 'September',
     conectorDias: 'and',
+    horarioExpo: 'during Expo hours',
     verNaProgramacao: 'See in the schedule',
     alt: 'Expo area floor plan',
   },
