@@ -137,10 +137,6 @@ const BRUTOS: Bruto[] = [
     segmentos: ['nutricao'], logo: 'gu', tipo: 'marca', px: [980, 364, 50, 32],
   },
   {
-    id: 'equip', nome: 'Equip', estande: '', marcas: ['Equip'],
-    segmentos: ['equipamentos'], logo: null, tipo: 'marca', px: [1038, 364, 50, 76],
-  },
-  {
     id: 'deuter', nome: 'Deuter', estande: 'E6', marcas: ['Deuter'],
     segmentos: ['equipamentos'], logo: 'deuter', tipo: 'marca', px: [744, 408, 52, 32],
   },
@@ -211,7 +207,7 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'vibram', nome: 'Vibram', estande: '', marcas: ['Vibram'],
-    segmentos: ['calcados'], logo: null, tipo: 'marca', px: [126, 510, 56, 62],
+    segmentos: ['calcados'], logo: 'vibram', tipo: 'marca', px: [126, 510, 56, 62],
   },
   {
     // Sem estande na planta: entra para aparecer na grade de Ativacoes.
@@ -240,7 +236,7 @@ const BRUTOS: Bruto[] = [
     segmentos: [], logo: null, tipo: 'servico', px: [1138, 308, 86, 188],
   },
   {
-    id: 'foto-oficial', nome: 'Foto oficial by FOTOP', estande: 'E10', marcas: ['FOTOP'],
+    id: 'foto-oficial', nome: 'Foto Oficial FOTOP', estande: 'E10', marcas: ['FOTOP'],
     segmentos: ['servicos'], logo: 'fotop', tipo: 'marca', px: [1138, 508, 86, 64],
   },
   {
