@@ -18,6 +18,7 @@ import { GuiaAtleta } from './screens/GuiaAtleta'
 import { Inicio } from './screens/Inicio'
 import { Info } from './screens/Info'
 import { Programacao } from './screens/Programacao'
+import { iniciarMetricas, registrar, registrarAba } from './metricas'
 import { aplicarTema, proximoTema, salvarTema, temaInicial, type Tema } from './tema'
 import { useDados } from './useDados'
 import { useFavoritos } from './useFavoritos'
@@ -51,7 +52,33 @@ export function App({ referencia }: Props = {}) {
     salvarIdioma(novo)
   }, [])
 
+  useEffect(() => {
+    iniciarMetricas()
+    registrarAba(aba)
+    // So a aba de abertura; as trocas seguintes contam em trocarAba.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const abrirItem = useCallback((item: ItemProgramacao | null) => {
+    setItemAberto(item)
+    if (item) {
+      registrar('item_aberto', {
+        item_id: item.id,
+        titulo: item.titulo.pt,
+        pilar: item.pilar,
+        marca: item.marca,
+        data: item.data,
+      })
+    }
+  }, [])
+
+  const abrirPonto = useCallback((ponto: PontoMapa | null) => {
+    setPontoAberto(ponto)
+    if (ponto) registrar('marca_aberta', { marca: ponto.nome, estande: ponto.estande || null })
+  }, [])
+
   const trocarAba = useCallback((nova: Aba) => {
+    registrarAba(nova)
     setAba(nova)
     setItemAberto(null)
     setBeneficioAberto(null)
@@ -144,7 +171,7 @@ export function App({ referencia }: Props = {}) {
                 {aba === 'inicio' && (
                   <Inicio
                     dados={dados}
-                    aoAbrirItem={setItemAberto}
+                    aoAbrirItem={abrirItem}
                     favoritos={favoritos}
                     aoAbrirAgenda={() => {
                       setAgendaAberta(true)
@@ -156,7 +183,7 @@ export function App({ referencia }: Props = {}) {
                 {aba === 'programacao' && (
                   <Programacao
                     dados={dados}
-                    aoAbrirItem={setItemAberto}
+                    aoAbrirItem={abrirItem}
                     favoritos={favoritos}
                     agendaAberta={agendaAberta}
                     aoAlternarAgenda={setAgendaAberta}
@@ -166,7 +193,7 @@ export function App({ referencia }: Props = {}) {
                 {aba === 'ativacoes' && (
                   <Ativacoes
                     dados={dados}
-                    aoAbrirPonto={setPontoAberto}
+                    aoAbrirPonto={abrirPonto}
                     aoAbrirBeneficio={setBeneficioAberto}
                   />
                 )}

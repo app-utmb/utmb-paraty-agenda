@@ -145,6 +145,7 @@ export function Info({ dados }: Props) {
       <section className="grupo">
         <h2 className="grupo__titulo">{t.secoes.sobre}</h2>
         <p className="bloco-texto">{t.info.sobreTexto}</p>
+        <p className="bloco-texto">{t.info.privacidade}</p>
       </section>
 
     </div>

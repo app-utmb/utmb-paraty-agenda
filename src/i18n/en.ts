@@ -166,6 +166,8 @@ export const en: Dicionario = {
     aviso: 'Opens a PDF in another window. Download it now to read it offline.',
   },
   info: {
+    privacidade:
+      'The app counts visits anonymously, with no cookies or personal data, so the organisers can improve the event.',
     retiradaKits: 'Bib pickup',
     kitsNota: 'At the Expo, same hours for all distances.',
     titulo: 'Information',

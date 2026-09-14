@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { registrar } from './metricas'
 
 export const CHAVE_FAVORITOS = 'paraty.favoritos.v1'
 
@@ -38,8 +39,10 @@ export function useFavoritos(): EstadoFavoritos {
   const alternar = useCallback((id: string) => {
     setFavoritos((atual) => {
       const novo = new Set(atual)
-      if (novo.has(id)) novo.delete(id)
+      const tirou = novo.has(id)
+      if (tirou) novo.delete(id)
       else novo.add(id)
+      registrar(tirou ? 'agenda_removeu' : 'agenda_adicionou', { item_id: id })
       return novo
     })
   }, [])

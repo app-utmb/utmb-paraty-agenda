@@ -166,6 +166,8 @@ export const es: Dicionario = {
     aviso: 'Abre un PDF en otra ventana. Descárgalo ahora para consultarlo sin internet.',
   },
   info: {
+    privacidade:
+      'La app cuenta accesos de forma anónima, sin cookies ni datos personales, para que la organización mejore el evento.',
     retiradaKits: 'Retiro de kits',
     kitsNota: 'En la Expo, con el mismo horario para todas las distancias.',
     titulo: 'Información',

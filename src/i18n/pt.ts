@@ -164,6 +164,8 @@ export const pt = {
     aviso: 'Abre um PDF em outra janela. Baixe agora para consultar sem internet.',
   },
   info: {
+    privacidade:
+      'O app conta acessos de forma anônima, sem cookies e sem dados pessoais, para a organização melhorar o evento.',
     retiradaKits: 'Retirada de kits',
     kitsNota: 'Na Expo, com o mesmo horário para todas as distâncias.',
     titulo: 'Informações',
