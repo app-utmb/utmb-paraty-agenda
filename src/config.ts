@@ -29,12 +29,12 @@ export const URL_CSV_PALCO =
   'https://docs.google.com/spreadsheets/d/1K0qEdbSEFSmuVAuUz0oPtqKqV8GfLUqyVPAHkzS25S8/gviz/tq?tqx=out:csv&sheet=base'
 
 /**
- * Metricas de uso no PostHog, regiao EU, em modo sem cookies: nada fica
+ * Metricas de uso no PostHog, regiao US (onde o projeto foi criado), em modo sem cookies: nada fica
  * guardado no aparelho e o visitante unico e contado por um hash diario
  * calculado no servidor do PostHog. O token e publico por natureza.
  */
 export const POSTHOG_TOKEN = 'phc_pZhhYZPPUnzztUb7WzNgeuzsJFnogrXkEexeZWGFN5zf'
-export const POSTHOG_HOST = 'https://eu.i.posthog.com'
+export const POSTHOG_HOST = 'https://us.i.posthog.com'
 
 /** Intervalo de revalidacao automatica enquanto o app esta aberto. */
 export const INTERVALO_REVALIDACAO_MS = 5 * 60 * 1000
