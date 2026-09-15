@@ -191,6 +191,7 @@ export function App({ referencia }: Props = {}) {
                     favoritos={favoritos}
                     agendaAberta={agendaAberta}
                     aoAlternarAgenda={setAgendaAberta}
+                    aoAbrirPonto={abrirPonto}
                     referencia={referencia}
                   />
                 )}

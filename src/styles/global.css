@@ -1605,3 +1605,44 @@ img {
   font-weight: 800;
   color: var(--destaque);
 }
+
+/* Cartao da marca sem atividade no dia, no filtro de marca da Programacao. */
+.marca-resumo {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  background: var(--cartao);
+}
+
+.marca-resumo__logo {
+  flex: 0 0 76px;
+  width: 76px;
+}
+
+.marca-resumo__corpo {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.marca-resumo__nome {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--texto);
+}
+
+.marca-resumo__linha {
+  margin: 0;
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+
+.marca-resumo__aviso {
+  margin: 6px 0 8px;
+  font-size: 13.5px;
+  color: var(--texto-fraco);
+}

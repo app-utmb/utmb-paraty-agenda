@@ -36,6 +36,9 @@ const casa = (ponto: PontoMapa, valor: string | null): boolean => {
 const casaAlguma = (ponto: PontoMapa, valores: readonly string[]): boolean =>
   valores.some((v) => casa(ponto, v))
 
+/** O item e desta marca? Compara sem caixa nem acento com os nomes do estande. */
+export const pontoTemMarca = casaAlguma
+
 export function beneficiosDaMarca(
   ponto: PontoMapa,
   beneficios: readonly Beneficio[],

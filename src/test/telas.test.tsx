@@ -195,35 +195,39 @@ describe('tela Programacao', () => {
     expect(screen.getByText(/nenhum estabelecimento com esse nome/i)).toBeInTheDocument()
   })
 
-  it('so oferece marcas presentes no recorte de dia e pilar', async () => {
+  it('oferece no filtro todas as marcas da Expo, mesmo sem atividade', async () => {
     abrir()
     await abrirMarcas()
-    expect(screen.getByRole('option', { name: 'Paraty Brazil by UTMB' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: 'Kailash' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: 'Loja Oficial' })).toBeInTheDocument()
     expect(screen.getByRole('option', { name: 'The North Face' })).toBeInTheDocument()
-    await userEvent.keyboard('{Escape}')
-
-    // A The North Face so tem item no dia 17, entao some do menu no dia 18.
-    await userEvent.click(screen.getByRole('tab', { name: /18/ }))
-    await abrirMarcas()
-    expect(screen.getByRole('option', { name: 'Leki' })).toBeInTheDocument()
-    expect(screen.queryByRole('option', { name: 'The North Face' })).not.toBeInTheDocument()
   })
 
-  it('esconde o filtro de marca quando o recorte tem menos de duas marcas', async () => {
+  it('mostra o filtro de marca mesmo com um pilar de poucas marcas', async () => {
     abrir()
     await userEvent.click(screen.getByRole('button', { name: 'Talks' }))
-    expect(
-      screen.queryByRole('button', { name: /filtrar por marca/i }),
-    ).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /filtrar por marca/i })).toBeInTheDocument()
   })
 
-  it('solta o filtro de marca quando ela some do recorte', async () => {
+  it('mostra o cartao com segmento e estande quando a marca nao tem nada programado', async () => {
+    abrir()
+    await abrirMarcas()
+    await userEvent.click(screen.getByRole('option', { name: 'Kailash' }))
+    const lista = screen.getByRole('tabpanel')
+    expect(within(lista).getByText('Kailash')).toBeInTheDocument()
+    expect(within(lista).getByText('Equipamentos e acessórios')).toBeInTheDocument()
+    expect(within(lista).getByText('Estande D2 e D3')).toBeInTheDocument()
+    expect(within(lista).getByText('Sem atividades programadas para esta marca.')).toBeInTheDocument()
+  })
+
+  it('mantem a marca escolhida ao trocar de dia', async () => {
     abrir()
     await abrirMarcas()
     await userEvent.click(screen.getByRole('option', { name: 'The North Face' }))
     expect(screen.getByText('2 itens')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('tab', { name: /18/ }))
-    expect(screen.getByText('2 itens')).toBeInTheDocument()
+    expect(screen.getByText('0 itens')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /filtrar por marca/i })).toHaveTextContent('The North Face')
   })
 
   it('fecha o menu de marcas com Escape', async () => {

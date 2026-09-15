@@ -51,6 +51,9 @@ export const pt = {
     vazioDica: 'Tente outro dia ou o filtro Todos',
     aviso: 'A programação será atualizada até o início do evento. Novas atividades podem entrar.',
     horariosExpo: 'Horários da Expo',
+    marcaSemAtividades: 'Sem atividades programadas para esta marca.',
+    marcaOutrosDias: (dias: string) => `Nada neste dia. Esta marca tem atividades em ${dias}.`,
+    verMarca: 'Ver detalhes da marca',
     itensContagem: (n: number) => (n === 1 ? '1 item' : `${n} itens`),
   },
   ativacoes: {

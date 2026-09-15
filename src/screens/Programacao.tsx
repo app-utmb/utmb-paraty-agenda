@@ -1,17 +1,78 @@
 import { useMemo, useState } from 'react'
 import { CartaoItem } from '../components/CartaoItem'
 import { HorariosExpo } from '../components/HorariosExpo'
-import { IconeEstrela } from '../components/Icones'
+import { IconeEstrela, IconeEtiqueta } from '../components/Icones'
 import { SeletorMarca } from '../components/SeletorMarca'
 import { DIAS_EVENTO } from '../config'
+import { PONTOS_MAPA, type PontoMapa } from '../data/mapa'
 import type { DadosApp, ItemProgramacao, Pilar } from '../data/types'
 import { PILARES } from '../data/types'
 import { LOCALES, useIdioma } from '../i18n'
+import { listarDias, pontoTemMarca } from '../utils/marca'
 import { ordenarPorPrioridade } from '../utils/prioridade'
 import { diaDoMes, diaPadrao, mesCurto, nomeDiaSemana } from '../utils/tempo'
 import type { EstadoFavoritos } from '../useFavoritos'
 
 type FiltroPilar = 'todos' | Pilar
+
+const ESTANDES = PONTOS_MAPA.filter((p) => p.tipo === 'marca')
+
+/** Cartao da marca que nao tem nada programado no dia escolhido. */
+function ResumoMarca({
+  ponto,
+  outrosDias,
+  aoAbrirPonto,
+}: {
+  ponto: PontoMapa
+  outrosDias: string[]
+  aoAbrirPonto?: (ponto: PontoMapa) => void
+}) {
+  const { t } = useIdioma()
+  const [logoFalhou, setLogoFalhou] = useState(false)
+  const segmento = ponto.segmentos.map((x) => t.segmentos[x]).join(' · ')
+
+  return (
+    <div className="marca-resumo">
+      <span className="marca-tile__logo marca-resumo__logo">
+        {ponto.logo && !logoFalhou ? (
+          <img
+            src={`${import.meta.env.BASE_URL}logos/${ponto.logo}.png`}
+            alt=""
+            decoding="async"
+            onError={() => setLogoFalhou(true)}
+          />
+        ) : (
+          <IconeEtiqueta />
+        )}
+      </span>
+      <div className="marca-resumo__corpo">
+        <p className="marca-resumo__nome">{ponto.nome}</p>
+        {segmento && <p className="marca-resumo__linha">{segmento}</p>}
+        {ponto.estande && (
+          <p className="marca-resumo__linha">
+            {t.mapa.estande} {ponto.estande}
+          </p>
+        )}
+        <p className="marca-resumo__aviso">
+          {outrosDias.length > 0
+            ? t.programacao.marcaOutrosDias(
+                `${listarDias(outrosDias, t.mapa.conectorDias)} ${t.mapa.setembro}`,
+              )
+            : t.programacao.marcaSemAtividades}
+        </p>
+        {aoAbrirPonto && (
+          <button
+            type="button"
+            className="botao botao--secundario botao--pequeno"
+            onClick={() => aoAbrirPonto(ponto)}
+          >
+            {t.programacao.verMarca}
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
 type FiltroMarca = 'todas' | string
 
 interface Props {
@@ -20,6 +81,8 @@ interface Props {
   favoritos: EstadoFavoritos
   agendaAberta: boolean
   aoAlternarAgenda: (aberta: boolean) => void
+  /** Abre o detalhe do estande a partir do cartao da marca. */
+  aoAbrirPonto?: (ponto: PontoMapa) => void
   referencia?: Date
 }
 
@@ -29,6 +92,7 @@ export function Programacao({
   favoritos,
   agendaAberta,
   aoAlternarAgenda,
+  aoAbrirPonto,
   referencia,
 }: Props) {
   const { idioma, t } = useIdioma()
@@ -47,18 +111,21 @@ export function Programacao({
 
   const diaAtivo = dias.includes(dia) ? dia : (dias[0] ?? dia)
 
-  // So oferece marcas que aparecem no recorte de dia e pilar, para o filtro
-  // nunca devolver lista vazia.
+  // O filtro oferece todas as marcas da Expo, tenham ou nao atividade, mais
+  // os nomes que so aparecem na programacao, como quem fala no palco.
   const marcas = useMemo(() => {
-    const base = dados.itens.filter(
-      (i) => i.data === diaAtivo && (pilar === 'todos' || i.pilar === pilar),
-    )
-    return [...new Set(base.flatMap((i) => i.marcas))].sort(
-      (a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' }),
-    )
-  }, [dados.itens, diaAtivo, pilar])
+    const nomes = new Set(ESTANDES.map((p) => p.nome))
+    for (const nome of dados.itens.flatMap((i) => i.marcas)) {
+      if (!ESTANDES.some((p) => pontoTemMarca(p, [nome]))) nomes.add(nome)
+    }
+    return [...nomes].sort((a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' }))
+  }, [dados.itens])
 
   const marcaAtiva = marca !== 'todas' && marcas.includes(marca) ? marca : 'todas'
+  const pontoAtivo = ESTANDES.find((p) => p.nome === marcaAtiva) ?? null
+  const ehDaMarca = (i: ItemProgramacao) =>
+    marcaAtiva === 'todas' ||
+    (pontoAtivo ? pontoTemMarca(pontoAtivo, i.marcas) : i.marcas.includes(marcaAtiva))
 
   const itens = useMemo(
     () =>
@@ -67,9 +134,10 @@ export function Programacao({
           (i) =>
             i.data === diaAtivo &&
             (pilar === 'todos' || i.pilar === pilar) &&
-            (marcaAtiva === 'todas' || i.marcas.includes(marcaAtiva)),
+            ehDaMarca(i),
         ),
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dados.itens, diaAtivo, pilar, marcaAtiva],
   )
 
@@ -202,9 +270,7 @@ export function Programacao({
         ))}
       </div>
 
-      {marcas.length > 1 && (
-        <SeletorMarca marcas={marcas} valor={marcaAtiva} aoEscolher={setMarca} />
-      )}
+      <SeletorMarca marcas={marcas} valor={marcaAtiva} aoEscolher={setMarca} />
 
       <p className="secao-titulo" aria-live="polite">
         {t.programacao.itensContagem(itens.length)}
@@ -226,6 +292,14 @@ export function Programacao({
               aoAlternarFavorito={favoritos.alternar}
             />
           ))
+        ) : pontoAtivo ? (
+          <ResumoMarca
+            ponto={pontoAtivo}
+            outrosDias={[
+              ...new Set(dados.itens.filter((i) => i.data !== diaAtivo && ehDaMarca(i)).map((i) => i.data)),
+            ].sort()}
+            aoAbrirPonto={aoAbrirPonto}
+          />
         ) : (
           <div className="vazio">
             <p className="vazio__titulo">{t.programacao.vazio}</p>

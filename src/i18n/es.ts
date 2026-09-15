@@ -53,6 +53,9 @@ export const es: Dicionario = {
     vazioDica: 'Prueba otro día o el filtro Todos',
     aviso: 'El programa se actualizará hasta el inicio del evento. Pueden sumarse nuevas actividades.',
     horariosExpo: 'Horarios de la Expo',
+    marcaSemAtividades: 'Sin actividades programadas para esta marca.',
+    marcaOutrosDias: (dias: string) => `Nada este día. Esta marca tiene actividades el ${dias}.`,
+    verMarca: 'Ver detalles de la marca',
     itensContagem: (n: number) => (n === 1 ? '1 elemento' : `${n} elementos`),
   },
   ativacoes: {
