@@ -98,7 +98,9 @@ export function Info({ dados }: Props) {
           rotulo={t.abas.ativacoes}
           texto={t.ajuda.ativacoesTexto}
         />
-        <LinhaExplicativa icone={IconeLivro} rotulo={t.guia.titulo} texto={t.ajuda.guiaTexto} />
+        {Object.values(config.guiaAtletaUrl).some(Boolean) && (
+          <LinhaExplicativa icone={IconeLivro} rotulo={t.guia.titulo} texto={t.ajuda.guiaTexto} />
+        )}
         <LinhaExplicativa
           icone={IconeNuvemCortada}
           rotulo={t.ajuda.offline}

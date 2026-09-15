@@ -15,3 +15,11 @@ export function abaSalva(v: string | null | undefined): Aba | null {
   const atual = v === 'beneficios' || v === 'mapa' ? 'ativacoes' : v
   return ehAba(atual) ? atual : null
 }
+
+/**
+ * Abas mostradas na barra. O Guia so aparece quando a Config tem o link do
+ * PDF, para o atleta nao abrir uma aba vazia; preenchido o link, ela volta.
+ */
+export function abasVisiveis(temGuia: boolean): Aba[] {
+  return ABAS.filter((a) => a !== 'guia' || temGuia)
+}

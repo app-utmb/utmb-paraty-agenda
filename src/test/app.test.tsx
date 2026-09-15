@@ -25,7 +25,7 @@ describe('App', () => {
     )
   })
 
-  it('mostra as cinco abas na barra de baixo', async () => {
+  it('esconde o Guia enquanto a Config nao tem o link do PDF', async () => {
     await abrirApp()
     const rotulos = within(nav())
       .getAllByRole('button')
@@ -34,7 +34,6 @@ describe('App', () => {
       'Início',
       'Programação',
       'Ativações',
-      'Guia',
       'Info',
     ])
   })
@@ -49,8 +48,8 @@ describe('App', () => {
 
   it('lembra a aba escolhida no aparelho', async () => {
     await abrirApp()
-    await userEvent.click(within(nav()).getByRole('button', { name: 'Guia' }))
-    expect(localStorage.getItem(CHAVE_ABA)).toBe('guia')
+    await userEvent.click(within(nav()).getByRole('button', { name: 'Info' }))
+    expect(localStorage.getItem(CHAVE_ABA)).toBe('info')
   })
 
   it('abre e fecha o detalhe de um item', async () => {

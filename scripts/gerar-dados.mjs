@@ -310,7 +310,7 @@ const ATIVACOES = [
            'Trote suave de soltura con los geles GU. Solo para invitados.',
            'Easy shake out run with GU gels. Invite only.'],
     dias: ['2026-09-18'], horas: { '2026-09-18': ['08:00', ''] },
-    local: aConfirmar, inscricao: 'invite',
+    local: estande('GU', 'E5'), inscricao: 'invite',
   }),
   ...ativacao({
     slug: 'garmin-gpx', marca: 'Garmin', logoArquivo: 'garmin',
@@ -337,8 +337,8 @@ const ATIVACOES = [
     desc: ['Vagas limitadas. As primeiras inscrições correm testando o produto, até acabar o estoque. Inscrições no estande da Shokz, B3.',
            'Cupos limitados. Las primeras inscripciones corren probando el producto, hasta agotar stock. Inscripciones en el stand de Shokz, B3.',
            'Limited places. The first sign-ups run testing the product, while stocks last. Sign up at the Shokz booth, B3.'],
-    dias: ['2026-09-18'], horas: { '2026-09-18': ['09:00', '10:00'] },
-    local: aConfirmar, inscricao: 'previa', destaque: 'sim',
+    dias: ['2026-09-18'], horas: { '2026-09-18': ['10:30', ''] },
+    local: estande('Shokz', 'B3'), inscricao: 'previa', destaque: 'sim',
   }),
   ...ativacao({
     slug: 'bananinha-degustacao', marca: 'Bananinha Paraibuna', logoArquivo: 'bananinha',

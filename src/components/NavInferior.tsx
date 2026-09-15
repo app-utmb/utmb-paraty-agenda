@@ -1,6 +1,5 @@
 import { useIdioma } from '../i18n'
 import type { Aba } from '../abas'
-import { ABAS } from '../abas'
 import {
   IconeCalendario,
   IconeEtiqueta,
@@ -18,15 +17,16 @@ const ICONES = {
 } as const
 
 interface Props {
+  abas: readonly Aba[]
   ativa: Aba
   aoTrocar: (aba: Aba) => void
 }
 
-export function NavInferior({ ativa, aoTrocar }: Props) {
+export function NavInferior({ abas, ativa, aoTrocar }: Props) {
   const { t } = useIdioma()
   return (
     <nav className="nav" aria-label={t.abas.programacao}>
-      {ABAS.map((aba) => {
+      {abas.map((aba) => {
         const Icone = ICONES[aba]
         const atual = aba === ativa
         return (

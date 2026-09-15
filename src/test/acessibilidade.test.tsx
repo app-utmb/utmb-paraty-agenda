@@ -125,11 +125,11 @@ describe('navegacao por teclado', () => {
     localStorage.setItem(CHAVE_IDIOMA, 'pt')
     render(<App referencia={DURANTE_KIT} />)
     await waitFor(() => expect(screen.getByRole('navigation')).toBeInTheDocument())
-    const botao = within(screen.getByRole('navigation')).getByRole('button', { name: 'Guia' })
+    const botao = within(screen.getByRole('navigation')).getByRole('button', { name: 'Info' })
     botao.focus()
     await userEvent.keyboard('{Enter}')
     expect(botao).toHaveAttribute('aria-current', 'page')
-    expect(screen.getByText(/guia do atleta/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /sobre o evento/i })).toBeInTheDocument()
   })
 
   it('devolve o foco ao cartao depois de fechar o detalhe', async () => {

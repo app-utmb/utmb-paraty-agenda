@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { describe, expect, it, vi } from 'vitest'
-import { abaSalva } from '../abas'
+import { abaSalva, abasVisiveis } from '../abas'
 import { PONTOS_MAPA } from '../data/mapa'
 import { Ativacoes, MARCAS_DA_EXPO } from '../screens/Ativacoes'
 import { dadosDeTeste } from './fixtures'
@@ -93,5 +93,12 @@ describe('aba guardada no aparelho', () => {
     expect(abaSalva('mapa')).toBe('ativacoes')
     expect(abaSalva('guia')).toBe('guia')
     expect(abaSalva('qualquer')).toBeNull()
+  })
+})
+
+describe('abas visiveis', () => {
+  it('mostra o Guia so quando ha link do PDF', () => {
+    expect(abasVisiveis(false)).toEqual(['inicio', 'programacao', 'ativacoes', 'info'])
+    expect(abasVisiveis(true)).toEqual(['inicio', 'programacao', 'ativacoes', 'guia', 'info'])
   })
 })

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { CHAVE_ABA, abaSalva, type Aba } from './abas'
+import { CHAVE_ABA, abaSalva, abasVisiveis, type Aba } from './abas'
 import { DetalheBeneficio } from './components/DetalheBeneficio'
 import { DetalheItem } from './components/DetalheItem'
 import { DetalheMarca } from './components/DetalheMarca'
@@ -114,6 +114,10 @@ export function App({ referencia }: Props = {}) {
   const t = contexto.t
 
   const config = dados?.config
+  const temGuia = Boolean(config && Object.values(config.guiaAtletaUrl).some(Boolean))
+  const abas = abasVisiveis(temGuia)
+  // Aba guardada que deixou de existir, como o Guia sem link, cai no Inicio.
+  const abaAtiva: Aba = abas.includes(aba) ? aba : 'inicio'
   const temaAtivo = tema
 
   return (
@@ -168,7 +172,7 @@ export function App({ referencia }: Props = {}) {
               </div>
             ) : (
               <>
-                {aba === 'inicio' && (
+                {abaAtiva === 'inicio' && (
                   <Inicio
                     dados={dados}
                     aoAbrirItem={abrirItem}
@@ -180,7 +184,7 @@ export function App({ referencia }: Props = {}) {
                     referencia={referencia}
                   />
                 )}
-                {aba === 'programacao' && (
+                {abaAtiva === 'programacao' && (
                   <Programacao
                     dados={dados}
                     aoAbrirItem={abrirItem}
@@ -190,15 +194,15 @@ export function App({ referencia }: Props = {}) {
                     referencia={referencia}
                   />
                 )}
-                {aba === 'ativacoes' && (
+                {abaAtiva === 'ativacoes' && (
                   <Ativacoes
                     dados={dados}
                     aoAbrirPonto={abrirPonto}
                     aoAbrirBeneficio={setBeneficioAberto}
                   />
                 )}
-                {aba === 'guia' && <GuiaAtleta config={dados.config} />}
-                {aba === 'info' && <Info dados={dados} />}
+                {abaAtiva === 'guia' && <GuiaAtleta config={dados.config} />}
+                {abaAtiva === 'info' && <Info dados={dados} />}
 
                 <StatusAtualizacao
                   dados={dados}
@@ -212,7 +216,7 @@ export function App({ referencia }: Props = {}) {
 
         <div className="rodape-fixo">
           <div className="rodape-fixo__interno">
-            <NavInferior ativa={aba} aoTrocar={trocarAba} />
+            <NavInferior abas={abas} ativa={abaAtiva} aoTrocar={trocarAba} />
           </div>
         </div>
       </div>
