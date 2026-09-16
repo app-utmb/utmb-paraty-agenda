@@ -203,6 +203,11 @@ const BRUTOS: Bruto[] = [
   },
   {
     id: 'suunto', nome: 'Suunto', estande: 'R4', marcas: ['Suunto'],
+    descricao: {
+      pt: 'Das montanhas mais altas aos oceanos mais profundos, equipamos pessoas para a aventura. Venha ver a Suunto em várias cores: Run, Race S, Race 2 e Wing 2.',
+      es: 'De las montañas más altas a los océanos más profundos, equipamos a las personas para la aventura. Ven a ver Suunto en varios colores: Run, Race S, Race 2 y Wing 2.',
+      en: 'From the highest mountains to the deepest oceans, we equip people for adventure. Come and see Suunto in different colours: Run, Race S, Race 2 and Wing 2.',
+    },
     segmentos: ['tecnologia'], logo: 'suunto', tipo: 'marca', px: [924, 510, 50, 62],
   },
   {
