@@ -63,7 +63,6 @@ export const en: Dicionario = {
     dica: 'Tap a brand to see what is happening at its booth.',
     busca: 'Search brand',
     buscaVazia: 'No brand with that name',
-    beneficio: 'Perk',
     outrosBeneficios: 'Other perks',
     contagem: (n: number) => (n === 1 ? '1 brand' : `${n} brands`),
   },

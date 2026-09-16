@@ -61,7 +61,6 @@ export const pt = {
     dica: 'Toque numa marca para ver o que acontece no estande.',
     busca: 'Buscar marca',
     buscaVazia: 'Nenhuma marca com esse nome',
-    beneficio: 'Benefício',
     outrosBeneficios: 'Outros benefícios',
     contagem: (n: number) => (n === 1 ? '1 marca' : `${n} marcas`),
   },

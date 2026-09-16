@@ -19,13 +19,9 @@ export const MARCAS_DA_EXPO = PONTOS_MAPA.filter((p) => p.tipo === 'marca').sort
 
 function CartaoMarca({
   ponto,
-  temBeneficio,
-  rotuloBeneficio,
   aoAbrir,
 }: {
   ponto: PontoMapa
-  temBeneficio: boolean
-  rotuloBeneficio: string
   aoAbrir: (p: PontoMapa) => void
 }) {
   const [logoFalhou, setLogoFalhou] = useState(false)
@@ -47,7 +43,6 @@ function CartaoMarca({
         )}
       </span>
       <span className="marca-tile__nome">{ponto.nome}</span>
-      {temBeneficio && <span className="marca-tile__tag">{rotuloBeneficio}</span>}
     </button>
   )
 }
@@ -62,16 +57,6 @@ export function Ativacoes({ dados, aoAbrirPonto, aoAbrirBeneficio }: Props) {
   const [busca, setBusca] = useState('')
   const buscaLenta = useDeferredValue(busca)
   const idBusca = useId()
-
-  const comBeneficio = useMemo(
-    () =>
-      new Set(
-        MARCAS_DA_EXPO.filter((p) => beneficiosDaMarca(p, dados.beneficios).length > 0).map(
-          (p) => p.id,
-        ),
-      ),
-    [dados.beneficios],
-  )
 
   // Beneficio de quem nao tem estande, como um restaurante da cidade, nao
   // tem logo na grade e precisa continuar acessivel.
@@ -128,12 +113,7 @@ export function Ativacoes({ dados, aoAbrirPonto, aoAbrirBeneficio }: Props) {
         <ul className="marcas-grade">
           {lista.map((p) => (
             <li key={p.id}>
-              <CartaoMarca
-                ponto={p}
-                temBeneficio={comBeneficio.has(p.id)}
-                rotuloBeneficio={t.ativacoes.beneficio}
-                aoAbrir={aoAbrirPonto}
-              />
+              <CartaoMarca ponto={p} aoAbrir={aoAbrirPonto} />
             </li>
           ))}
         </ul>

@@ -63,7 +63,6 @@ export const es: Dicionario = {
     dica: 'Toca una marca para ver lo que pasa en el stand.',
     busca: 'Buscar marca',
     buscaVazia: 'Ninguna marca con ese nombre',
-    beneficio: 'Beneficio',
     outrosBeneficios: 'Otros beneficios',
     contagem: (n: number) => (n === 1 ? '1 marca' : `${n} marcas`),
   },
