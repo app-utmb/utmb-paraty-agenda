@@ -109,16 +109,16 @@ const OFICIAL = [
  * abre o app no sabado ver o que tem no sabado.
  * `horas` null significa que segue o horario da Expo daquele dia.
  */
-function ativacao({ slug, marca, tit, desc, dias, horas = null, local, inscricao = 'livre', link = '', logoArquivo = null, destaque = '' }) {
+function ativacao({ slug, marca, tit, desc, dias, horas = null, local, inscricao = 'livre', link = '', logoArquivo = null, destaque = '', pilar = 'ativacao', palestrante = '' }) {
   return dias.map((data, i) => {
     const [ini, fim] = horas?.[data] ?? DIAS[data].expo
     return {
       id: `at-${slug}-${i + 1}`, data, dia_semana: DIAS[data].semana,
-      hora_inicio: ini, hora_fim: fim, data_fim: '', pilar: 'ativacao',
+      hora_inicio: ini, hora_fim: fim, data_fim: '', pilar,
       titulo_pt: tit[0], titulo_es: tit[1], titulo_en: tit[2],
       descricao_pt: desc[0], descricao_es: desc[1], descricao_en: desc[2],
       local_pt: local[0], local_es: local[1], local_en: local[2],
-      palestrante: '', marca, logo_url: logo(logoArquivo),
+      palestrante, marca, logo_url: logo(logoArquivo),
       inscricao, link_inscricao: link, destaque,
     }
   })
@@ -278,6 +278,41 @@ const ATIVACOES = [
            'Venta de los modelos licenciados oficiales exclusivos Yopp & UTMB: uno hexagonal y otro Performance fotocromático.',
            'Sale of the exclusive official licensed Yopp & UTMB models: a hexagonal frame and a photochromic Performance model.'],
     dias: TODOS, local: estande('Yopp', 'F2'),
+  }),
+  ...ativacao({
+    slug: 'desola-sorteio', marca: 'Desola', logoArquivo: 'desola',
+    tit: ['Inscreva-se para concorrer a prêmios', 'Inscríbete para concursar por premios', 'Enter the prize draw'],
+    desc: ['Inscrição pelo formulário da Desola, no link abaixo.',
+           'Inscripción por el formulario de Desola, en el enlace de abajo.',
+           'Sign up through the Desola form, in the link below.'],
+    dias: TODOS, local: estande('Desola', 'R3'),
+    inscricao: 'previa', link: 'https://forms.gle/8k2SjN42EMQzSfSR9',
+  }),
+  ...ativacao({
+    slug: 'desola-doacao', marca: 'Desola', logoArquivo: 'desola',
+    tit: ['Doe um tênis e ganhe 10%', 'Dona unas zapatillas y gana 10%', 'Donate shoes and get 10%'],
+    desc: ['Doe um tênis para o Projeto Próximo Passo e ganhe 10% em todos os produtos e serviços da Desola.',
+           'Dona unas zapatillas al Projeto Próximo Passo y gana 10% en todos los productos y servicios de Desola.',
+           'Donate a pair of shoes to Projeto Próximo Passo and get 10% off every Desola product and service.'],
+    dias: TODOS, local: estande('Desola', 'R3'),
+  }),
+  ...ativacao({
+    slug: 'desola-foto', marca: 'Desola', logoArquivo: 'desola',
+    tit: ['Poste sua foto e ganhe uma camiseta', 'Publica tu foto y gana una camiseta', 'Post your photo and get a T-shirt'],
+    desc: ['Poste uma foto correndo o Paraty Brazil by UTMB com um tênis ressolado pela Desola e ganhe uma camiseta exclusiva.',
+           'Publica una foto corriendo el Paraty Brazil by UTMB con unas zapatillas resoladas por Desola y gana una camiseta exclusiva.',
+           'Post a photo running Paraty Brazil by UTMB wearing shoes resoled by Desola and get an exclusive T-shirt.'],
+    dias: TODOS, local: estande('Desola', 'R3'),
+  }),
+  ...ativacao({
+    slug: 'desola-bate-papo', marca: 'Desola', logoArquivo: 'desola', pilar: 'talks',
+    palestrante: 'Luiz, o Feliz',
+    tit: ['A jornada do corredor', 'La jornada del corredor', "The runner's journey"],
+    desc: ['Bate-papo sobre a jornada do corredor: do treinamento à performance, da rua à montanha. Com Luiz, o Feliz, treinador de corrida e trail running certificado pela World Athletics, integrante do Time Strava, dirigente da Confederação Brasileira de Skyrunning e idealizador do Corrindo Pelas Montanhas.',
+           'Charla sobre la jornada del corredor: del entrenamiento al rendimiento, de la calle a la montaña. Con Luiz, o Feliz, entrenador de corrida y trail running certificado por World Athletics, integrante del Time Strava, dirigente de la Confederación Brasileña de Skyrunning e ideador del Corrindo Pelas Montanhas.',
+           "A talk on the runner's journey: from training to performance, from the road to the mountains. With Luiz, o Feliz, running and trail running coach certified by World Athletics, member of Time Strava, director at the Brazilian Skyrunning Confederation and founder of Corrindo Pelas Montanhas."],
+    dias: ['2026-09-18'], horas: { '2026-09-18': ['14:00', ''] },
+    local: estande('Desola', 'R3'),
   }),
   ...ativacao({
     slug: 'kipway-sorteio', marca: 'Kipway', logoArquivo: 'kipway',
