@@ -138,6 +138,10 @@ const BRUTOS: Bruto[] = [
     logo: 'aimo', tipo: 'marca', px: [862, 364, 50, 32],
   },
   {
+    id: 'anny-sports', nome: 'Anny Sports', estande: 'E4', marcas: ['Anny Sports'],
+    segmentos: ['vestuario'], logo: 'anny-sports', tipo: 'marca', px: [920, 364, 52, 32],
+  },
+  {
     id: 'gu', nome: 'GU', estande: 'E5', marcas: ['GU'],
     segmentos: ['nutricao'], logo: 'gu', tipo: 'marca', px: [980, 364, 50, 32],
   },
@@ -167,6 +171,11 @@ const BRUTOS: Bruto[] = [
   // ---------------------------------------------------------- setor C
   {
     id: 'nubank', nome: 'Mulher by Nubank', estande: 'C1 e C2', marcas: ['Mulher by Nubank', 'Nubank'],
+    descricao: {
+      pt: 'Serviços exclusivos para atletas na quinta e na sexta, com a pulseira na mão. No sábado, aberto ao público geral.',
+      es: 'Servicios exclusivos para atletas el jueves y el viernes, presentando la pulsera. El sábado, abierto al público general.',
+      en: 'Services for athletes only on Thursday and Friday, on presentation of the wristband. On Saturday, open to everyone.',
+    },
     segmentos: ['servicos'], logo: 'nubank', tipo: 'marca', px: [218, 508, 98, 64],
   },
   {
