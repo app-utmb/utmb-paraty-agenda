@@ -138,10 +138,6 @@ const BRUTOS: Bruto[] = [
     logo: 'aimo', tipo: 'marca', px: [862, 364, 50, 32],
   },
   {
-    id: 'kipway', nome: 'Kipway', estande: 'E4', marcas: ['Kipway'],
-    segmentos: ['acessorios'], logo: 'kipway', tipo: 'marca', px: [920, 364, 52, 32],
-  },
-  {
     id: 'gu', nome: 'GU', estande: 'E5', marcas: ['GU'],
     segmentos: ['nutricao'], logo: 'gu', tipo: 'marca', px: [980, 364, 50, 32],
   },

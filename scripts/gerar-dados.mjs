@@ -315,22 +315,6 @@ const ATIVACOES = [
     local: estande('Desola', 'R3'),
   }),
   ...ativacao({
-    slug: 'kipway-sorteio', marca: 'Kipway', logoArquivo: 'kipway',
-    tit: ['Sorteio de 2 óculos fotocromáticos KIPWAY', 'Sorteo de 2 gafas fotocromáticas KIPWAY', 'KIPWAY photochromic sunglasses giveaway'],
-    desc: ['Participe pelo QR code no estande da Kipway e concorra a 2 óculos fotocromáticos. O sorteio será realizado no domingo, 20/09, às 11h.',
-           'Participa con el código QR en el stand de Kipway y concursa por 2 gafas fotocromáticas. El sorteo se realizará el domingo 20/09 a las 11h.',
-           'Enter via the QR code at the Kipway booth for a chance to win 2 pairs of photochromic sunglasses. The draw takes place on Sunday, 20/09, at 11h.'],
-    dias: TODOS, local: estande('Kipway', 'E4'),
-  }),
-  ...ativacao({
-    slug: 'kipway-trial', marca: 'Kipway', logoArquivo: 'kipway',
-    tit: ['Trial Kipway', 'Trial Kipway', 'Kipway Trial'],
-    desc: ['Corra sua prova com Kipway. Retire 1 óculos Kipway no dia anterior à sua prova e sinta a experiência de correr com Kipway. Vagas limitadas.',
-           'Corre tu carrera con Kipway. Retira unas gafas Kipway el día antes de tu carrera y vive la experiencia de correr con Kipway. Cupos limitados.',
-           'Run your race with Kipway. Pick up a pair of Kipway sunglasses the day before your race and feel what it is like to run with them. Limited places.'],
-    dias: ['2026-09-17', '2026-09-18', '2026-09-19'], local: estande('Kipway', 'E4'),
-  }),
-  ...ativacao({
     slug: 'espaco-mulher', marca: 'Mulher by Nubank',
     tit: ['Espaço Mulher', 'Espacio Mujer', "Women's Space"],
     desc: ['Espaço dedicado ao público feminino, com trancistas, massagem esportiva e estúdio de fotos da FOTOP. Para entrar, responda a uma pesquisa rápida sobre a sua experiência no trail.',
