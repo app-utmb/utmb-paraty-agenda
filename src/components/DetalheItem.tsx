@@ -91,7 +91,13 @@ export function DetalheItem({ item, aoFechar }: Props) {
           <span className="visualmente-oculto">{t.detalhe.fechar}</span>
         </button>
 
-        <span className={`etiqueta etiqueta--${item.pilar}`}>{t.pilares[item.pilar]}</span>
+        <span className="folha__pilares">
+          {item.pilares.map((p) => (
+            <span key={p} className={`etiqueta etiqueta--${p}`}>
+              {t.pilares[p]}
+            </span>
+          ))}
+        </span>
         <h2 className="folha__titulo" id={idTitulo}>
           {titulo}
         </h2>
@@ -113,7 +119,7 @@ export function DetalheItem({ item, aoFechar }: Props) {
         {item.palestrante && (
           <div className="folha__linha">
             <span className="folha__rotulo">{t.detalhe.palestrante}</span>
-            <span className="folha__valor">{item.palestrante}</span>
+            <span className="folha__valor folha__valor--linhas">{item.palestrante}</span>
           </div>
         )}
 

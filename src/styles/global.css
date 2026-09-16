@@ -1639,3 +1639,14 @@ img {
   font-size: 13.5px;
   color: var(--texto-fraco);
 }
+
+/* Quem apresenta pode vir em duas linhas: nomes e, embaixo, o moderador. */
+.folha__valor--linhas {
+  white-space: pre-line;
+}
+
+.folha__pilares {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}

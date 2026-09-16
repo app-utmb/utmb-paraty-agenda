@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { normalizarProgramacao } from '../data/normalize'
-import { dataDoDia, ehAbaDoPalco, faixaDoHorario, linhasDoPalco } from '../data/palco'
+import {
+  dataDoDia,
+  ehAbaDoPalco,
+  faixaDoHorario,
+  linhasDoPalco,
+  nomesDeQuemApresenta,
+} from '../data/palco'
 import { lerCsv } from '../data/sheets'
 
 const CABECALHO =
@@ -93,5 +99,34 @@ describe('dia e horario da base', () => {
     expect(faixaDoHorario('15h45 - 16h00 (15 min)', '15')).toEqual(['15:45', '16:00'])
     expect(faixaDoHorario('16h', '30')).toEqual(['16:00', '16:30'])
     expect(faixaDoHorario('a definir', '15')).toBeNull()
+  })
+})
+
+describe('quem apresenta', () => {
+  it('separa dois nomes por virgula, venham com barra, quebra de linha ou "e"', () => {
+    expect(nomesDeQuemApresenta('Cris Savieto / Vandrei Stephani')).toBe('Cris Savieto, Vandrei Stephani')
+    expect(nomesDeQuemApresenta('Cris Savieto e\nVandrei Stephani')).toBe('Cris Savieto, Vandrei Stephani')
+    expect(nomesDeQuemApresenta('Sophie Bouquet')).toBe('Sophie Bouquet')
+  })
+
+  it('poe o moderador na linha de baixo', () => {
+    expect(nomesDeQuemApresenta('Rosalia Camargo e Virginio\nModeradora: Tamis Monteiro')).toBe(
+      'Rosalia Camargo, Virginio\nModeradora: Tamis Monteiro',
+    )
+  })
+
+  it('nao quebra uma frase com "e" no meio', () => {
+    const frase = 'Geisa: liga da justiça e caiçara em chamonix'
+    expect(nomesDeQuemApresenta(frase)).toBe(frase)
+  })
+})
+
+describe('item que vale por dois pilares', () => {
+  it('entende "Talk e Filme" como filme e talk', () => {
+    const [item] = itens(
+      'Imprensa,Gi Martins,Talk e Filme,30,A Filha do Vento,Giovana Martins,,confirmado,Quinta,18h00 - 18h30,,',
+    )
+    expect(item?.pilares).toEqual(['filmes', 'talks'])
+    expect(item?.pilar).toBe('filmes')
   })
 })

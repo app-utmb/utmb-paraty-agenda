@@ -13,7 +13,6 @@ import { ordenarPorPrioridade } from '../utils/prioridade'
 import { diaDoMes, diaPadrao, mesCurto, nomeDiaSemana } from '../utils/tempo'
 import type { EstadoFavoritos } from '../useFavoritos'
 
-type FiltroPilar = 'todos' | Pilar
 
 const ESTANDES = PONTOS_MAPA.filter((p) => p.tipo === 'marca')
 
@@ -106,10 +105,20 @@ export function Programacao({
   }, [dados.itens])
 
   const [dia, setDia] = useState(() => diaPadrao(dias, referencia ?? new Date()))
-  const [pilar, setPilar] = useState<FiltroPilar>('todos')
+  const [pilares, setPilares] = useState<ReadonlySet<Pilar>>(() => new Set())
   const [marca, setMarca] = useState<FiltroMarca>('todas')
 
   const diaAtivo = dias.includes(dia) ? dia : (dias[0] ?? dia)
+
+  // Os pilares somam: dá para ver Talks e Filmes juntos, e tocar de novo no
+  // chip tira aquele pilar. Sem nenhum marcado, a lista mostra tudo.
+  const alternarPilar = (p: Pilar) =>
+    setPilares((atual) => {
+      const novo = new Set(atual)
+      if (novo.has(p)) novo.delete(p)
+      else novo.add(p)
+      return novo
+    })
 
   // O filtro oferece todas as marcas da Expo, tenham ou nao atividade, mais
   // os nomes que so aparecem na programacao, como quem fala no palco.
@@ -133,12 +142,12 @@ export function Programacao({
         dados.itens.filter(
           (i) =>
             i.data === diaAtivo &&
-            (pilar === 'todos' || i.pilar === pilar) &&
+            (pilares.size === 0 || i.pilares.some((p) => pilares.has(p))) &&
             ehDaMarca(i),
         ),
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dados.itens, diaAtivo, pilar, marcaAtiva],
+    [dados.itens, diaAtivo, pilares, marcaAtiva],
   )
 
   // A agenda montada pelo atleta e uma visao propria: mostra os quatro dias
@@ -251,8 +260,8 @@ export function Programacao({
         <button
           type="button"
           className="chip"
-          aria-pressed={pilar === 'todos'}
-          onClick={() => setPilar('todos')}
+          aria-pressed={pilares.size === 0}
+          onClick={() => setPilares(new Set())}
         >
           {t.programacao.todos}
         </button>
@@ -261,9 +270,9 @@ export function Programacao({
             key={p}
             type="button"
             className="chip"
-            aria-pressed={pilar === p}
+            aria-pressed={pilares.has(p)}
             style={{ ['--chip-cor' as string]: `var(--${p})` }}
-            onClick={() => setPilar(p)}
+            onClick={() => alternarPilar(p)}
           >
             {t.pilares[p]}
           </button>

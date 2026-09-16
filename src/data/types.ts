@@ -30,7 +30,10 @@ export interface ItemProgramacao {
    * que comeca e termina no mesmo dia.
    */
   dataFim: string | null
+  /** Pilar principal, o primeiro de `pilares`. */
   pilar: Pilar
+  /** Um item pode valer por dois, como um filme seguido de bate-papo. */
+  pilares: Pilar[]
   titulo: TextoMultilingue
   descricao: TextoMultilingue
   local: TextoMultilingue

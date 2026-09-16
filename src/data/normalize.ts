@@ -291,7 +291,17 @@ export function normalizarProgramacao(
       minutoFim = 23 * 60 + 59
     }
 
-    let pilar = normalizarPilar(texto(l.pilar))
+    // A celula aceita mais de um pilar, separados por ponto e virgula ou "e",
+    // para o filme com bate-papo aparecer nos dois filtros.
+    const pilares = [
+      ...new Set(
+        texto(l.pilar)
+          .split(/[;&]| e /i)
+          .map((p) => normalizarPilar(p))
+          .filter((p): p is Pilar => Boolean(p)),
+      ),
+    ]
+    let pilar = pilares[0] ?? normalizarPilar(texto(l.pilar))
     if (!pilar) {
       problemas.push({
         linha,
@@ -351,6 +361,7 @@ export function normalizarProgramacao(
       horaFim,
       dataFim,
       pilar,
+      pilares: pilares.length > 0 ? pilares : [pilar],
       titulo,
       descricao: multilingue(l, 'descricao'),
       local: multilingue(l, 'local'),

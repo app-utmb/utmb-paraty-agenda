@@ -105,6 +105,30 @@ function urlDoLogo(logo: string | null): string {
   return new URL(`${import.meta.env.BASE_URL}logos/${logo}.png`, origem).href
 }
 
+/**
+ * Arruma a lista de quem apresenta: nomes separados por virgula e o moderador
+ * sempre na linha de baixo. A planilha usa barra, quebra de linha ou "e".
+ */
+export function nomesDeQuemApresenta(valor: string): string {
+  // Barra so separa quando tem espaco em volta, senao quebraria "RS/SC".
+  const partes = texto(valor)
+    .split(/\n|\s+\/\s*|\s*\/\s+/)
+    .map((p) => p.replace(/\s+(e|y|and|&)\s*$/i, '').trim())
+    .filter(Boolean)
+  const ehModerador = (p: string) => /^(modera|media)/i.test(p)
+  const moderadores = partes.filter(ehModerador)
+  const nomes = partes.filter((p) => !ehModerador(p)).flatMap((p) => separarNomes(p))
+  return [nomes.join(', '), ...moderadores].filter(Boolean).join('\n')
+}
+
+/** Só quebra no "e" quando os dois lados parecem nomes, e nao uma frase. */
+function separarNomes(parte: string): string[] {
+  if (/[:,]/.test(parte)) return [parte]
+  const lados = parte.split(/\s+e\s+/i)
+  const nomes = lados.every((l) => l.trim().split(/\s+/).length <= 5)
+  return nomes ? lados.map((l) => l.trim()).filter(Boolean) : [parte]
+}
+
 /** A aba tem as colunas que o app precisa? Serve para distinguir planilha mudada de agenda vazia. */
 export function ehAbaDoPalco(linhas: LinhaCrua[]): boolean {
   const primeira = linhas[0]
@@ -125,7 +149,11 @@ export function linhasDoPalco(linhas: LinhaCrua[]): LinhaCrua[] {
     if (!data || !faixa) continue
 
     const tipo = texto(l.oque)
-    const pilar = chaveColuna(tipo).includes('filme') ? 'filmes' : 'talks'
+    const chaveTipo = chaveColuna(tipo)
+    // "Talk e Filme" vale pelos dois: o filme abre e o bate-papo vem depois.
+    const pilar = [chaveTipo.includes('filme') && 'filmes', chaveTipo.includes('talk') && 'talks']
+      .filter(Boolean)
+      .join('; ') || 'talks'
     const { marca, logo } = resolverMarca(texto(l.marca), texto(l.categoria))
     const tema = texto(l.temadotalk)
     const titulo = tema || [tipo || 'Talk', marca || texto(l.marca)].filter(Boolean).join(' ')
@@ -150,7 +178,7 @@ export function linhasDoPalco(linhas: LinhaCrua[]): LinhaCrua[] {
       local_pt: PALCO.pt,
       local_es: PALCO.es,
       local_en: PALCO.en,
-      palestrante: texto(l.quemapresenta),
+      palestrante: nomesDeQuemApresenta(texto(l.quemapresenta)),
       marca,
       logo_url: urlDoLogo(logo),
       inscricao: 'livre',

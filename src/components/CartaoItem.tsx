@@ -37,7 +37,11 @@ export function CartaoItem({
             {mostrarData ? `${item.data.slice(8, 10)}/${item.data.slice(5, 7)} ` : ''}
             {faixaHoraria(item)}
           </span>
-          <span className={`etiqueta etiqueta--${item.pilar}`}>{t.pilares[item.pilar]}</span>
+          {item.pilares.map((p) => (
+            <span key={p} className={`etiqueta etiqueta--${p}`}>
+              {t.pilares[p]}
+            </span>
+          ))}
         </span>
 
         <span className="cartao__titulo">{titulo}</span>

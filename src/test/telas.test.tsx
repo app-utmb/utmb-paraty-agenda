@@ -131,6 +131,24 @@ describe('tela Programacao', () => {
     expect(titulos[1]).toContain('Nutricao no ultra')
   })
 
+  it('soma pilares no filtro e tira ao tocar de novo', async () => {
+    abrir()
+    await userEvent.click(screen.getByRole('button', { name: 'Talks' }))
+    expect(screen.getByText('Nutricao no ultra')).toBeInTheDocument()
+    expect(screen.queryByText('Teste de calcados')).not.toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Ativações' }))
+    expect(screen.getByText('Nutricao no ultra')).toBeInTheDocument()
+    expect(screen.getByText('Teste de calcados')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Talks' }))
+    expect(screen.queryByText('Nutricao no ultra')).not.toBeInTheDocument()
+    expect(screen.getByText('Teste de calcados')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Todos' }))
+    expect(screen.getByText('Retirada de kits')).toBeInTheDocument()
+  })
+
   it('filtra por pilar', async () => {
     abrir()
     await userEvent.click(screen.getByRole('button', { name: 'Talks' }))

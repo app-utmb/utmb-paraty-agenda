@@ -368,10 +368,10 @@ const ATIVACOES = [
   ...ativacao({
     slug: 'drpeanut-canoa', marca: 'DR PEANUT', logoArquivo: 'dr-peanut',
     tit: ['Ativação com canoa havaiana', 'Activación con canoa hawaiana', 'Outrigger canoe activation'],
-    desc: ['Ativação da DR PEANUT com canoa havaiana nos dias de evento. Local e horários a confirmar.',
-           'Activación de DR PEANUT con canoa hawaiana en los días del evento. Lugar y horarios por confirmar.',
-           'DR PEANUT outrigger canoe activation during the event. Venue and times to be confirmed.'],
-    dias: TODOS, local: aConfirmar,
+    desc: ['Ativação da DR PEANUT com canoa havaiana, no estande da marca. Horários a confirmar.',
+           'Activación de DR PEANUT con canoa hawaiana, en el stand de la marca. Horarios por confirmar.',
+           'DR PEANUT outrigger canoe activation at the brand booth. Times to be confirmed.'],
+    dias: TODOS, local: estande('DR PEANUT', 'D4'),
   }),
   ...ativacao({
     slug: 'liquidz-sabor', marca: 'Liquidz', logoArquivo: 'liquidz',
