@@ -380,7 +380,7 @@ const ATIVACOES = [
     desc: ['Vagas limitadas. As primeiras inscrições correm testando o produto, até acabar o estoque. Inscrições no estande da Shokz, B3.',
            'Cupos limitados. Las primeras inscripciones corren probando el producto, hasta agotar stock. Inscripciones en el stand de Shokz, B3.',
            'Limited places. The first sign-ups run testing the product, while stocks last. Sign up at the Shokz booth, B3.'],
-    dias: ['2026-09-18'], horas: { '2026-09-18': ['10:30', ''] },
+    dias: ['2026-09-18'], horas: { '2026-09-18': ['10:00', ''] },
     local: estande('Shokz', 'B3'), inscricao: 'previa', destaque: 'sim',
   }),
   ...ativacao({
